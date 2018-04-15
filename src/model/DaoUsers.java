@@ -137,10 +137,7 @@ public class DaoUsers {
 
 	}
 
-	/**
-	 * @param args the command line arguments
-	 * @throws SQLException 
-	 *
+	/*
 	public static void main(String[] args) throws SQLException {
 		DaoUsers dao = new DaoUsers();
 		String Username = "chris";
