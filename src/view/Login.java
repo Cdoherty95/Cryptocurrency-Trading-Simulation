@@ -1,8 +1,9 @@
-package application;
+package view;
 
 import java.io.IOException;
 import java.sql.SQLException;
 
+import application.Exchange;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -32,10 +33,13 @@ public class Login extends Exchange {
 			if(dao.loginPasswordMatching(Username.getText(), Password.getText())) {
 				//Move on to get user information
 				String[] userInfo = dao.activeUserInfo();
-				if(userInfo[2]=="admin") {
+				for (String s: userInfo) {
+					System.out.println(s);
+				}
+				if(userInfo[2].equals("admin")) {
 					System.out.println("User is an admin");
 					Stage primaryStage = new Stage();
-					Parent root = FXMLLoader.load(getClass().getResource("/application/AdminMain.fxml"));
+					Parent root = FXMLLoader.load(getClass().getResource("/view/AdminMain.fxml"));
 					Scene scene = new Scene(root,400,400);
 					scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 					primaryStage.setScene(scene);
@@ -49,6 +53,7 @@ public class Login extends Exchange {
 					primaryStage.setScene(scene);
 					primaryStage.show();
 				}
+
 			}else { // if the Username or password is incorrect
 				System.out.println("Bad Username or password");
 				errorLable.setText("Username Or Password is incorrect");

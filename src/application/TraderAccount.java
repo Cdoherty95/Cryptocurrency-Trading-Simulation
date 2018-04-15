@@ -1,5 +1,7 @@
 package application;
 
+import view.Login;
+
 public class TraderAccount extends Login implements TraderOperations {
 	
 	public int userID;

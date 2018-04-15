@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="300.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.AdminMenu">
+   <children>
+      <BorderPane prefHeight="300.0" prefWidth="300.0">
+         <center>
+            <VBox fx:id="border" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Button fx:id="viewUsers" mnemonicParsing="false" onAction="#viewUsers" text="View Users" />
+                  <Button fx:id="viewTransactionHistory" mnemonicParsing="false" onAction="#viewTransactionHistory" text="View Transaction Histroy" />
+                  <Button fx:id="viewExchange" mnemonicParsing="false" onAction="#viewExchange" text="View Exchange" />
+                  <Button fx:id="viewWallets" mnemonicParsing="false" onAction="#viewWallets" text="View Wallets" />
+                  <Button fx:id="viewExchangeHistory" mnemonicParsing="false" onAction="#viewExchangeHistory" text="View Exchange History" />
+               </children>
+            </VBox>
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>
