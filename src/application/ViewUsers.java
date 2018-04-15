@@ -14,7 +14,7 @@ import view.UserTableViewController;
 
 import java.io.IOException;
 
-public class ViewUsers extends Application{
+public class ViewUsers{
 
 
     private Stage primaryStage;
@@ -43,15 +43,16 @@ public class ViewUsers extends Application{
         return personData;
     }
 
-
+/*
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Crypto App");
 
-        initRootLayout();
+        //initRootLayout();
 
-        DisplayUsers();
+        //DisplayUsers();
+        // Give the controller access to the main app.
 
     }
 
@@ -60,20 +61,20 @@ public class ViewUsers extends Application{
             // Load root layout from fxml file.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/view/RootLayout.fxml"));
-            rootLayout = (BorderPane) loader.load();
+           rootLayout = (BorderPane) loader.load();
 
             // Show the scene containing the root layout.
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
             primaryStage.show();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     /**
      * Shows the person overview inside the root layout.
-     */
+     *
     public void DisplayUsers() {
         try {
 
@@ -87,7 +88,7 @@ public class ViewUsers extends Application{
 
             // Give the controller access to the main app.
             UserTableViewController controller = loader.getController();
-            controller.setMainApp(this);
+            controller.setMainApp();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -100,5 +101,6 @@ public class ViewUsers extends Application{
     public static void main(String[] args) {
         launch(args);
     }
+    */
 
 }

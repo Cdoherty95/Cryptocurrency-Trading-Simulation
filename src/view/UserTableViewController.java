@@ -28,20 +28,7 @@ public class UserTableViewController {
     private TableColumn<UseraccountsView, Long> lastLoggedInCol;
 
     // Reference to the main application.
-    private ViewUsers viewUsers;
-
-    private ObservableList<UseraccountsView> personData = FXCollections.observableArrayList();
-
-    public UserTableViewController(){
-        setData();
-
-    }
-
-    public void setData(){
-        personData.add(new UseraccountsView(1, "chris", "admin", 123L));
-        personData.add(new UseraccountsView(1, "dhris", "admin", 121L));
-        personData.add(new UseraccountsView(1, "fhris", "admin", 124L));
-    }
+    //private ViewUsers viewUsers;
 
     /**
      * Initializes the controller class. This method is automatically called
@@ -59,9 +46,10 @@ public class UserTableViewController {
     /**
      * Is called by the main application to give a reference back to itself.
      */
-    public void setMainApp(ViewUsers viewUsers) {
-        this.viewUsers = viewUsers;
-
+    public void setMainApp() {
+        //ViewUsers viewUsers
+        //this.viewUsers = viewUsers;
+        ViewUsers viewUsers = new ViewUsers();
         table.setItems(viewUsers.getPersonData());
     }
 
