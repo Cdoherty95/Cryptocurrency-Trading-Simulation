@@ -48,12 +48,8 @@ public class AdminMenu {
 
     @FXML
     void viewUsers(ActionEvent event) throws IOException {
-        Stage primaryStage = new Stage();
-        Parent root = FXMLLoader.load(getClass().getResource("/view/AdminMain.fxml"));
-        Scene scene = new Scene(root,400,400);
-        scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        ViewUsers vu = new ViewUsers();
+       // vu.start(Stage primaryStage);
     }
 
     @FXML

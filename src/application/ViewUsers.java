@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -17,7 +18,9 @@ public class ViewUsers extends Application{
 
 
     private Stage primaryStage;
+    //= new Stage();
     private BorderPane rootLayout;
+    //= new BorderPane();
 
     /**
      * The data as an observable list of user accounts
@@ -25,17 +28,50 @@ public class ViewUsers extends Application{
     private ObservableList<UseraccountsView> personData = FXCollections.observableArrayList();
 
 
-    public ViewUsers() {
+    public ViewUsers()  {
+        setData();
 
+
+    }
+
+    public void setData(){
         personData.add(new UseraccountsView(1, "chris", "admin", 123L));
         personData.add(new UseraccountsView(1, "dhris", "admin", 121L));
         personData.add(new UseraccountsView(1, "fhris", "admin", 124L));
-
     }
 
     //ObservableList function to return data
     public ObservableList<UseraccountsView> getPersonData() {
         return personData;
+    }
+
+    public void display(){
+
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(ViewUsers.class.getResource("/view/RootLayout.fxml"));
+            rootLayout = (BorderPane) loader.load();
+
+            // Show the scene containing the root layout.
+            Scene scene = new Scene(rootLayout);
+            primaryStage.setScene(scene);
+            primaryStage.show();
+
+            // Load person overview.
+            FXMLLoader loader1 = new FXMLLoader();
+            loader1.setLocation(ViewUsers.class.getResource("/view/UsersTableView.fxml"));
+            AnchorPane personOverview = (AnchorPane) loader1.load();
+
+            // Set person overview into the center of root layout.
+            rootLayout.setCenter(personOverview);
+
+            // Give the controller access to the main app.
+            UserTableViewController controller = loader1.getController();
+            controller.setMainApp(this);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -53,7 +89,7 @@ public class ViewUsers extends Application{
         try {
             // Load root layout from fxml file.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(ViewUsers.class.getResource("/view/RootLayout.fxml"));
+            loader.setLocation(getClass().getResource("/view/RootLayout.fxml"));
             rootLayout = (BorderPane) loader.load();
 
             // Show the scene containing the root layout.
@@ -70,6 +106,7 @@ public class ViewUsers extends Application{
      */
     public void DisplayUsers() {
         try {
+
             // Load person overview.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(ViewUsers.class.getResource("/view/UsersTableView.fxml"));
@@ -89,6 +126,9 @@ public class ViewUsers extends Application{
 
     public Stage getPrimaryStage() {
         return primaryStage;
+    }
+    public static void main(String[] args) {
+        launch(args);
     }
 
 }

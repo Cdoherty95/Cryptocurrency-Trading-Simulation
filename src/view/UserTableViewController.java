@@ -1,6 +1,8 @@
 package view;
 
 import application.ViewUsers;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.UseraccountsView;
 import javafx.fxml.FXML;
@@ -26,7 +28,21 @@ public class UserTableViewController {
     private TableColumn<UseraccountsView, Long> lastLoggedInCol;
 
     // Reference to the main application.
+    private UserTableViewController cserTableViewController;
     private ViewUsers viewUsers;
+
+    private ObservableList<UseraccountsView> personData = FXCollections.observableArrayList();
+
+    public UserTableViewController(){
+        setData();
+
+    }
+
+    public void setData(){
+        personData.add(new UseraccountsView(1, "chris", "admin", 123L));
+        personData.add(new UseraccountsView(1, "dhris", "admin", 121L));
+        personData.add(new UseraccountsView(1, "fhris", "admin", 124L));
+    }
 
     /**
      * Initializes the controller class. This method is automatically called
@@ -47,7 +63,6 @@ public class UserTableViewController {
     public void setMainApp(ViewUsers viewUsers) {
         this.viewUsers = viewUsers;
 
-        // Add observable list data to the table
         table.setItems(viewUsers.getPersonData());
     }
 
