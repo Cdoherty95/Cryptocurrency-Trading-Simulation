@@ -30,8 +30,6 @@ public class ViewUsers extends Application{
 
     public ViewUsers()  {
         setData();
-
-
     }
 
     public void setData(){
@@ -45,34 +43,6 @@ public class ViewUsers extends Application{
         return personData;
     }
 
-    public void display(){
-
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(ViewUsers.class.getResource("/view/RootLayout.fxml"));
-            rootLayout = (BorderPane) loader.load();
-
-            // Show the scene containing the root layout.
-            Scene scene = new Scene(rootLayout);
-            primaryStage.setScene(scene);
-            primaryStage.show();
-
-            // Load person overview.
-            FXMLLoader loader1 = new FXMLLoader();
-            loader1.setLocation(ViewUsers.class.getResource("/view/UsersTableView.fxml"));
-            AnchorPane personOverview = (AnchorPane) loader1.load();
-
-            // Set person overview into the center of root layout.
-            rootLayout.setCenter(personOverview);
-
-            // Give the controller access to the main app.
-            UserTableViewController controller = loader1.getController();
-            controller.setMainApp(this);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     @Override
     public void start(Stage primaryStage) {

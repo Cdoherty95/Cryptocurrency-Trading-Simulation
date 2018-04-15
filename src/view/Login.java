@@ -39,8 +39,8 @@ public class Login extends Exchange {
 				if(userInfo[2].equals("admin")) {
 					System.out.println("User is an admin");
 					Stage primaryStage = new Stage();
-					//Parent root = FXMLLoader.load(getClass().getResource("/view/AdminMain.fxml"));
-					Parent root = FXMLLoader.load(getClass().getResource("/view/UsersTableView.fxml"));
+					Parent root = FXMLLoader.load(getClass().getResource("/view/AdminMain.fxml"));
+					//Parent root = FXMLLoader.load(getClass().getResource("/view/UsersTableView.fxml"));
 					Scene scene = new Scene(root,400,400);
 					scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 					primaryStage.setScene(scene);

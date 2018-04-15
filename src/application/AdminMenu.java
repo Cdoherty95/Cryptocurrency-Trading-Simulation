@@ -9,6 +9,8 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import view.UserTableViewController;
+
 import java.io.IOException;
 
 public class AdminMenu {
@@ -48,8 +50,7 @@ public class AdminMenu {
 
     @FXML
     void viewUsers(ActionEvent event) throws IOException {
-        ViewUsers vu = new ViewUsers();
-       // vu.start(Stage primaryStage);
+       new UserTableViewController();
     }
 
     @FXML
