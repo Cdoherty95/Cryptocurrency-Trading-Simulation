@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.RegisterController">
+   <children>
+      <Label alignment="CENTER" layoutX="1.0" prefHeight="32.0" prefWidth="600.0" text="Register">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <VBox layoutX="21.0" layoutY="61.0" prefHeight="306.0" prefWidth="202.0">
+         <children>
+            <Label text="Username" />
+            <TextField fx:id="usernameIn" promptText="Username">
+               <VBox.margin>
+                  <Insets bottom="6.0" />
+               </VBox.margin>
+            </TextField>
+            <Label text="Password" />
+            <PasswordField fx:id="pass1In" promptText="Password">
+               <VBox.margin>
+                  <Insets bottom="6.0" />
+               </VBox.margin>
+            </PasswordField>
+            <Label prefHeight="18.0" prefWidth="91.0" text="Verify Password" />
+            <PasswordField fx:id="pass2In" onInputMethodTextChanged="#verifyPasswordMatches" promptText="Verify Password">
+               <VBox.margin>
+                  <Insets bottom="6.0" />
+               </VBox.margin>
+            </PasswordField>
+            <Label text="First Name" />
+            <TextField fx:id="fNameIn" promptText="First Name">
+               <VBox.margin>
+                  <Insets bottom="6.0" />
+               </VBox.margin>
+            </TextField>
+            <Label text="Last Name" />
+            <TextField fx:id="lNameIn" promptText="Last Name">
+               <VBox.margin>
+                  <Insets bottom="6.0" />
+               </VBox.margin>
+            </TextField>
+            <Label prefHeight="18.0" prefWidth="34.0" text="Email" />
+            <TextField fx:id="emIn" promptText="Email">
+               <VBox.margin>
+                  <Insets bottom="6.0" />
+               </VBox.margin>
+            </TextField>
+         </children>
+      </VBox>
+      <Label alignment="CENTER" layoutX="23.0" layoutY="35.0" prefHeight="18.0" prefWidth="202.0" text="User Information" />
+      <VBox layoutX="336.0" layoutY="61.0" prefHeight="97.0" prefWidth="202.0">
+         <children>
+            <Label text="Payment Name" />
+            <TextField fx:id="payNameIn" promptText="Payment Method Name">
+               <VBox.margin>
+                  <Insets bottom="6.0" />
+               </VBox.margin>
+            </TextField>
+            <Label text="Account Number" />
+            <TextField fx:id="accountIn" promptText="Account Number" />
+            <Label text="Routing Number" />
+            <TextField fx:id="routingIn" layoutX="10.0" layoutY="77.0" promptText="Routing Number" />
+         </children>
+      </VBox>
+      <Label alignment="CENTER" layoutX="362.0" layoutY="35.0" prefHeight="18.0" prefWidth="150.0" text="Bank Account Details" />
+      <Button fx:id="registerBtn" layoutX="329.0" layoutY="256.0" mnemonicParsing="false" onAction="#Register" prefHeight="89.0" prefWidth="217.0" text="Register">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Button>
+      <ToggleButton fx:id="regAsAdmin" layoutX="328.0" layoutY="214.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="218.0" text="Register As Admin" />
+      <Button fx:id="cancelBtn" layoutX="535.0" layoutY="5.0" mnemonicParsing="false" onAction="#cancel" text="Cancel" />
+   </children>
+</AnchorPane>

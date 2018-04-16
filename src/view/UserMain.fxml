@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.UserMenuController">
+   <children>
+      <ButtonBar layoutX="154.0" layoutY="43.0" prefHeight="40.0" prefWidth="200.0" />
+      <MenuBar fx:id="topBar" prefHeight="26.0" prefWidth="800.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Edit">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Delete" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <Label fx:id="welcomeUser" alignment="CENTER" layoutX="12.0" layoutY="55.0" prefHeight="54.0" prefWidth="770.0" text="Welcome Chris" textAlignment="CENTER">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
+      <Label layoutX="45.0" layoutY="123.0" prefHeight="40.0" prefWidth="90.0" text="Username">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="usrName" layoutX="143.0" layoutY="123.0" prefHeight="40.0" prefWidth="178.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="45.0" layoutY="163.0" prefHeight="40.0" prefWidth="90.0" text="Last Name:">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="usrLastName" layoutX="143.0" layoutY="163.0" prefHeight="40.0" prefWidth="178.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="45.0" layoutY="203.0" prefHeight="40.0" prefWidth="90.0" text="Email">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="usrEmail" layoutX="143.0" layoutY="203.0" prefHeight="40.0" prefWidth="178.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="45.0" layoutY="243.0" prefHeight="40.0" prefWidth="161.0" text="Payment Method">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="usrpaymnetMethod" layoutX="191.0" layoutY="243.0" prefHeight="40.0" prefWidth="227.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="editClick" layoutX="45.0" layoutY="100.0" text="Edit Profile" />
+      <Label fx:id="welcomeUser1" alignment="CENTER" layoutX="12.0" layoutY="300.0" prefHeight="54.0" prefWidth="770.0" text="Wallet Details" textAlignment="CENTER">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
+      <SplitPane dividerPositions="0.38753799392097266" layoutX="54.0" layoutY="354.0" orientation="VERTICAL" prefHeight="133.0" prefWidth="178.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="48.0" prefWidth="178.0" text="USD">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+               <children>
+                  <Label fx:id="usdAmt" alignment="CENTER" layoutX="1.0" prefHeight="78.0" prefWidth="177.0">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+      <SplitPane dividerPositions="0.38753799392097266" layoutX="308.0" layoutY="354.0" orientation="VERTICAL" prefHeight="133.0" prefWidth="178.0">
+         <items>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="48.0" prefWidth="178.0" text="BTC">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+               <children>
+                  <Label fx:id="btcAmt" alignment="CENTER" layoutX="1.0" prefHeight="78.0" prefWidth="177.0">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+         </items>
+      </SplitPane>
+      <SplitPane dividerPositions="0.38753799392097266" layoutX="562.0" layoutY="354.0" orientation="VERTICAL" prefHeight="133.0" prefWidth="178.0">
+         <items>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="48.0" prefWidth="178.0" text="ETH">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+               <children>
+                  <Label fx:id="ethAmt" alignment="CENTER" layoutX="1.0" prefHeight="78.0" prefWidth="177.0">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+         </items>
+      </SplitPane>
+      <Button fx:id="goToExch" layoutX="530.0" layoutY="109.0" mnemonicParsing="false" onAction="#goToExchange" prefHeight="48.0" prefWidth="209.0" text="Exchange Currencies">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="CurrencyHistory" layoutX="530.0" layoutY="175.0" mnemonicParsing="false" onAction="#viewCurrencyHistory" prefHeight="48.0" prefWidth="209.0" text="View Currency History">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="viewTransHist" layoutX="530.0" layoutY="239.0" mnemonicParsing="false" onAction="#viewTransactionHistory" prefHeight="48.0" prefWidth="209.0" text="View Transaction History">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

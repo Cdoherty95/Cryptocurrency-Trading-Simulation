@@ -1,6 +1,6 @@
 package view;
 
-import application.ViewUsers;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -49,8 +49,33 @@ public class UserTableViewController {
     public void setMainApp() {
         //ViewUsers viewUsers
         //this.viewUsers = viewUsers;
-        ViewUsers viewUsers = new ViewUsers();
-        table.setItems(viewUsers.getPersonData());
+        //UserTableViewController viewUsers = new UserTableViewController();
+
+        table.setItems(getPersonData());
     }
+
+    private ObservableList<UseraccountsView> personData = FXCollections.observableArrayList();
+
+    /**
+     * constructor that adds data
+     */
+    public UserTableViewController()  {
+        setData();
+    }
+
+    /**
+     * method to get data.
+     */
+    public void setData(){
+        personData.add(new UseraccountsView(1, "chris", "admin", 123L));
+        personData.add(new UseraccountsView(1, "dhris", "admin", 121L));
+        personData.add(new UseraccountsView(1, "fhris", "admin", 124L));
+    }
+
+    //ObservableList function to return data
+    public ObservableList<UseraccountsView> getPersonData() {
+        return personData;
+    }
+
 
 }

@@ -23,6 +23,7 @@ public class DaoSelectData {
 		sql = "SELECT * FROM USERS";	
 		rs = statement.executeQuery(sql);
 		System.out.println("Selected from DB");
+		statement.close();
 		connection.connect().close(); //close db connection 
 		return rs;
 		

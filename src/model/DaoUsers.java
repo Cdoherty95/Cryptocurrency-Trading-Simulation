@@ -35,6 +35,7 @@ public class DaoUsers {
 
 		statement.executeUpdate(sql);
 		System.out.println("Selected from DB");
+		statement.close();
 		connection.connect().close(); //close db connection 
 	}
 
@@ -65,6 +66,50 @@ public class DaoUsers {
 			System.out.println(e.getMessage());
 		}
 		connection.connect().close(); //close db connection 
+
+	}
+	public int getUserID(String uname) throws SQLException, InterruptedException {
+		String sql;
+		int userID=0;
+		statement = connection.connect().createStatement();
+		//sql to select from database
+		sql = "SELECT UserID FROM Users WHERE Username='"+uname+"'";
+
+		ResultSet rs = statement.executeQuery(sql);
+
+		if(rs.next()) {
+			userID = rs.getInt("UserID");
+			System.out.println(userID);
+		}
+		statement.close();
+		connection.connect().close(); //close db connection
+		return userID;
+	}
+
+	public void registerUser(int uID, String fname, String lName, String payName, int accNum, int routeNum) throws SQLException{
+		String sql;
+		//getting timestamp to be stored
+		long currentUnixTime = System.currentTimeMillis() / 1000L;
+
+		//sql prepared stmt
+		sql = "INSERT INTO UserAccountDetails(UserID, FirstName, LastName, PaymentNumber, PaymentName, Account, Routing, Active, DateAdded) VALUES(?,?,?,?,?,?,?,?,?)";
+
+		try (
+				PreparedStatement pstmt = connection.connect().prepareStatement(sql)) {
+			pstmt.setInt(1, uID);
+			pstmt.setString(2, fname);
+			pstmt.setString(3, lName);
+			pstmt.setInt(4, 1);
+			pstmt.setString(5, payName);
+			pstmt.setInt(6, accNum);
+			pstmt.setInt(7, routeNum);
+			pstmt.setInt(8, 1);
+			pstmt.setLong(9, currentUnixTime);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		connection.connect().close(); //close db connection
 
 	}
 
@@ -99,6 +144,7 @@ public class DaoUsers {
 			}else
 				return false;
 		}
+		statement.close();
 		connection.connect().close(); //close db connection 
 		return false;
 	}
@@ -127,7 +173,7 @@ public class DaoUsers {
 			lastLoggedInUnixTime = rs.getLong("LastLoggedIn"); 
 			userName = rs.getString("Username");
 		}
-
+		statement.close();
 		connection.connect().close(); //close db connection 
 		
 		//setting return

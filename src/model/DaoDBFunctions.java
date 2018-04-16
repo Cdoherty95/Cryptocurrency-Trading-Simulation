@@ -114,6 +114,7 @@ public class DaoDBFunctions {
 			}
 			statement.executeUpdate(sql);
 			System.out.println("Created " + whatTable + " in database.");
+			statement.close();
 			connection.connect().close(); //close db connection 
 		}catch (SQLException se) {
 			// Handle errors for JDBC
@@ -132,6 +133,7 @@ public class DaoDBFunctions {
 
 			statement.executeUpdate(sql);
 			System.out.println("Table " +TableName +" deleted in database.");
+			statement.close();
 			connection.connect().close(); //close db connection 
 		}catch (SQLException se) {
 			// Handle errors for JDBC
@@ -169,6 +171,7 @@ public class DaoDBFunctions {
 		results = statement.executeQuery(sql);
 
 		//Closes the connection
+		statement.close();
 		connection.connect().close();
 
 		while(results.next()) {
