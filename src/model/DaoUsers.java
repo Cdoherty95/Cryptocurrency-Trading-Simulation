@@ -39,6 +39,17 @@ public class DaoUsers {
 		connection.connect().close(); //close db connection 
 	}
 
+	public void programstart() throws SQLException {
+		String sql;
+		//Creates a connection to the database
+		statement = connection.connect().createStatement();
+		sql = "UPDATE Users SET Active=0";
+		statement.execute(sql);
+		statement.close();
+		connection.connect().close(); //close db connection
+
+	}
+
 	public void createUser(String Username, String Password, String Role) throws SQLException{
 		String sql;
 

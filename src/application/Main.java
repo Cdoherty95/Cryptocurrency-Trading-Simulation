@@ -6,11 +6,16 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import model.DaoUsers;
+
+import java.sql.SQLException;
 
 public class Main extends Application {
 	
 	@Override
-	public void start(Stage primaryStage) {
+	public void start(Stage primaryStage) throws SQLException {
+		DaoUsers doa = new DaoUsers();
+		doa.programstart();
 		try {
 			Parent root = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
 			//Parent root = FXMLLoader.load(getClass().getResource("/view/AdminMain.fxml"));
