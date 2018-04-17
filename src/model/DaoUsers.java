@@ -18,35 +18,13 @@ public class DaoUsers {
 		connection = new DBConnect();
 	}
 
-	public void selectSQL() throws SQLException {
-		String sql = null;
-
-		//Creates a connection to the database
-		statement = connection.connect().createStatement();
-
-
-		sql = "CREATE TABLE IF NOT EXISTS Users"
-				+ " (UserID integer PRIMARY KEY AUTOINCREMENT, " + 
-				" Username text NOT NULL, " +
-				" Password text NOT NULL, " + 
-				" Role text, " + 
-				" LastLoggedIn integer"+
-				" );";
-
-		statement.executeUpdate(sql);
-		System.out.println("Selected from DB");
-		statement.close();
-		connection.connect().close(); //close db connection 
-	}
-
 	public void programstart() throws SQLException {
 		String sql;
 		//Creates a connection to the database
 		statement = connection.connect().createStatement();
 		sql = "UPDATE Users SET Active=0";
-		statement.execute(sql);
-		statement.close();
-		connection.connect().close(); //close db connection
+		//statement.execute(sql);
+		statement.close();//Close COnnectio
 
 	}
 
@@ -61,7 +39,7 @@ public class DaoUsers {
 		byte[] pwHash = application.Password.hash(Password.toCharArray(), salt);
 
 
-		//sql prepared stmt 
+		//sql prepared stmt
 		sql = "INSERT INTO Users(Username,Password,Role,LastLoggedIn,Salt,Active) VALUES(?,?,?,?,?,?)";
 
 		try (
@@ -73,10 +51,12 @@ public class DaoUsers {
 			pstmt.setBytes(5, salt);
 			pstmt.setInt(6, 0);
 			pstmt.executeUpdate();
+			pstmt.close();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
-		connection.connect().close(); //close db connection 
+
+		connection.connect().close(); //close db connection
 
 	}
 	public int getUserID(String uname) throws SQLException, InterruptedException {
@@ -117,6 +97,7 @@ public class DaoUsers {
 			pstmt.setInt(8, 1);
 			pstmt.setLong(9, currentUnixTime);
 			pstmt.executeUpdate();
+			pstmt.close();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
@@ -155,6 +136,7 @@ public class DaoUsers {
 			}else
 				return false;
 		}
+		rs.close();
 		statement.close();
 		connection.connect().close(); //close db connection 
 		return false;
@@ -184,6 +166,7 @@ public class DaoUsers {
 			lastLoggedInUnixTime = rs.getLong("LastLoggedIn"); 
 			userName = rs.getString("Username");
 		}
+		rs.close();
 		statement.close();
 		connection.connect().close(); //close db connection 
 		

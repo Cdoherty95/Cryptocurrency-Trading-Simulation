@@ -16,6 +16,7 @@ public class Main extends Application {
 	public void start(Stage primaryStage) throws SQLException {
 		DaoUsers doa = new DaoUsers();
 		doa.programstart();
+		System.out.println("Cleared all active users");
 		try {
 			Parent root = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
 			//Parent root = FXMLLoader.load(getClass().getResource("/view/AdminMain.fxml"));
