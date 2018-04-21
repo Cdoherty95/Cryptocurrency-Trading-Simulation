@@ -1,8 +1,6 @@
 package application;
 
-import view.Login;
-
-public class TraderAccount extends Login implements TraderOperations {
+public class TraderAccount extends LoginController implements TraderOperations {
 	
 	public int userID;
 	public String firstName;

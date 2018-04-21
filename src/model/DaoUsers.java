@@ -11,25 +11,14 @@ public class DaoUsers {
 	final String DBURL = "jdbc:sqlite:CryptoTrader.db";
 	DBConnect connection;
 	Statement statement;
-
+	String sql;
 	String TableName; 
 	
 	public DaoUsers() {
 		connection = new DBConnect();
 	}
 
-	public void programstart() throws SQLException {
-		String sql;
-		//Creates a connection to the database
-		statement = connection.connect().createStatement();
-		sql = "UPDATE Users SET Active=0";
-		//statement.execute(sql);
-		statement.close();//Close COnnectio
-
-	}
-
 	public void createUser(String Username, String Password, String Role) throws SQLException{
-		String sql;
 
 		//getting timestamp to be stored
 		long currentUnixTime = System.currentTimeMillis() / 1000L;
@@ -60,7 +49,7 @@ public class DaoUsers {
 
 	}
 	public int getUserID(String uname) throws SQLException, InterruptedException {
-		String sql;
+
 		int userID=0;
 		statement = connection.connect().createStatement();
 		//sql to select from database
@@ -78,7 +67,7 @@ public class DaoUsers {
 	}
 
 	public void registerUser(int uID, String fname, String lName, String payName, int accNum, int routeNum) throws SQLException{
-		String sql;
+
 		//getting timestamp to be stored
 		long currentUnixTime = System.currentTimeMillis() / 1000L;
 
@@ -106,7 +95,7 @@ public class DaoUsers {
 	}
 
 	public boolean loginPasswordMatching(String Username, String Password) throws SQLException{
-		String sql;
+
 		byte[] hashPw = null;
 		byte[] saltFromSql =null;
 
@@ -143,7 +132,7 @@ public class DaoUsers {
 	}
 
 	public String[] activeUserInfo() throws SQLException{
-		String sql;
+
 		String[] userInfo;
 		String userName = null;
 		String role = null;
@@ -175,6 +164,31 @@ public class DaoUsers {
 		//Return user information
 		return userInfo;
 
+	}
+
+	public void makeAllInactive() throws SQLException {
+		//Creates a connection to the database
+		statement = connection.connect().createStatement();
+		//sql to set active to 0
+		sql = "UPDATE Users SET Active=0";
+
+		statement.executeUpdate(sql);
+		statement.close();
+	}
+
+	public ResultSet viewAllUsers() throws SQLException {
+
+		//Creates a connection to the database
+		statement = connection.connect().createStatement();
+
+		//sql to select from database
+		sql = "SELECT UserID, Username, Role, LastLoggedIn FROM Users";
+
+		ResultSet results = statement.executeQuery(sql);
+
+		//results.close();
+
+		return results;
 	}
 
 	/*

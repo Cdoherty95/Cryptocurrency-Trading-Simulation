@@ -1,4 +1,4 @@
-package view;
+package application;
 
 import java.io.IOException;
 import java.net.URL;
@@ -121,7 +121,7 @@ public class RegisterController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Login.fxml"));
         Parent root = (Parent) loader.load();
         Scene scene = new Scene(root);
-        scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("/view/app.css").toExternalForm());
         primaryStage.setScene(scene);
         primaryStage.setTitle("Cryptocurrency Trader");
         primaryStage.show();

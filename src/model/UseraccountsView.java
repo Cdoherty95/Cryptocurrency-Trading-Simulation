@@ -2,17 +2,31 @@ package model;
 
 import javafx.beans.property.*;
 
+import java.util.Date;
+
 public class UseraccountsView {
     StringProperty Username;
     StringProperty Role;
     IntegerProperty UserID;
     LongProperty LastLoggedIn;
 
-    public UseraccountsView(Integer uid, String uname, String roll, Long lli){
+    public Date getLastindate() {
+        return lastindate;
+    }
+
+    public void setLastindate(Date lastindate) {
+        this.lastindate = lastindate;
+    }
+
+    Date lastindate;
+
+    public UseraccountsView(Integer uid, String uname, String roll, Date lastin){
         this.UserID = new SimpleIntegerProperty(uid);
         this.Username = new SimpleStringProperty(uname);
         this.Role = new SimpleStringProperty(roll);
-        this.LastLoggedIn = new SimpleLongProperty(lli);
+        //this.LastLoggedIn = new SimpleLongProperty(lli);
+        this.lastindate = lastin;
+
     }
 
     public String getUsername() {

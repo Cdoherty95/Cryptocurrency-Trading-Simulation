@@ -1,14 +1,19 @@
-package view;
+package application;
 
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.cell.PropertyValueFactory;
+import model.DaoUsers;
 import model.UseraccountsView;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Date;
 
 public class UserTableViewController {
 
@@ -24,8 +29,10 @@ public class UserTableViewController {
     private TableColumn<UseraccountsView, String> usernameCol;
     @FXML
     private TableColumn<UseraccountsView, String> roleCol;
+    //@FXML
+    //private TableColumn<UseraccountsView, Long> lastLoggedInCol;
     @FXML
-    private TableColumn<UseraccountsView, Long> lastLoggedInCol;
+    private TableColumn<UseraccountsView, Date> lastindate;
 
     // Reference to the main application.
     //private ViewUsers viewUsers;
@@ -37,10 +44,11 @@ public class UserTableViewController {
     @FXML
     private void initialize() {
         // Initialize the person table with the two columns.
-        userIdCol.setCellValueFactory(new PropertyValueFactory<>("Username"));
-        usernameCol.setCellValueFactory(new PropertyValueFactory<>("Role"));
-        roleCol.setCellValueFactory(new PropertyValueFactory<>("UserID"));
-        lastLoggedInCol.setCellValueFactory(new PropertyValueFactory<>("LastLoggedIn"));
+        roleCol.setCellValueFactory(new PropertyValueFactory<>("Role"));
+        userIdCol.setCellValueFactory(new PropertyValueFactory<>("UserID"));
+        usernameCol.setCellValueFactory(new PropertyValueFactory<>("Username"));
+        //lastLoggedInCol.setCellValueFactory(new PropertyValueFactory<>("LastLoggedIn"));
+        lastindate.setCellValueFactory(new PropertyValueFactory<>("lastindate"));
     }
 
     /**
@@ -59,17 +67,26 @@ public class UserTableViewController {
     /**
      * constructor that adds data
      */
-    public UserTableViewController()  {
+    public UserTableViewController() throws SQLException {
         setData();
     }
 
     /**
      * method to get data.
      */
-    public void setData(){
-        personData.add(new UseraccountsView(1, "chris", "admin", 123L));
-        personData.add(new UseraccountsView(1, "dhris", "admin", 121L));
-        personData.add(new UseraccountsView(1, "fhris", "admin", 124L));
+    public void setData() throws SQLException {
+        DaoUsers dao = new DaoUsers();
+        ResultSet rs = dao.viewAllUsers();
+        // loop through the result set
+        while (rs.next()) {
+            int userID = rs.getInt("UserID");
+            String role = rs.getString("Role");
+            Long lastLoggedInUnixTime = rs.getLong("LastLoggedIn");
+            String userName = rs.getString("Username");
+            Date lastin = new Date(lastLoggedInUnixTime*1000);
+            personData.add(new UseraccountsView(userID, userName, role, lastin));
+        }
+        rs.close();
     }
 
     //ObservableList function to return data
