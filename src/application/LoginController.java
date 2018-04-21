@@ -46,6 +46,7 @@ public class LoginController extends Exchange {
             dao.makeAllInactive();
             //this checks for the passwords matching
             if (dao.loginPasswordMatching(Username.getText(), Password.getText())) {
+                exit(event);
                 new WhichUserMainMenu();
                 //Move on to get user information
                 /*
