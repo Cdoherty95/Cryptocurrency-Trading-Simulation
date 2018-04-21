@@ -1,7 +1,11 @@
 package application;
 
+import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
+
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -9,6 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 public class ExchangeController {
 
@@ -58,6 +63,9 @@ public class ExchangeController {
     private Label tradeOptionName;
 
     @FXML
+    private Button exitBtn;
+
+    @FXML
     void initialize() {
         assert chiceDropDown != null : "fx:id=\"chiceDropDown\" was not injected: check your FXML file 'Exchange.fxml'.";
         assert usdLable != null : "fx:id=\"usdLable\" was not injected: check your FXML file 'Exchange.fxml'.";
@@ -75,14 +83,30 @@ public class ExchangeController {
         defaultStart();
     }
 
-    public void defaultStart(){
+    public void defaultStart() {
         chiceDropDown.getItems().addAll("BTC/USD", "BTC/ETH", "ETH/USD", "ETH/BTC");
         chiceDropDown.getSelectionModel().selectFirst();
 
 
     }
 
+    @FXML
+    public void exit(ActionEvent event) {
+        // get a handle to the stage
+        Stage stage = (Stage) exitBtn.getScene().getWindow();
+        // do what you have to do
+        stage.close();
+    }
 
+    @FXML
+    void logout(ActionEvent event) {
+        exit(event);
+        new Main();
+    }
 
-
+    @FXML
+    void mainMenu(ActionEvent event) throws IOException, SQLException {
+        exit(event);
+        new WhichUserMainMenu();
+    }
 }

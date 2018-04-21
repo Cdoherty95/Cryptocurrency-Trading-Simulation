@@ -52,21 +52,21 @@
             </AnchorPane>
         </items>
       </SplitPane>
-      <AnchorPane layoutX="200.0" layoutY="96.0" prefHeight="290.0" prefWidth="390.0">
+      <AnchorPane layoutX="205.0" layoutY="135.0" prefHeight="239.0" prefWidth="352.0">
          <children>
-            <ToggleButton fx:id="toggleBuySell" layoutX="97.0" layoutY="14.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="210.0" text="ToggleButton" />
-            <TextField fx:id="inputAmount" layoutX="84.0" layoutY="97.0" prefHeight="40.0" prefWidth="222.0">
+            <ToggleButton fx:id="toggleBuySell" layoutX="70.0" layoutY="14.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="210.0" text="ToggleButton" />
+            <TextField fx:id="inputAmount" layoutX="65.0" layoutY="68.0" prefHeight="40.0" prefWidth="222.0">
                <opaqueInsets>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </opaqueInsets>
             </TextField>
-            <Label fx:id="inputAmountCurrencyLable" layoutX="195.0" layoutY="108.0" text="Label" />
-            <Button fx:id="placOrderBtn" layoutX="152.0" layoutY="227.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="99.0" text="Place Order" />
-            <Label fx:id="totalCurrencyLable" layoutX="52.0" layoutY="176.0" prefHeight="40.0" prefWidth="113.0" text="Total(xxx)=" />
-            <Label fx:id="calculatedAmountLable" layoutX="166.0" layoutY="176.0" prefHeight="40.0" prefWidth="113.0" text="amount(xxx)" />
+            <Label fx:id="inputAmountCurrencyLable" layoutX="225.0" layoutY="79.0" text="Label" />
+            <Button fx:id="placOrderBtn" layoutX="125.0" layoutY="171.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="99.0" text="Place Order" />
+            <Label fx:id="totalCurrencyLable" layoutX="69.0" layoutY="120.0" prefHeight="40.0" prefWidth="113.0" text="Total(xxx)=" />
+            <Label fx:id="calculatedAmountLable" layoutX="193.0" layoutY="120.0" prefHeight="40.0" prefWidth="113.0" text="amount(xxx)" />
          </children>
       </AnchorPane>
-      <SplitPane dividerPositions="0.49433573635427397" layoutX="198.0" layoutY="5.0" prefHeight="67.0" prefWidth="390.0">
+      <SplitPane dividerPositions="0.49433573635427397" layoutX="195.0" layoutY="57.0" prefHeight="67.0" prefWidth="390.0">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
@@ -80,5 +80,8 @@
             </AnchorPane>
         </items>
       </SplitPane>
+      <Button fx:id="exitBtn" layoutX="531.0" layoutY="16.0" mnemonicParsing="false" onAction="#exit" text="Exit" />
+      <Button fx:id="logOut" layoutX="448.0" layoutY="16.0" mnemonicParsing="false" onAction="#logout" text="Log Out" />
+      <Button fx:id="mainMenu" layoutX="349.0" layoutY="16.0" mnemonicParsing="false" onAction="#mainMenu" text="Main Menu" />
    </children>
 </AnchorPane>

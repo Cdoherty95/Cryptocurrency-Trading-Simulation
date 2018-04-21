@@ -12,7 +12,7 @@
          <children>
             <TextField fx:id="Username" layoutX="63.0" layoutY="64.0" promptText="Username" />
             <PasswordField fx:id="Password" layoutX="63.0" layoutY="100.0" promptText="Password" />
-            <Button fx:id="loginBTN" layoutX="63.0" layoutY="182.0" mnemonicParsing="false" onAction="#loginbtnClicked" text="Login" />
+            <Button fx:id="loginBTN" defaultButton="true" layoutX="63.0" layoutY="182.0" mnemonicParsing="false" onAction="#loginbtnClicked" text="Login" />
             <Button fx:id="exitBTN" layoutX="119.0" layoutY="220.0" mnemonicParsing="false" onAction="#exit" text="Exit" />
             <Label fx:id="Welcome" layoutX="43.0" layoutY="23.0" text="Welcome To Cryptocurrency Trader" />
             <Label fx:id="errorLable" layoutX="19.0" layoutY="137.0" prefHeight="18.0" prefWidth="238.0" />

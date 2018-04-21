@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import model.DaoUsers;
 
 import java.sql.SQLException;
 
@@ -12,6 +13,9 @@ public class Main extends Application {
 	
 	@Override
 	public void start(Stage primaryStage) throws SQLException {
+		DaoUsers dao = new DaoUsers();
+		//this makes all the Active Users Inactive
+		dao.makeAllInactive();
 		try {
 			Parent root = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
 			//Parent root = FXMLLoader.load(getClass().getResource("/view/AdminMain.fxml"));

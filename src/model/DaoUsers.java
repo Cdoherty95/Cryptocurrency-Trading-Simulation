@@ -121,9 +121,12 @@ public class DaoUsers {
 				//Sql to update active user
 				sql = "UPDATE Users SET Active=1 WHERE Username='"+Username+"'";
 				statement.execute(sql);
+				statement.close();
 				return true;
-			}else
+			}else {
+				rs.close();
 				return false;
+			}
 		}
 		rs.close();
 		statement.close();
