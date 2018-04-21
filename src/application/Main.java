@@ -13,8 +13,8 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) throws SQLException {
 		try {
-			Parent root = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
-			//Parent root = FXMLLoader.load(getClass().getResource("/view/AdminMain.fxml"));
+			//Parent root = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
+			Parent root = FXMLLoader.load(getClass().getResource("/view/AdminMain.fxml"));
 			//Parent root = FXMLLoader.load(getClass().getResource("/view/Register.fxml"));
 			//Parent root = FXMLLoader.load(getClass().getResource("/view/Exchange.fxml"));
 			Scene scene = new Scene(root);

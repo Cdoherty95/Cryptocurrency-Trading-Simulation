@@ -52,7 +52,7 @@ public class AdminMenu {
     }
     @FXML
     void viewExchange(ActionEvent event) throws IOException {
-
+        exit(event);
         //ViewUsers vu = new ViewUsers();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Exchange.fxml"));
         Parent root = (Parent) loader.load();
@@ -77,7 +77,7 @@ public class AdminMenu {
 
     @FXML
     void viewUsers(ActionEvent event) throws IOException {
-
+        exit(event);
         //ViewUsers vu = new ViewUsers();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/UsersTableView.fxml"));
         Parent root = (Parent) loader.load();
@@ -101,6 +101,7 @@ public class AdminMenu {
 
     @FXML
     void logout(ActionEvent event) throws IOException {
+        exit(event);
         Stage primaryStage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Login.fxml"));
         Parent root = (Parent) loader.load();
