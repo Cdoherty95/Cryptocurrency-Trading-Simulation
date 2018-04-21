@@ -10,7 +10,8 @@ import model.DaoUsers;
 import java.sql.SQLException;
 
 public class Main extends Application {
-	
+
+
 	@Override
 	public void start(Stage primaryStage) throws SQLException {
 		DaoUsers dao = new DaoUsers();
@@ -33,6 +34,10 @@ public class Main extends Application {
 	}
 
 	public static void main(String[] args) {
+		UpdateCurrencyPrices updCur = new UpdateCurrencyPrices();
+		updCur.start();
 		launch(args);
+		updCur.stop();
+
 	}
 }

@@ -14,7 +14,7 @@ public class Exchange {
 	public String currencyCode;
 	public final String URL = "https://min-api.cryptocompare.com/data/pricemulti?fsyms=BTC,ETH&tsyms=USD,BTC,ETH";
 
-	public CurrencyHistory currency;
+	public CurrencyHistoryController currency;
 
 	public void getCurrentPrices(String code) {
 		String cryptoCode = code;

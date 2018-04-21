@@ -10,10 +10,42 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.sql.SQLException;
 
-public class UpdateCurrencyPrices {
+public class UpdateCurrencyPrices implements Runnable {
+    private Thread t;
 
     //Default constructor
     public UpdateCurrencyPrices(){}
+
+    @Override
+    public void run() {
+        boolean run = true;
+        try {
+            System.out.println("Currency Tread Started");
+            while (run){
+            getBtc();
+            getETH();
+            Thread.sleep(5000);
+            }
+        } catch (IOException | JSONException | SQLException | InterruptedException e) {
+            //e.printStackTrace();
+            run = false;
+        }
+
+    }
+
+    public void start(){
+        System.out.println("Starting thread");
+        if(t==null){
+            t = new Thread(this);
+            t.start();
+            System.out.println("Out of start Method");
+        }
+    }
+
+    public void stop(){
+        t.interrupt();
+        System.out.println("Thread is stopped");
+    }
 
     public void getBtc() throws IOException, JSONException, SQLException {
         //url to get USD and Eth for 1BTC
@@ -80,10 +112,12 @@ public class UpdateCurrencyPrices {
     }
 
 
+    /*
     public static void main(String[] args) throws IOException, JSONException, SQLException {
         UpdateCurrencyPrices ucp = new UpdateCurrencyPrices();
         ucp.getBtc();
         ucp.getETH();
     }
 
+*/
 }
