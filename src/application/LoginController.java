@@ -43,7 +43,7 @@ public class LoginController extends Exchange {
         if (!Username.getText().isEmpty() && !Password.getText().isEmpty()) {
             DaoUsers dao = new DaoUsers();
             //this makes all the Active Users Inactive
-            //dao.makeAllInactive();
+            dao.makeAllInactive();
             //this checks for the passwords matching
             if (dao.loginPasswordMatching(Username.getText(), Password.getText())) {
                 exit(event);
