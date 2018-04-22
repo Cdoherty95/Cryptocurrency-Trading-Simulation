@@ -38,7 +38,7 @@ public class LoginController extends Exchange {
     @FXML
     private Button registerbtn;
 
-    public void loginbtnClicked(ActionEvent event) throws SQLException, IOException {
+    public void loginbtnClicked(ActionEvent event) throws SQLException, IOException, InterruptedException {
 
         if (!Username.getText().isEmpty() && !Password.getText().isEmpty()) {
             DaoUsers dao = new DaoUsers();

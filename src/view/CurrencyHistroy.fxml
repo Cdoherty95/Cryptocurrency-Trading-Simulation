@@ -20,7 +20,7 @@
                <children>
                   <TableView fx:id="btcTableView" prefHeight="330.4" prefWidth="296.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columns>
-                      <TableColumn fx:id="btcTimeCol" prefWidth="120.0" text="Date/Time" />
+                      <TableColumn fx:id="btcTimeCol" prefWidth="120.0" sortType="DESCENDING" text="Date/Time" />
                       <TableColumn fx:id="btcUsdCol" prefWidth="85.0" text="USD Price" />
                         <TableColumn fx:id="btcEthCol" prefWidth="85.0" text="ETH Price" />
                     </columns>
@@ -31,7 +31,7 @@
                <children>
                   <TableView fx:id="ethTableView" prefHeight="330.4" prefWidth="296.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columns>
-                      <TableColumn fx:id="ethTimeCol" prefWidth="120.0" text="Date/Time" />
+                      <TableColumn fx:id="ethTimeCol" prefWidth="120.0" sortType="DESCENDING" text="Date/Time" />
                       <TableColumn fx:id="ethUsdCol" prefWidth="85.0" text="USD Price" />
                         <TableColumn fx:id="ethBtcCol" prefWidth="85.0" text="BTC Price" />
                     </columns>
@@ -39,5 +39,6 @@
                </children></AnchorPane>
         </items>
       </SplitPane>
+      <Button fx:id="refreshBtn" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#refresh" text="Refresh" visible="false" />
    </children>
 </AnchorPane>

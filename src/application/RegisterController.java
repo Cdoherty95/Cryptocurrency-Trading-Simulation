@@ -88,12 +88,14 @@ public class RegisterController {
                if (regAsAdmin.isSelected()) {
                    dao.createUser(usernameIn.getText(), pass1In.getText(), "admin");
                    int uid = dao.getUserID(usernameIn.getText());
-                   dao.registerUser(uid,fNameIn.getText(),lNameIn.getText(),payNameIn.getText(),Integer.parseInt(accountIn.getText()), Integer.parseInt(routingIn.getText()));
+                   dao.registerUser(uid,fNameIn.getText(),lNameIn.getText(),payNameIn.getText(),Integer.parseInt(accountIn.getText()),
+                           Integer.parseInt(routingIn.getText()), emIn.getText());
                    cancel(event);
                }else{//user is regular user
                    dao.createUser(usernameIn.getText(), pass1In.getText(), "user");
                    int uid = dao.getUserID(usernameIn.getText());
-                   dao.registerUser(uid,fNameIn.getText(),lNameIn.getText(),payNameIn.getText(),Integer.parseInt(accountIn.getText()), Integer.parseInt(routingIn.getText()));
+                   dao.registerUser(uid,fNameIn.getText(),lNameIn.getText(),payNameIn.getText(),Integer.parseInt(accountIn.getText()),
+                           Integer.parseInt(routingIn.getText()), emIn.getText());
                    cancel(event);
                }
            }else {//account or routing numbers were incorrect

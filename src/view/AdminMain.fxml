@@ -8,7 +8,7 @@
 
 <AnchorPane prefHeight="300.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.AdminMenu">
    <children>
-      <VBox fx:id="border" layoutX="14.0" layoutY="93.0" prefHeight="164.0" prefWidth="100.0">
+      <VBox fx:id="border" layoutX="14.0" layoutY="93.0" prefHeight="164.0" prefWidth="158.0">
          <children>
             <Button fx:id="viewUsers" mnemonicParsing="false" onAction="#viewUsers" text="View Users" />
             <Button fx:id="viewTransactionHistory" mnemonicParsing="false" onAction="#viewTransactionHistory" text="View Transaction Histroy" />

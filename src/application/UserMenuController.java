@@ -1,12 +1,19 @@
 package application;
 
+import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuBar;
+import javafx.stage.Stage;
+import model.DaoUsers;
 
 public class UserMenuController {
 
@@ -35,10 +42,7 @@ public class UserMenuController {
     private Label usrpaymnetMethod;
 
     @FXML
-    private Label editClick;
-
-    @FXML
-    private Label welcomeUser1;
+    private Label walletHeading;
 
     @FXML
     private Label usdAmt;
@@ -59,13 +63,43 @@ public class UserMenuController {
     private Button viewTransHist;
 
     @FXML
+    private Button DepositFunds;
+
+    @FXML
+    private Button UpdateUserInfo;
+    @FXML
+    private Button logoutBtn;
+    @FXML
+    private Button exitBtn;
+
+    @FXML
+    void depositeFundsBtn(ActionEvent event) {
+
+    }
+
+    @FXML
+    void withdrawFundsBtn(ActionEvent event) {
+
+    }
+
+    @FXML
     void goToExchange(ActionEvent event) {
 
     }
 
     @FXML
-    void viewCurrencyHistory(ActionEvent event) {
+    void viewCurrencyHistory(ActionEvent event) throws IOException {
+        exit(event);
+        //ViewUsers vu = new ViewUsers();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/CurrencyHistroy.fxml"));
+        Parent root = (Parent) loader.load();
 
+        //set up the new stage+scene
+        Scene newScene = new Scene(root);
+        newScene.getStylesheets().add(getClass().getResource("/view/app.css").toExternalForm());
+        Stage newStage = new Stage();
+        newStage.setScene(newScene);
+        newStage.show();
     }
 
     @FXML
@@ -74,30 +108,39 @@ public class UserMenuController {
     }
 
     @FXML
-    void initialize() {
-        assert topBar != null : "fx:id=\"topBar\" was not injected: check your FXML file 'UserMain.fxml'.";
-        assert welcomeUser != null : "fx:id=\"welcomeUser\" was not injected: check your FXML file 'UserMain.fxml'.";
-        assert usrName != null : "fx:id=\"usrName\" was not injected: check your FXML file 'UserMain.fxml'.";
-        assert usrLastName != null : "fx:id=\"usrLastName\" was not injected: check your FXML file 'UserMain.fxml'.";
-        assert usrEmail != null : "fx:id=\"usrEmail\" was not injected: check your FXML file 'UserMain.fxml'.";
-        assert usrpaymnetMethod != null : "fx:id=\"usrpaymnetMethod\" was not injected: check your FXML file 'UserMain.fxml'.";
-        assert editClick != null : "fx:id=\"editClick\" was not injected: check your FXML file 'UserMain.fxml'.";
-        assert welcomeUser1 != null : "fx:id=\"welcomeUser1\" was not injected: check your FXML file 'UserMain.fxml'.";
-        assert usdAmt != null : "fx:id=\"usdAmt\" was not injected: check your FXML file 'UserMain.fxml'.";
-        assert btcAmt != null : "fx:id=\"btcAmt\" was not injected: check your FXML file 'UserMain.fxml'.";
-        assert ethAmt != null : "fx:id=\"ltcAmt\" was not injected: check your FXML file 'UserMain.fxml'.";
-        assert goToExch != null : "fx:id=\"goToExch\" was not injected: check your FXML file 'UserMain.fxml'.";
-        assert CurrencyHistory != null : "fx:id=\"CurrencyHistory\" was not injected: check your FXML file 'UserMain.fxml'.";
-        assert viewTransHist != null : "fx:id=\"viewTransHist\" was not injected: check your FXML file 'UserMain.fxml'.";
+    void logout(ActionEvent event) {
 
     }
 
-    public void setUserInfo(String uname, String fname, String lname, String em, String paymeth){
-        welcomeUser.setText("Welcome" + fname);
-        usrName.setText(uname);
-        usrLastName.setText(lname);
-        usrEmail.setText(em);
-        usrpaymnetMethod.setText(paymeth);
+    @FXML
+    void exit(ActionEvent event) {
+        // get a handle to the stage
+        Stage stage = (Stage) exitBtn.getScene().getWindow();
+        // do what you have to do
+        stage.close();
+    }
+
+    @FXML
+    void updInfoBtn(ActionEvent event) {
+
+    }
+
+    @FXML
+    void initialize() throws SQLException {
+
+        setUserInfo();
+    }
+
+
+    public void setUserInfo() throws SQLException {
+        DaoUsers dao = new DaoUsers();
+        String[] userInfo = dao.activeUserInfo();
+
+        welcomeUser.setText("Welcome " + userInfo[4]);
+        usrName.setText(userInfo[0]);
+        usrLastName.setText(userInfo[5]);
+        usrEmail.setText(userInfo[9]);
+        usrpaymnetMethod.setText(userInfo[6]);
     }
 
     public void setWalletInfo(Number usd, Number btc, Number eth){

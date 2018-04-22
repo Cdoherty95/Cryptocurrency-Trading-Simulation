@@ -10,7 +10,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.UserMenuController">
    <children>
       <ButtonBar layoutX="154.0" layoutY="43.0" prefHeight="40.0" prefWidth="200.0" />
@@ -38,53 +37,52 @@
             <Font size="26.0" />
          </font>
       </Label>
-      <Label layoutX="45.0" layoutY="123.0" prefHeight="40.0" prefWidth="90.0" text="Username">
+      <Label layoutX="45.0" layoutY="109.0" prefHeight="40.0" prefWidth="90.0" text="Username">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label fx:id="usrName" layoutX="143.0" layoutY="123.0" prefHeight="40.0" prefWidth="178.0">
+      <Label fx:id="usrName" layoutX="183.0" layoutY="109.0" prefHeight="40.0" prefWidth="178.0">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="45.0" layoutY="163.0" prefHeight="40.0" prefWidth="90.0" text="Last Name:">
+      <Label layoutX="45.0" layoutY="147.0" prefHeight="40.0" prefWidth="90.0" text="Last Name">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label fx:id="usrLastName" layoutX="143.0" layoutY="163.0" prefHeight="40.0" prefWidth="178.0">
+      <Label fx:id="usrLastName" layoutX="183.0" layoutY="147.0" prefHeight="40.0" prefWidth="178.0">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="45.0" layoutY="203.0" prefHeight="40.0" prefWidth="90.0" text="Email">
+      <Label layoutX="45.0" layoutY="186.0" prefHeight="40.0" prefWidth="90.0" text="Email">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label fx:id="usrEmail" layoutX="143.0" layoutY="203.0" prefHeight="40.0" prefWidth="178.0">
+      <Label fx:id="usrEmail" layoutX="183.0" layoutY="186.0" prefHeight="40.0" prefWidth="178.0">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="45.0" layoutY="243.0" prefHeight="40.0" prefWidth="161.0" text="Payment Method">
+      <Label layoutX="45.0" layoutY="225.0" prefHeight="40.0" prefWidth="161.0" text="Payment Method">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label fx:id="usrpaymnetMethod" layoutX="191.0" layoutY="243.0" prefHeight="40.0" prefWidth="227.0">
+      <Label fx:id="usrpaymnetMethod" layoutX="194.0" layoutY="225.0" prefHeight="40.0" prefWidth="227.0">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label fx:id="editClick" layoutX="45.0" layoutY="100.0" text="Edit Profile" />
-      <Label fx:id="welcomeUser1" alignment="CENTER" layoutX="12.0" layoutY="300.0" prefHeight="54.0" prefWidth="770.0" text="Wallet Details" textAlignment="CENTER">
+      <Label fx:id="walletHeading" alignment="CENTER" layoutX="12.0" layoutY="337.0" prefHeight="54.0" prefWidth="770.0" text="Wallet Details" textAlignment="CENTER">
          <font>
             <Font size="26.0" />
          </font>
       </Label>
-      <SplitPane dividerPositions="0.38753799392097266" layoutX="54.0" layoutY="354.0" orientation="VERTICAL" prefHeight="133.0" prefWidth="178.0">
+      <SplitPane dividerPositions="0.38753799392097266" layoutX="54.0" layoutY="410.0" orientation="VERTICAL" prefHeight="133.0" prefWidth="178.0">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                <children>
@@ -106,7 +104,7 @@
             </AnchorPane>
         </items>
       </SplitPane>
-      <SplitPane dividerPositions="0.38753799392097266" layoutX="308.0" layoutY="354.0" orientation="VERTICAL" prefHeight="133.0" prefWidth="178.0">
+      <SplitPane dividerPositions="0.38753799392097266" layoutX="308.0" layoutY="410.0" orientation="VERTICAL" prefHeight="133.0" prefWidth="178.0">
          <items>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                <children>
@@ -128,7 +126,7 @@
             </AnchorPane>
          </items>
       </SplitPane>
-      <SplitPane dividerPositions="0.38753799392097266" layoutX="562.0" layoutY="354.0" orientation="VERTICAL" prefHeight="133.0" prefWidth="178.0">
+      <SplitPane dividerPositions="0.38753799392097266" layoutX="561.0" layoutY="410.0" orientation="VERTICAL" prefHeight="133.0" prefWidth="178.0">
          <items>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                <children>
@@ -150,20 +148,37 @@
             </AnchorPane>
          </items>
       </SplitPane>
-      <Button fx:id="goToExch" layoutX="530.0" layoutY="109.0" mnemonicParsing="false" onAction="#goToExchange" prefHeight="48.0" prefWidth="209.0" text="Exchange Currencies">
+      <Button fx:id="goToExch" layoutX="530.0" layoutY="109.0" mnemonicParsing="false" onAction="#goToExchange" prefHeight="35.0" prefWidth="209.0" text="Exchange Currencies">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <Button fx:id="CurrencyHistory" layoutX="530.0" layoutY="175.0" mnemonicParsing="false" onAction="#viewCurrencyHistory" prefHeight="48.0" prefWidth="209.0" text="View Currency History">
+      <Button fx:id="CurrencyHistory" layoutX="530.0" layoutY="155.0" mnemonicParsing="false" onAction="#viewCurrencyHistory" prefHeight="35.0" prefWidth="209.0" text="View Currency History">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <Button fx:id="viewTransHist" layoutX="530.0" layoutY="239.0" mnemonicParsing="false" onAction="#viewTransactionHistory" prefHeight="48.0" prefWidth="209.0" text="View Transaction History">
+      <Button fx:id="viewTransHist" layoutX="530.0" layoutY="204.0" mnemonicParsing="false" onAction="#viewTransactionHistory" prefHeight="35.0" prefWidth="209.0" text="View Transaction History">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
+      <Button fx:id="DepositFunds" layoutX="530.0" layoutY="249.0" mnemonicParsing="false" onAction="#depositeFundsBtn" prefHeight="35.0" prefWidth="209.0" text="Deposit Funds From Bank">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="viewTransHist11" layoutX="530.0" layoutY="296.0" mnemonicParsing="false" onAction="#withdrawFundsBtn" prefHeight="35.0" prefWidth="209.0" text="Withdraw Funds To Bank">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="UpdateUserInfo" layoutX="38.0" layoutY="278.0" mnemonicParsing="false" onAction="#updInfoBtn" prefHeight="35.0" prefWidth="209.0" text="Update User Info">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="logoutBtn" layoutX="635.0" layoutY="43.0" mnemonicParsing="false" onAction="#logout" text="Log Out" />
+      <Button fx:id="exitBtn" layoutX="721.0" layoutY="43.0" mnemonicParsing="false" onAction="#exit" text="Exit" />
    </children>
 </AnchorPane>

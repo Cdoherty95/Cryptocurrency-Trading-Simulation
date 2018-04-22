@@ -73,6 +73,7 @@ public class UserTableViewController {
         usernameCol.setCellValueFactory(new PropertyValueFactory<>("Username"));
         //lastLoggedInCol.setCellValueFactory(new PropertyValueFactory<>("LastLoggedIn"));
         lastindate.setCellValueFactory(new PropertyValueFactory<>("lastindate"));
+        setMainApp();
     }
 
     /**

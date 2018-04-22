@@ -1,5 +1,6 @@
 package model;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -28,7 +29,37 @@ public class DaoUpdateCurrencyHist {
 
         statement.execute(sql);
         statement.close();
+    }
 
+    public ResultSet getEthHist() throws SQLException {
+
+        //Creates a connection to the database
+        statement = connection.connect().createStatement();
+
+        //sql to select from database
+        sql = "SELECT * FROM ETHHistory ORDER BY TimeStamp DESC LIMIT 20";
+
+        ResultSet results = statement.executeQuery(sql);
+
+        //results.close();
+
+        return results;
+
+    }
+
+    public ResultSet getBtcHist() throws SQLException {
+
+        //Creates a connection to the database
+        statement = connection.connect().createStatement();
+
+        //sql to select from database
+        sql = "SELECT * FROM BTCHistory ORDER BY TimeStamp DESC LIMIT 20";
+
+        ResultSet results = statement.executeQuery(sql);
+
+        //results.close();
+
+        return results;
 
     }
 }

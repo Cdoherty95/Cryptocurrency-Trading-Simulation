@@ -66,13 +66,13 @@ public class DaoUsers {
 		return userID;
 	}
 
-	public void registerUser(int uID, String fname, String lName, String payName, int accNum, int routeNum) throws SQLException{
+	public void registerUser(int uID, String fname, String lName, String payName, int accNum, int routeNum, String em) throws SQLException{
 
 		//getting timestamp to be stored
 		long currentUnixTime = System.currentTimeMillis() / 1000L;
 
 		//sql prepared stmt
-		sql = "INSERT INTO UserAccountDetails(UserID, FirstName, LastName, PaymentNumber, PaymentName, Account, Routing, Active, DateAdded) VALUES(?,?,?,?,?,?,?,?,?)";
+		sql = "INSERT INTO UserAccountDetails(UserID, FirstName, LastName, PaymentNumber, PaymentName, Account, Routing, Active, DateAdded, Email) VALUES(?,?,?,?,?,?,?,?,?,?)";
 
 		try (
 				PreparedStatement pstmt = connection.connect().prepareStatement(sql)) {
@@ -83,8 +83,9 @@ public class DaoUsers {
 			pstmt.setString(5, payName);
 			pstmt.setInt(6, accNum);
 			pstmt.setInt(7, routeNum);
-			pstmt.setInt(8, 1);
+			pstmt.setInt(8, 0);
 			pstmt.setLong(9, currentUnixTime);
+			pstmt.setString(10, em);
 			pstmt.executeUpdate();
 			pstmt.close();
 		} catch (SQLException e) {
@@ -94,7 +95,7 @@ public class DaoUsers {
 
 	}
 
-	public boolean loginPasswordMatching(String Username, String Password) throws SQLException{
+	public boolean loginPasswordMatching(String Username, String Password) throws SQLException, InterruptedException {
 
 		byte[] hashPw = null;
 		byte[] saltFromSql =null;
@@ -118,13 +119,13 @@ public class DaoUsers {
 
 			if(y){
 				System.out.println("Passwords Match");
-				//Sql to update active user
-				sql = "UPDATE Users SET Active=1 WHERE Username='"+Username+"'";
-				statement.execute(sql);
+				rs.close();
 				statement.close();
+				setActiveUsers(Username);
 				return true;
 			}else {
 				rs.close();
+				statement.close();
 				return false;
 			}
 		}
@@ -134,6 +135,23 @@ public class DaoUsers {
 		return false;
 	}
 
+	public void setActiveUsers(String uname) throws SQLException, InterruptedException {
+		//Creates a connection to the database
+		statement = connection.connect().createStatement();
+		int uid = getUserID(uname);
+
+		//Sql to update active user
+		sql = "UPDATE Users SET Active=1 WHERE UserID='"+uid+"'";
+		statement.executeUpdate(sql);
+		statement.close();
+
+		statement = connection.connect().createStatement();
+		//Sql to update UserAccountDetails active user
+		sql = "UPDATE UserAccountDetails SET Active=1 WHERE UserID='"+uid+"'";
+		statement.executeUpdate(sql);
+		statement.close();
+	}
+
 	public String[] activeUserInfo() throws SQLException{
 
 		String[] userInfo;
@@ -141,6 +159,12 @@ public class DaoUsers {
 		String role = null;
 		int userID = 0;
 		long lastLoggedInUnixTime = 0;
+		String fname = null;
+		String lname = null;
+		String paymentName = null;
+		int bankAccNumber = 0;
+		int bankRoutingNum =0;
+		String email = null;
 
 	
 		//Creates a connection to the database
@@ -160,10 +184,30 @@ public class DaoUsers {
 		}
 		rs.close();
 		statement.close();
-		connection.connect().close(); //close db connection 
-		
+		//connection.connect().close(); //close db connection
+
+		//Creates a connection to the database
+		statement = connection.connect().createStatement();
+
+		//sql to select from database
+		sql = "SELECT FirstName, LastName, PaymentName, Account, Routing, Email FROM UserAccountDetails WHERE Active=1";
+
+		ResultSet rs2 = statement.executeQuery(sql);
+		// loop through the result set
+		while (rs2.next()) {
+			fname = rs2.getString("FirstName");
+			lname = rs2.getString("LastName");
+			paymentName = rs2.getString("PaymentName");
+			bankAccNumber = rs2.getInt("Account");
+			bankRoutingNum = rs2.getInt("Routing");
+			email = rs2.getString("Email");
+		}
+		rs2.close();
+		statement.close();
+
 		//setting return
-		userInfo = new String[] {String.valueOf(userID), userName, role, String.valueOf(lastLoggedInUnixTime)};
+		userInfo = new String[] {String.valueOf(userID), userName, role, String.valueOf(lastLoggedInUnixTime), fname, lname,
+				paymentName, String.valueOf(bankAccNumber), String.valueOf(bankRoutingNum), email};
 		//Return user information
 		return userInfo;
 
@@ -174,7 +218,11 @@ public class DaoUsers {
 		statement = connection.connect().createStatement();
 		//sql to set active to 0
 		sql = "UPDATE Users SET Active=0";
-
+		statement.executeUpdate(sql);
+		statement.close();
+		statement = connection.connect().createStatement();
+		//sql to set active to 0
+		sql = "UPDATE UserAccountDetails SET Active=0";
 		statement.executeUpdate(sql);
 		statement.close();
 	}

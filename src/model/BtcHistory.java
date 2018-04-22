@@ -1,12 +1,13 @@
 package model;
 
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 
 import java.util.Date;
 
-public class CryptoHistory {
+public class BtcHistory {
     Date date;
-    DoubleProperty cryptoPrice;
+    DoubleProperty ethPrice;
     DoubleProperty usdPrice;
 
     public Date getDate() {
@@ -17,16 +18,16 @@ public class CryptoHistory {
         this.date = date;
     }
 
-    public double getCryptoPrice() {
-        return cryptoPrice.get();
+    public double getEthPrice() {
+        return ethPrice.get();
     }
 
-    public DoubleProperty cryptoPriceProperty() {
-        return cryptoPrice;
+    public DoubleProperty ethPriceProperty() {
+        return ethPrice;
     }
 
-    public void setCryptoPrice(double cryptoPrice) {
-        this.cryptoPrice.set(cryptoPrice);
+    public void setEthPrice(double ethPrice) {
+        this.ethPrice.set(ethPrice);
     }
 
     public double getUsdPrice() {
@@ -41,10 +42,14 @@ public class CryptoHistory {
         this.usdPrice.set(usdPrice);
     }
 
-    public CryptoHistory(Date d, DoubleProperty cp, DoubleProperty usd){
+
+
+
+
+    public BtcHistory(Date d, Double eth, Double usd){
         this.date = d;
-        this.cryptoPrice = cp;
-        this.usdPrice = usd;
+        this.ethPrice = new SimpleDoubleProperty(eth);
+        this.usdPrice = new SimpleDoubleProperty(usd);
     }
 
 

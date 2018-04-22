@@ -1,12 +1,23 @@
 package application;
 
+import javafx.beans.property.DoubleProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
+import model.*;
 
+import java.io.IOException;
 import java.net.URL;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.DateFormat;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 public class CurrencyHistoryController {
@@ -24,51 +35,105 @@ public class CurrencyHistoryController {
 	private Button mainMenuBtn;
 
 	@FXML
-	private TableView<?> btcTableView;
+	private TableView<BtcHistory> btcTableView;
 
 	@FXML
-	private TableColumn<?, ?> btcTimeCol;
+	private TableColumn<BtcHistory, Date> btcTimeCol;
 
 	@FXML
-	private TableColumn<?, ?> btcUsdCol;
+	private TableColumn<BtcHistory, Double> btcUsdCol;
 
 	@FXML
-	private TableColumn<?, ?> btcEthCol;
+	private TableColumn<BtcHistory, Double> btcEthCol;
 
 	@FXML
-	private TableView<?> ethTableView;
+	private TableView<EthHistory> ethTableView;
 
 	@FXML
-	private TableColumn<?, ?> ethTimeCol;
+	private TableColumn<EthHistory, Date> ethTimeCol;
 
 	@FXML
-	private TableColumn<?, ?> ethUsdCol;
+	private TableColumn<EthHistory, Double> ethUsdCol;
 
 	@FXML
-	private TableColumn<?, ?> ethBtcCol;
+	private TableColumn<EthHistory, Double> ethBtcCol;
+
+    @FXML
+    private Button refreshBtn;
+
+    private ObservableList<BtcHistory> btcHist = FXCollections.observableArrayList();
+
+    private ObservableList<EthHistory> ethHist = FXCollections.observableArrayList();
 
 	@FXML
 	void exit(ActionEvent event) {
-
+        // get a handle to the stage
+        Stage stage = (Stage) exitBtn.getScene().getWindow();
+        // do what you have to do
+        stage.close();
 	}
 
 	@FXML
-	void mainMenu(ActionEvent event) {
-
+	void mainMenu(ActionEvent event) throws IOException, SQLException {
+        exit(event);
+        new WhichUserMainMenu();
 	}
 
 	@FXML
 	void initialize() {
-		assert exitBtn != null : "fx:id=\"exitBtn\" was not injected: check your FXML file 'CurrencyHistroy.fxml'.";
-		assert mainMenuBtn != null : "fx:id=\"mainMenuBtn\" was not injected: check your FXML file 'CurrencyHistroy.fxml'.";
-		assert btcTableView != null : "fx:id=\"btcTableView\" was not injected: check your FXML file 'CurrencyHistroy.fxml'.";
-		assert btcTimeCol != null : "fx:id=\"btcTimeCol\" was not injected: check your FXML file 'CurrencyHistroy.fxml'.";
-		assert btcUsdCol != null : "fx:id=\"btcUsdCol\" was not injected: check your FXML file 'CurrencyHistroy.fxml'.";
-		assert btcEthCol != null : "fx:id=\"btcEthCol\" was not injected: check your FXML file 'CurrencyHistroy.fxml'.";
-		assert ethTableView != null : "fx:id=\"ethTableView\" was not injected: check your FXML file 'CurrencyHistroy.fxml'.";
-		assert ethTimeCol != null : "fx:id=\"ethTimeCol\" was not injected: check your FXML file 'CurrencyHistroy.fxml'.";
-		assert ethUsdCol != null : "fx:id=\"ethUsdCol\" was not injected: check your FXML file 'CurrencyHistroy.fxml'.";
-		assert ethBtcCol != null : "fx:id=\"ethBtcCol\" was not injected: check your FXML file 'CurrencyHistroy.fxml'.";
-
+	    btcEthCol.setCellValueFactory(new PropertyValueFactory<>("ethPrice"));
+	    btcTimeCol.setCellValueFactory(new PropertyValueFactory<>("date"));
+	    btcUsdCol.setCellValueFactory(new PropertyValueFactory<>("usdPrice"));
+	    ethBtcCol.setCellValueFactory(new PropertyValueFactory<>("btcPrice"));
+        ethTimeCol.setCellValueFactory(new PropertyValueFactory<>("date"));
+        ethUsdCol.setCellValueFactory(new PropertyValueFactory<>("usdPrice"));
+        fillBothTables();
 	}
+
+    @FXML
+    void refresh(ActionEvent event) throws SQLException {
+        new CurrencyHistoryController();
+        fillBothTables();
+    }
+
+	public CurrencyHistoryController() throws SQLException {
+        setBtcData();
+        setEthData();
+
+    }
+
+    public void fillBothTables() {
+        btcTableView.setItems(btcHist);
+        ethTableView.setItems(ethHist);
+    }
+
+    public void setBtcData() throws SQLException {
+        DaoUpdateCurrencyHist dao = new DaoUpdateCurrencyHist();
+        ResultSet rs = dao.getBtcHist();
+        // loop through the result set
+        while (rs.next()) {
+            Long DateTimeStamp = rs.getLong("TimeStamp");
+            double USDHistory = rs.getDouble("USDAmt");
+            double EthHistory = rs.getDouble("CryptoAmt");
+            Date dt = new Date(DateTimeStamp*1000);
+            //DateFormat df = new DateFormat.format(dt);
+            btcHist.add(new BtcHistory(dt, EthHistory, USDHistory));
+        }
+        rs.close();
+    }
+
+    public void setEthData() throws SQLException {
+        DaoUpdateCurrencyHist dao = new DaoUpdateCurrencyHist();
+        ResultSet rs = dao.getEthHist();
+        // loop through the result set
+        while (rs.next()) {
+            Long DateTimeStamp = rs.getLong("TimeStamp");
+            double USDHistory = rs.getDouble("USDAmt");
+            double BtcHistory = rs.getDouble("CryptoAmt");
+            Date dt = new Date(DateTimeStamp*1000);
+            ethHist.add(new EthHistory(dt, BtcHistory, USDHistory));
+        }
+        rs.close();
+    }
+
 }

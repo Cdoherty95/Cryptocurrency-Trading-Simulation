@@ -66,8 +66,18 @@ public class AdminMenu {
     }
 
     @FXML
-    void viewExchangeHistory(ActionEvent event) {
+    void viewExchangeHistory(ActionEvent event) throws IOException {
+        exit(event);
+        //ViewUsers vu = new ViewUsers();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/CurrencyHistroy.fxml"));
+        Parent root = (Parent) loader.load();
 
+        //set up the new stage+scene
+        Scene newScene = new Scene(root);
+        newScene.getStylesheets().add(getClass().getResource("/view/app.css").toExternalForm());
+        Stage newStage = new Stage();
+        newStage.setScene(newScene);
+        newStage.show();
     }
 
     @FXML
@@ -82,10 +92,10 @@ public class AdminMenu {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/UsersTableView.fxml"));
         Parent root = (Parent) loader.load();
 
-        //get the controllers functions to add data
+        /*get the controllers functions to add data
         UserTableViewController controller = loader.getController();
         controller.setMainApp();
-
+*/
         //set up the new stage+scene
         Scene newScene = new Scene(root);
         newScene.getStylesheets().add(getClass().getResource("/view/app.css").toExternalForm());
