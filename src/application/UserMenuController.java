@@ -14,6 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.MenuBar;
 import javafx.stage.Stage;
 import model.DaoUsers;
+import model.DaoWallet;
 
 public class UserMenuController {
 
@@ -73,8 +74,18 @@ public class UserMenuController {
     private Button exitBtn;
 
     @FXML
-    void depositeFundsBtn(ActionEvent event) {
+    void depositeFundsBtn(ActionEvent event) throws IOException {
+        exit(event);
+        //ViewUsers vu = new ViewUsers();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Deposit.fxml"));
+        Parent root = (Parent) loader.load();
 
+        //set up the new stage+scene
+        Scene newScene = new Scene(root);
+        newScene.getStylesheets().add(getClass().getResource("/view/app.css").toExternalForm());
+        Stage newStage = new Stage();
+        newStage.setScene(newScene);
+        newStage.show();
     }
 
     @FXML
@@ -108,7 +119,17 @@ public class UserMenuController {
     }
 
     @FXML
-    void logout(ActionEvent event) {
+    void logout(ActionEvent event) throws IOException {
+        exit(event);
+        Stage primaryStage = new Stage();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Login.fxml"));
+        Parent root = (Parent) loader.load();
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(getClass().getResource("/view/app.css").toExternalForm());
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("Cryptocurrency Trader");
+
+        primaryStage.show();
 
     }
 
@@ -127,8 +148,8 @@ public class UserMenuController {
 
     @FXML
     void initialize() throws SQLException {
-
         setUserInfo();
+        setWalletInfo();
     }
 
 
@@ -143,9 +164,11 @@ public class UserMenuController {
         usrpaymnetMethod.setText(userInfo[6]);
     }
 
-    public void setWalletInfo(Number usd, Number btc, Number eth){
-        usdAmt.setText(usd.toString());
-        btcAmt.setText(btc.toString());
-        ethAmt.setText(eth.toString());
+    public void setWalletInfo() throws SQLException {
+        DaoWallet dao = new DaoWallet();
+        Double[] wallet = dao.getWalletAmounts();
+        usdAmt.setText(String.valueOf(wallet[0]));
+        btcAmt.setText(String.valueOf(wallet[1]));
+        ethAmt.setText(String.valueOf(wallet[2]));
     }
 }

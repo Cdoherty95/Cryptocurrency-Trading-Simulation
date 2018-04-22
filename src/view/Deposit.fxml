@@ -1,14 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="view.Deposit"
-            prefHeight="400.0" prefWidth="600.0">
 
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.DepositController">
+   <children>
+      <Label layoutX="230.0" layoutY="28.0" text="Deposit Funds To Account" />
+      <Label layoutX="33.0" layoutY="71.0" text="Payment Method Name" />
+      <Label layoutX="33.0" layoutY="126.0" text="Bank Account Routing Number" />
+      <Label layoutX="33.0" layoutY="99.0" text="Bank Account Number" />
+      <Button fx:id="exitBtn" layoutX="515.0" layoutY="24.0" mnemonicParsing="false" onAction="#exit" text="Exit" />
+      <Button fx:id="mainMenuBtn" layoutX="429.0" layoutY="24.0" mnemonicParsing="false" onAction="#mainMenu" text="Main Menu" />
+      <Label layoutX="201.0" layoutY="182.0" text="Enter Amount To Deposit To Account" />
+      <TextField fx:id="amountTxtfield" layoutX="201.0" layoutY="221.0" promptText="3400.00" />
+      <Button fx:id="depositBtn" layoutX="357.0" layoutY="221.0" mnemonicParsing="false" onAction="#deposit" text="Deposit" />
+      <Label fx:id="payMethLabel" layoutX="216.0" layoutY="71.0" prefHeight="18.0" prefWidth="224.0" text="Label" />
+      <Label fx:id="accountNumberLabel" layoutX="216.0" layoutY="99.0" prefHeight="18.0" prefWidth="224.0" text="Label" />
+      <Label fx:id="routingNumLabel" layoutX="216.0" layoutY="126.0" prefHeight="18.0" prefWidth="224.0" text="Label" />
+      <Label layoutX="314.0" layoutY="225.0" text="USD" />
+   </children>
 </AnchorPane>

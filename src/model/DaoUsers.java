@@ -91,8 +91,15 @@ public class DaoUsers {
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
-		connection.connect().close(); //close db connection
 
+
+		//Create User Wallet
+		statement = connection.connect().createStatement();
+		sql = "INSERT INTO Wallet (UserID, BTCAmt, ETHAmt, USDAmt, DateAdded) VALUES ("+uID+",0,0,0,"+currentUnixTime+");";
+		//System.out.println(sql);
+		statement.execute(sql);
+		statement.close();
+		//connection.connect().close(); //close db connection
 	}
 
 	public boolean loginPasswordMatching(String Username, String Password) throws SQLException, InterruptedException {
