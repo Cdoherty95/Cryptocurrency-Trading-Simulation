@@ -89,8 +89,18 @@ public class UserMenuController {
     }
 
     @FXML
-    void withdrawFundsBtn(ActionEvent event) {
+    void withdrawFundsBtn(ActionEvent event) throws IOException {
+        exit(event);
+        //ViewUsers vu = new ViewUsers();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Withdraw.fxml"));
+        Parent root = (Parent) loader.load();
 
+        //set up the new stage+scene
+        Scene newScene = new Scene(root);
+        newScene.getStylesheets().add(getClass().getResource("/view/app.css").toExternalForm());
+        Stage newStage = new Stage();
+        newStage.setScene(newScene);
+        newStage.show();
     }
 
     @FXML

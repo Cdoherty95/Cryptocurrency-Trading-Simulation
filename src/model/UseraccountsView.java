@@ -9,6 +9,7 @@ public class UseraccountsView {
     StringProperty Role;
     IntegerProperty UserID;
     LongProperty LastLoggedIn;
+    Date lastindate;
 
     public Date getLastindate() {
         return lastindate;
@@ -16,17 +17,6 @@ public class UseraccountsView {
 
     public void setLastindate(Date lastindate) {
         this.lastindate = lastindate;
-    }
-
-    Date lastindate;
-
-    public UseraccountsView(Integer uid, String uname, String roll, Date lastin){
-        this.UserID = new SimpleIntegerProperty(uid);
-        this.Username = new SimpleStringProperty(uname);
-        this.Role = new SimpleStringProperty(roll);
-        //this.LastLoggedIn = new SimpleLongProperty(lli);
-        this.lastindate = lastin;
-
     }
 
     public String getUsername() {
@@ -76,5 +66,15 @@ public class UseraccountsView {
     public void setLastLoggedIn(long lastLoggedIn) {
         this.LastLoggedIn.set(lastLoggedIn);
     }
+
+    public UseraccountsView(Integer uid, String uname, String roll, Date lastin){
+        this.UserID = new SimpleIntegerProperty(uid);
+        this.Username = new SimpleStringProperty(uname);
+        this.Role = new SimpleStringProperty(roll);
+        //this.LastLoggedIn = new SimpleLongProperty(lli);
+        this.lastindate = lastin;
+
+    }
+
 
 }
