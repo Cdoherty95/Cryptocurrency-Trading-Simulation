@@ -52,6 +52,7 @@ public class DepositController {
                 Double[] walletAmts = daoWallet.getWalletAmounts();
                 Double total = (walletAmts[0] + Double.parseDouble(amountTxtfield.getText()));
                 daoWallet.setUsdAmount(total);
+                daoWallet.logTransaction("Deposit",null,0.0,Double.parseDouble(amountTxtfield.getText()));
                 exit(event);
                 new WhichUserMainMenu();
             }else {
