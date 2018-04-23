@@ -55,7 +55,7 @@ public class UserTableViewController {
     @FXML
     void menu(ActionEvent event) throws IOException, SQLException {
         exit(event);
-        new WhichUserMainMenu();
+        new WhichUserMainMenu("admin");
     }
 
     // Reference to the main application.

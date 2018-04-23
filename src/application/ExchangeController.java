@@ -118,6 +118,6 @@ public class ExchangeController {
     @FXML
     void mainMenu(ActionEvent event) throws IOException, SQLException {
         exit(event);
-        new WhichUserMainMenu();
+        new WhichUserMainMenu("user");
     }
 }

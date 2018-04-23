@@ -11,6 +11,7 @@ import java.sql.SQLException;
 
 public class Main extends Application {
 
+	static DaoUsers dao = new DaoUsers();
 
 	@Override
 	public void start(Stage primaryStage) throws SQLException {
@@ -33,11 +34,14 @@ public class Main extends Application {
 		}
 	}
 
-	public static void main(String[] args) {
-		UpdateCurrencyPrices updCur = new UpdateCurrencyPrices();
-		updCur.start();
+	public static void main(String[] args) throws SQLException {
+		//this makes all the Active Users Inactive
+		dao.makeAllInactive();
+		//UpdateCurrencyPrices updCur = new UpdateCurrencyPrices();
+		//updCur.start();
 		launch(args);
-		updCur.stop();
+		//this makes all the Active Users Inactive
+		dao.makeAllInactive();
 
 	}
 }

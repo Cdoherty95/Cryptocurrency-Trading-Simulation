@@ -10,11 +10,11 @@
    <children>
       <VBox fx:id="border" layoutX="14.0" layoutY="93.0" prefHeight="164.0" prefWidth="158.0">
          <children>
-            <Button fx:id="viewUsers" mnemonicParsing="false" onAction="#viewUsers" text="View Users" />
-            <Button fx:id="viewTransactionHistory" mnemonicParsing="false" onAction="#viewTransactionHistory" text="View Transaction Histroy" />
-            <Button fx:id="viewExchange" mnemonicParsing="false" onAction="#viewExchange" text="View Exchange" />
-            <Button fx:id="viewWallets" mnemonicParsing="false" onAction="#viewWallets" text="View Wallets" />
-            <Button fx:id="viewExchangeHistory" mnemonicParsing="false" onAction="#viewExchangeHistory" text="View Exchange History" />
+            <Button fx:id="viewUsers" mnemonicParsing="false" onAction="#viewUsers" text="View All Users" />
+            <Button fx:id="viewTransactionHistory" mnemonicParsing="false" onAction="#viewTransactionHistory" text="View All Transactions" />
+            <Button mnemonicParsing="false" />
+            <Button fx:id="viewWallets" mnemonicParsing="false" onAction="#viewWallets" text="View All User Wallets" />
+            <Button mnemonicParsing="false" />
          </children>
       </VBox>
       <Label fx:id="welcomeLabel" alignment="CENTER" layoutX="32.0" layoutY="40.0" prefHeight="51.0" prefWidth="235.0" text="Welcome">

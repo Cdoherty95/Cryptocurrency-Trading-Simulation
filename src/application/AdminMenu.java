@@ -24,9 +24,6 @@ public class AdminMenu {
     private Button viewTransactionHistory;
 
     @FXML
-    private Button viewExchange;
-
-    @FXML
     private Button viewWallets;
 
     @FXML
@@ -44,40 +41,10 @@ public class AdminMenu {
         assert border != null : "fx:id=\"border\" was not injected: check your FXML file 'AdminMain.fxml'.";
         assert viewUsers != null : "fx:id=\"viewUsers\" was not injected: check your FXML file 'AdminMain.fxml'.";
         assert viewTransactionHistory != null : "fx:id=\"viewTransactionHistory\" was not injected: check your FXML file 'AdminMain.fxml'.";
-        assert viewExchange != null : "fx:id=\"viewExchange\" was not injected: check your FXML file 'AdminMain.fxml'.";
         assert viewWallets != null : "fx:id=\"viewWallets\" was not injected: check your FXML file 'AdminMain.fxml'.";
         assert viewExchangeHistory != null : "fx:id=\"viewExchangeHistory\" was not injected: check your FXML file 'AdminMain.fxml'.";
         assert welcomeLabel != null : "fx:id=\"welcomeLabel\" was not injected: check your FXML file 'AdminMain.fxml'.";
         welcomeLabel.setText("Welcome Chris");
-    }
-    @FXML
-    void viewExchange(ActionEvent event) throws IOException {
-        exit(event);
-        //ViewUsers vu = new ViewUsers();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Exchange.fxml"));
-        Parent root = (Parent) loader.load();
-
-        //set up the new stage+scene
-        Scene newScene = new Scene(root);
-        newScene.getStylesheets().add(getClass().getResource("/view/app.css").toExternalForm());
-        Stage newStage = new Stage();
-        newStage.setScene(newScene);
-        newStage.show();
-    }
-
-    @FXML
-    void viewExchangeHistory(ActionEvent event) throws IOException {
-        exit(event);
-        //ViewUsers vu = new ViewUsers();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/CurrencyHistroy.fxml"));
-        Parent root = (Parent) loader.load();
-
-        //set up the new stage+scene
-        Scene newScene = new Scene(root);
-        newScene.getStylesheets().add(getClass().getResource("/view/app.css").toExternalForm());
-        Stage newStage = new Stage();
-        newStage.setScene(newScene);
-        newStage.show();
     }
 
     @FXML
@@ -95,7 +62,8 @@ public class AdminMenu {
         /*get the controllers functions to add data
         UserTableViewController controller = loader.getController();
         controller.setMainApp();
-*/
+        */
+
         //set up the new stage+scene
         Scene newScene = new Scene(root);
         newScene.getStylesheets().add(getClass().getResource("/view/app.css").toExternalForm());

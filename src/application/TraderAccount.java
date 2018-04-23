@@ -16,7 +16,7 @@ public class TraderAccount extends LoginController implements TraderOperations {
 	public int accountNumber;
 	public int routingNumber;
 	
-	public Transaction transactionTableController;
+	//public Transaction transactionTableController;
 
 	@Override
 	public void viewTransactionHistory() {

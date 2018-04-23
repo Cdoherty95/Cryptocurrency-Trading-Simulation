@@ -38,6 +38,8 @@ public class LoginController extends Exchange {
     @FXML
     private Button registerbtn;
 
+
+
     public void loginbtnClicked(ActionEvent event) throws SQLException, IOException, InterruptedException {
 
         if (!Username.getText().isEmpty() && !Password.getText().isEmpty()) {
@@ -48,7 +50,7 @@ public class LoginController extends Exchange {
             if (dao.loginPasswordMatching(Username.getText(), Password.getText())) {
                 exit(event);
 
-                new WhichUserMainMenu();
+                new WhichUserMainMenu("user");
                 //Move on to get user information
                 /*
                 String[] userInfo = dao.activeUserInfo();

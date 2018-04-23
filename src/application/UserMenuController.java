@@ -72,6 +72,8 @@ public class UserMenuController {
     private Button logoutBtn;
     @FXML
     private Button exitBtn;
+    @FXML
+    private Button adminMenuBtn;
 
     @FXML
     void depositeFundsBtn(ActionEvent event) throws IOException {
@@ -124,8 +126,17 @@ public class UserMenuController {
     }
 
     @FXML
-    void viewTransactionHistory(ActionEvent event) {
+    void viewTransactionHistory(ActionEvent event) throws IOException {
+        exit(event);
+        Stage primaryStage = new Stage();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/TransactionHist.fxml"));
+        Parent root = (Parent) loader.load();
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(getClass().getResource("/view/app.css").toExternalForm());
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("Cryptocurrency Trader");
 
+        primaryStage.show();
     }
 
     @FXML
@@ -158,6 +169,17 @@ public class UserMenuController {
 
     @FXML
     void initialize() throws SQLException {
+
+    }
+
+    @FXML
+    void goToAdminMenu(ActionEvent event){
+
+    }
+
+    public void disableAdminBtn(boolean y) throws SQLException {
+        //adminMenuBtn.managedProperty().bind(adminMenuBtn.visibleProperty());
+        adminMenuBtn.setVisible(y);
         setUserInfo();
         setWalletInfo();
     }
@@ -168,7 +190,7 @@ public class UserMenuController {
         String[] userInfo = dao.activeUserInfo();
 
         welcomeUser.setText("Welcome " + userInfo[4]);
-        usrName.setText(userInfo[0]);
+        usrName.setText(userInfo[1]);
         usrLastName.setText(userInfo[5]);
         usrEmail.setText(userInfo[9]);
         usrpaymnetMethod.setText(userInfo[6]);

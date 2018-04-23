@@ -10,13 +10,11 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import model.BtcHistory;
-import model.DaoWallet;
-import model.EthHistory;
-import model.TransactionModel;
+import model.*;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -62,7 +60,7 @@ public class TransactionTableController {
     @FXML
     private Button mainMenuBtn;
 
-    private ObservableList<TransactionModel> transModel = FXCollections.observableArrayList();
+    private ObservableList<TransactionModel> tHistList = FXCollections.observableArrayList();
 
     @FXML
     void exit(ActionEvent event) {
@@ -75,7 +73,7 @@ public class TransactionTableController {
     @FXML
     void menu(ActionEvent event) throws IOException, SQLException {
         exit(event);
-        new WhichUserMainMenu();
+        new WhichUserMainMenu("user");
     }
 
     @FXML
@@ -98,20 +96,53 @@ public class TransactionTableController {
         caAmount.setCellValueFactory(new PropertyValueFactory<>("cAmt"));
         usdAmtCol.setCellValueFactory(new PropertyValueFactory<>("usAmt"));
         date.setCellValueFactory(new PropertyValueFactory<>("date"));
+
+        //Fills the table with information in the Observ list
+        fillTable();
     }
 
-    public TransactionTableController(){
-        setData();
+    public TransactionTableController() throws SQLException {
+        DaoUsers daoUsers = new DaoUsers();
+        String[] allOrOne = daoUsers.activeUserInfo();
+        if(allOrOne[2].equals("user")) {
+            setDataAU();
+        }
+        if(allOrOne[2].equals("admin")){
+            setDataAll();
+        }
     }
 
-    public void fillBothTables() {
-        table.setItems(transModel);
+    public void fillTable() {
+        table.setItems(tHistList);
     }
 
-    public void setData(){
+    public void setDataAU() throws SQLException {
         DaoWallet daoWallet = new DaoWallet();
-        /**
-         * NEED TO FINISH THIS!
-         */
+        ResultSet rs = daoWallet.getTransactionHistoryActiveUser();
+        while (rs.next()) {
+            //get Unix timestamp * 1000 to get it to current date and cast it to date object
+            Date timestamp = new Date((rs.getLong("DateAdded")*1000));
+            tHistList.add(new TransactionModel(
+                    rs.getInt("ID"), rs.getInt("UserID"),
+                    rs.getString("Type"), rs.getString("CryptoCode"),
+                    rs.getDouble("CryptoAmt"), rs.getDouble("USDAmt"),
+                    timestamp));
+        }
+        rs.close();
+    }
+
+    public void setDataAll() throws SQLException {
+        DaoWallet daoWallet = new DaoWallet();
+        ResultSet rs = daoWallet.getTransactionHistoryAll();
+        while (rs.next()) {
+            //get Unix timestamp * 1000 to get it to current date and cast it to date object
+            Date timestamp = new Date((rs.getLong("DateAdded")*1000));
+            tHistList.add(new TransactionModel(
+                    rs.getInt("ID"), rs.getInt("UserID"),
+                    rs.getString("Type"), rs.getString("CryptoCode"),
+                    rs.getDouble("CryptoAmt"), rs.getDouble("USDAmt"),
+                    timestamp));
+        }
+        rs.close();
     }
 }

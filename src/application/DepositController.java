@@ -54,7 +54,7 @@ public class DepositController {
                 daoWallet.setUsdAmount(total);
                 daoWallet.logTransaction("Deposit",null,0.0,Double.parseDouble(amountTxtfield.getText()));
                 exit(event);
-                new WhichUserMainMenu();
+                new WhichUserMainMenu("user");
             }else {
                 amountTxtfield.clear();
                 amountTxtfield.setPromptText("Please Input A Number");
@@ -76,7 +76,7 @@ public class DepositController {
     @FXML
     void mainMenu(ActionEvent event) throws IOException, SQLException {
         exit(event);
-        new WhichUserMainMenu();
+        new WhichUserMainMenu("user");
     }
 
     @FXML

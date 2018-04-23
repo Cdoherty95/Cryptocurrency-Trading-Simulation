@@ -59,21 +59,23 @@ public class WithdrawController {
     @FXML
     void mainMenu(ActionEvent event) throws IOException, SQLException {
         exit(event);
-        new WhichUserMainMenu();
+        new WhichUserMainMenu("user");
     }
 
     @FXML
     void withdraw(ActionEvent event) throws SQLException, IOException {
         if (!amountTxtfield.getText().isEmpty()) {
             if(checkInput()){
+                System.out.println("Input is valid");
                 DaoWallet daoWallet = new DaoWallet();
                 Double[] walletAmts = daoWallet.getWalletAmounts();
                 Double total = (walletAmts[0] - Double.parseDouble(amountTxtfield.getText()));
+                System.out.println("Total after withdraw would be " + total);
                 if(total>0){
                     daoWallet.setUsdAmount(total);
+                    System.out.println("Set USD to amount minus the withdraw");
                     daoWallet.logTransaction("Withdraw",null,0.0,Double.parseDouble(amountTxtfield.getText()));
-                    exit(event);
-                    new WhichUserMainMenu();
+                    mainMenu(event);
                 }else {
                     amountTxtfield.clear();
                     amountTxtfield.setPromptText("Balance Cannot Be Negative");

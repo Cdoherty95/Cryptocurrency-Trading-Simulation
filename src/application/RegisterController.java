@@ -63,7 +63,9 @@ public class RegisterController {
     @FXML
     private Button cancelBtn;
 
-    public boolean checkInput(){
+    DaoUsers dao = new DaoUsers();
+
+    public boolean checkBankInfo(){
         try{
             Integer.parseInt(accountIn.getText());
         }catch (NumberFormatException e){
@@ -78,25 +80,37 @@ public class RegisterController {
         return true;
     }
 
+    public boolean seeIfUsernameExists(String userName) throws SQLException, InterruptedException {
+        if(dao.getUserID(userName)==0){
+            return true; //Username Doesnt Exist
+        }
+        return false;
+    }
+
     @FXML
     void Register(ActionEvent event) throws SQLException, InterruptedException, IOException {
 
-        DaoUsers dao = new DaoUsers();
+
         //check to make sure user entered the same password
         if(pass1In.getText().equals(pass2In.getText())){
-           if(checkInput()){//ints are ints
-               if (regAsAdmin.isSelected()) {
-                   dao.createUser(usernameIn.getText(), pass1In.getText(), "admin");
-                   int uid = dao.getUserID(usernameIn.getText());
-                   dao.registerUser(uid,fNameIn.getText(),lNameIn.getText(),payNameIn.getText(),Integer.parseInt(accountIn.getText()),
-                           Integer.parseInt(routingIn.getText()), emIn.getText());
-                   cancel(event);
-               }else{//user is regular user
-                   dao.createUser(usernameIn.getText(), pass1In.getText(), "user");
-                   int uid = dao.getUserID(usernameIn.getText());
-                   dao.registerUser(uid,fNameIn.getText(),lNameIn.getText(),payNameIn.getText(),Integer.parseInt(accountIn.getText()),
-                           Integer.parseInt(routingIn.getText()), emIn.getText());
-                   cancel(event);
+           if(checkBankInfo()){//ints are ints
+               if (seeIfUsernameExists(usernameIn.getText())) { //see if username exists
+                   if (regAsAdmin.isSelected()) { //Check if admin is selected
+                       dao.createUser(usernameIn.getText(), pass1In.getText(), "admin");
+                       int uid = dao.getUserID(usernameIn.getText());
+                       dao.registerUser(uid,fNameIn.getText(),lNameIn.getText(),payNameIn.getText(),Integer.parseInt(accountIn.getText()),
+                               Integer.parseInt(routingIn.getText()), emIn.getText());
+                       cancel(event);
+                   }else{//user is regular user
+                       dao.createUser(usernameIn.getText(), pass1In.getText(), "user");
+                       int uid = dao.getUserID(usernameIn.getText());
+                       dao.registerUser(uid,fNameIn.getText(),lNameIn.getText(),payNameIn.getText(),Integer.parseInt(accountIn.getText()),
+                               Integer.parseInt(routingIn.getText()), emIn.getText());
+                       cancel(event);
+                   }
+               }else{
+                   usernameIn.clear();
+                   usernameIn.setPromptText("Username Exists");
                }
            }else {//account or routing numbers were incorrect
                accountIn.clear();

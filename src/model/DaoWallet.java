@@ -44,6 +44,37 @@ public class DaoWallet {
         connection.connect().close();
     }
 
+    public ResultSet getTransactionHistoryActiveUser() throws SQLException {
+
+        //Creates a connection to the database
+        statement = connection.connect().createStatement();
+
+        //sql to select from database
+        sql = "SELECT ID, UserID, Type, CryptoCode, CryptoAmt, USDAmt, DateAdded " +
+                "FROM TransactionHistory WHERE UserID='"+activeUserID+"'";
+
+        ResultSet results = statement.executeQuery(sql);
+
+        //results.close();
+
+        return results;
+    }
+
+    public ResultSet getTransactionHistoryAll() throws SQLException {
+
+        //Creates a connection to the database
+        statement = connection.connect().createStatement();
+
+        //sql to select from database
+        sql = "SELECT ID, UserID, Type, CryptoCode, CryptoAmt, USDAmt, DateAdded " +
+                "FROM TransactionHistory";
+
+        ResultSet results = statement.executeQuery(sql);
+
+        //results.close();
+        return results;
+    }
+
     public void setUsdAmount(Double usdAmount) throws SQLException {
 
         statement = connection.connect().createStatement();

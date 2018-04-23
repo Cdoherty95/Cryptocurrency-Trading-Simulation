@@ -76,7 +76,7 @@ public class CurrencyHistoryController {
 	@FXML
 	void mainMenu(ActionEvent event) throws IOException, SQLException {
         exit(event);
-        new WhichUserMainMenu();
+        new WhichUserMainMenu("user");
 	}
 
 	@FXML
