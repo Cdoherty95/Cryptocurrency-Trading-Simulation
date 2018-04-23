@@ -1,22 +1,24 @@
 package application;
 
-import java.io.IOException;
-import java.net.URL;
-import java.sql.SQLException;
-import java.util.ResourceBundle;
-
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleButton;
+import javafx.scene.control.*;
+import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import model.DaoUsers;
+import model.DaoWallet;
+
+import java.io.IOException;
+import java.net.URL;
+import java.sql.SQLException;
+import java.util.ResourceBundle;
 
 public class ExchangeController {
 
@@ -68,6 +70,28 @@ public class ExchangeController {
     @FXML
     private Button exitBtn;
 
+    String[] ActiveUserID;
+
+    DaoWallet daoWallet = new DaoWallet();
+    DaoUsers daoUsers = new DaoUsers();
+    int i=0;
+
+    ChangeListener<Number> changeListener = new ChangeListener<Number>() {
+
+        @Override
+        public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+            if(i==0){
+                updateDataAfterChangingExchanges(newValue);
+                i++;
+            }
+        }
+    };
+    public ExchangeController() throws SQLException {
+
+        ActiveUserID = daoUsers.activeUserInfo();
+    }
+
+
     @FXML
     void initialize() {
         assert chiceDropDown != null : "fx:id=\"chiceDropDown\" was not injected: check your FXML file 'Exchange.fxml'.";
@@ -89,9 +113,39 @@ public class ExchangeController {
     public void defaultStart() {
         chiceDropDown.getItems().addAll("BTC/USD", "BTC/ETH", "ETH/USD", "ETH/BTC");
         chiceDropDown.getSelectionModel().selectFirst();
+    }
 
+    public void setUSDBalance(String crypto) throws SQLException {
+        Double[] wallet = daoWallet.getWalletAmounts();
+        usdAmountLable.setText(String.valueOf(wallet[0]));
+        if (crypto.equals("btc")) {
+            CryptoBalLable.setText(String.valueOf(wallet[1]));
+        }
+        if (crypto.equals("eth")) {
+            CryptoBalLable.setText(String.valueOf(wallet[2]));
+        }
 
     }
+
+    public void updateDataAfterChangingExchanges(Number choice){
+        System.out.println(choice);
+    }
+
+    @FXML
+    void changeTrade(MouseEvent event) {
+        usdAmountLable.setText("mouseEvent");
+        chiceDropDown.getSelectionModel()
+                .selectedIndexProperty()
+                .addListener(changeListener);
+        i=0;
+    }
+
+    @FXML
+    void onContexMenuRequested(ContextMenuEvent event) {
+        System.out.println("context Menu Requested");
+
+    }
+
 
     @FXML
     public void exit(ActionEvent event) {
