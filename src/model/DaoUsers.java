@@ -263,6 +263,16 @@ public class DaoUsers {
 		statement.close();
 	}
 
+	public void deleteUser(int uID) throws SQLException {
+		statement = connection.connect().createStatement();
+		//sql to set active to 0
+		sql = "DELETE FROM Users WHERE UserID="+uID+"";
+		//System.out.println(sql);
+		int i = statement.executeUpdate(sql);
+		//System.out.println(i);
+		statement.close();
+	}
+
 	/*
 	public static void main(String[] args) throws SQLException {
 		DaoUsers dao = new DaoUsers();

@@ -74,7 +74,7 @@ public class WithdrawController {
                 if(total>0){
                     daoWallet.setUsdAmount(total);
                     System.out.println("Set USD to amount minus the withdraw");
-                    daoWallet.logTransaction("Withdraw",null,0.0,Double.parseDouble(amountTxtfield.getText()));
+                    daoWallet.logTransaction("Withdraw","USD", Double.parseDouble(amountTxtfield.getText()), null, 0.0);
                     mainMenu(event);
                 }else {
                     amountTxtfield.clear();

@@ -22,9 +22,9 @@ public class DaoWallet {
     }
 
 
-    public void logTransaction(String type, String cc, Double ca, Double usa) throws SQLException {
+    public void logTransaction(String type, String fcc, Double fca, String scc, Double sca) throws SQLException {
         //sql prepared stmt
-        sql = "INSERT INTO TransactionHistory (UserID, Type, CryptoCode, CryptoAmt, USDAmt, DateAdded) VALUES (?,?,?,?,?,?)";
+        sql = "INSERT INTO TransactionHistory (UserID, Type, FirstCurrencyCode, FirstCurrencyAmount, SecondCurrencyCode, SecondCurrencyAmount, DateAdded) VALUES (?,?,?,?,?,?,?)";
         //getting timestamp to be stored
         long currentUnixTime = System.currentTimeMillis() / 1000L;
 
@@ -32,10 +32,11 @@ public class DaoWallet {
                 PreparedStatement pstmt = connection.connect().prepareStatement(sql)) {
             pstmt.setInt(1, activeUserID);
             pstmt.setString(2, type);
-            pstmt.setString(3, cc);
-            pstmt.setDouble(4, ca);
-            pstmt.setDouble(5, usa);
-            pstmt.setLong(6, currentUnixTime);
+            pstmt.setString(3, fcc);
+            pstmt.setDouble(4, fca);
+            pstmt.setString(5, scc);
+            pstmt.setDouble(6, sca);
+            pstmt.setLong(7, currentUnixTime);
             pstmt.executeUpdate();
             pstmt.close();
         } catch (SQLException e) {
@@ -50,7 +51,7 @@ public class DaoWallet {
         statement = connection.connect().createStatement();
 
         //sql to select from database
-        sql = "SELECT ID, UserID, Type, CryptoCode, CryptoAmt, USDAmt, DateAdded " +
+        sql = "SELECT ID, UserID, Type, FirstCurrencyCode, FirstCurrencyAmount, SecondCurrencyCode, SecondCurrencyAmount, DateAdded " +
                 "FROM TransactionHistory WHERE UserID='"+activeUserID+"'";
 
         ResultSet results = statement.executeQuery(sql);
@@ -66,7 +67,7 @@ public class DaoWallet {
         statement = connection.connect().createStatement();
 
         //sql to select from database
-        sql = "SELECT ID, UserID, Type, CryptoCode, CryptoAmt, USDAmt, DateAdded " +
+        sql = "SELECT ID, UserID, Type, FirstCurrencyCode, FirstCurrencyAmount, SecondCurrencyCode, SecondCurrencyAmount, DateAdded " +
                 "FROM TransactionHistory";
 
         ResultSet results = statement.executeQuery(sql);

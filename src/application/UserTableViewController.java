@@ -4,15 +4,16 @@ package application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.scene.control.Button;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.DaoUsers;
 import model.UseraccountsView;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 
 import java.io.IOException;
 import java.sql.ResultSet;
@@ -43,6 +44,72 @@ public class UserTableViewController {
 
     @FXML
     private Button mainMenuBtn;
+
+    @FXML
+    private AnchorPane adminAnchorPane;
+
+    @FXML
+    private TextField userIDTextField;
+
+    @FXML
+    private Button rmvUserBtn;
+
+    @FXML
+    private Label errorLabl;
+
+    DaoUsers daoUsers = new DaoUsers();
+    //0= unset, 1=Cancel, 2=continue
+    static int DoubleCheck=0;
+
+
+
+    @FXML
+    public void removeUser(ActionEvent event) throws IOException, SQLException {
+        Stage primaryStage = new Stage();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/DoubleCheck.fxml"));
+        Parent root = (Parent) loader.load();
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(getClass().getResource("/view/app.css").toExternalForm());
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("Cryptocurrency Trader");
+
+        primaryStage.showAndWait();
+        if (DoubleCheck==2){
+            if(checkInput()){
+               daoUsers.deleteUser(Integer.parseInt(userIDTextField.getText()));
+               System.out.println("removed User");
+               //Im not sure which works
+               table.getItems().clear();
+               table.getItems().removeAll();
+               personData.clear();
+               personData.removeAll();
+               setData();
+               setMainApp();
+            }
+        }
+    }
+
+    private boolean checkInput(){
+        errorLabl.setText("");
+        try{
+            Integer.parseInt(userIDTextField.getText());
+
+            try {
+                int adminID = Integer.parseInt(daoUsers.activeUserInfo()[0]);
+                if (adminID!=Integer.parseInt(userIDTextField.getText())){
+                    return true;
+                }else {
+                    errorLabl.setText("You cannot remove yourself");
+                    return false;
+                }
+            }catch (Exception e){
+                return false;
+            }
+        }catch (Exception e){
+            errorLabl.setText("Input The UserID integer");
+            return false;
+        }
+    }
 
     @FXML
     void exit(ActionEvent event) {
@@ -100,8 +167,8 @@ public class UserTableViewController {
      * method to get data.
      */
     public void setData() throws SQLException {
-        DaoUsers dao = new DaoUsers();
-        ResultSet rs = dao.viewAllUsers();
+
+        ResultSet rs = daoUsers.viewAllUsers();
         // loop through the result set
         while (rs.next()) {
             int userID = rs.getInt("UserID");
@@ -113,6 +180,12 @@ public class UserTableViewController {
         }
         rs.close();
     }
+
+    /*
+    public void changeDoubleCheckValue(int i){
+        DoubleCheck=i;
+        System.out.println(DoubleCheck);
+    }*/
 
     //ObservableList function to return data
     public ObservableList<UseraccountsView> getPersonData() {

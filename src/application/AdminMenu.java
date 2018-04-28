@@ -37,8 +37,6 @@ public class AdminMenu {
     @FXML
     private Button exitBtn;
 
-
-
     @FXML
     void initialize() {
         assert border != null : "fx:id=\"border\" was not injected: check your FXML file 'AdminMain.fxml'.";
@@ -48,6 +46,11 @@ public class AdminMenu {
         assert viewExchangeHistory != null : "fx:id=\"viewExchangeHistory\" was not injected: check your FXML file 'AdminMain.fxml'.";
         assert welcomeLabel != null : "fx:id=\"welcomeLabel\" was not injected: check your FXML file 'AdminMain.fxml'.";
         welcomeLabel.setText("Welcome Chris");
+    }
+
+    //default constructor needed
+    public AdminMenu(){
+
     }
 
     @FXML
@@ -91,6 +94,12 @@ public class AdminMenu {
     }
 
     @FXML
+    void backToUserMenu(ActionEvent event) throws IOException, SQLException {
+        exit(event);
+        new WhichUserMainMenu("user");
+    }
+
+    @FXML
     void logout(ActionEvent event) throws IOException {
         exit(event);
         Stage primaryStage = new Stage();
@@ -104,10 +113,7 @@ public class AdminMenu {
         primaryStage.show();
     }
 
-    //default constructor needed
-    public AdminMenu(){
 
-    }
 
     public void setWelcomeName(){
         welcomeLabel.setText("Welcome Chris");

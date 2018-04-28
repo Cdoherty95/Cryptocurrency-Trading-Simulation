@@ -12,9 +12,8 @@
          <children>
             <Button fx:id="viewUsers" mnemonicParsing="false" onAction="#viewUsers" text="View All Users" />
             <Button fx:id="viewTransactionHistory" mnemonicParsing="false" onAction="#viewTransactionHistory" text="View All Transactions" />
-            <Button mnemonicParsing="false" />
             <Button fx:id="viewWallets" mnemonicParsing="false" onAction="#viewWallets" text="View All User Wallets" />
-            <Button mnemonicParsing="false" />
+            <Button fx:id="userMenu" mnemonicParsing="false" onAction="#backToUserMenu" text="Back To User Menu" />
          </children>
       </VBox>
       <Label fx:id="welcomeLabel" alignment="CENTER" layoutX="32.0" layoutY="40.0" prefHeight="51.0" prefWidth="235.0" text="Welcome">

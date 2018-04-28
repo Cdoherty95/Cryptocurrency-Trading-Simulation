@@ -9,10 +9,59 @@ public class TransactionModel {
     IntegerProperty transID;
     IntegerProperty userID;
     StringProperty type;
-    StringProperty crycode;
-    DoubleProperty cAmt;
-    DoubleProperty usAmt;
+    StringProperty firstCurrencyCode;
+    StringProperty secondCurrencyCode;
+    DoubleProperty firstCurrencyAmount;
+    DoubleProperty secondCurrencyAmount;
     Date date;
+
+    public String getFirstCurrencyCode() {
+        return firstCurrencyCode.get();
+    }
+
+    public StringProperty firstCurrencyCodeProperty() {
+        return firstCurrencyCode;
+    }
+
+    public void setFirstCurrencyCode(String firstCurrencyCode) {
+        this.firstCurrencyCode.set(firstCurrencyCode);
+    }
+
+    public String getSecondCurrencyCode() {
+        return secondCurrencyCode.get();
+    }
+
+    public StringProperty secondCurrencyCodeProperty() {
+        return secondCurrencyCode;
+    }
+
+    public void setSecondCurrencyCode(String secondCurrencyCode) {
+        this.secondCurrencyCode.set(secondCurrencyCode);
+    }
+
+    public double getFirstCurrencyAmount() {
+        return firstCurrencyAmount.get();
+    }
+
+    public DoubleProperty firstCurrencyAmountProperty() {
+        return firstCurrencyAmount;
+    }
+
+    public void setFirstCurrencyAmount(double firstCurrencyAmount) {
+        this.firstCurrencyAmount.set(firstCurrencyAmount);
+    }
+
+    public double getSecondCurrencyAmount() {
+        return secondCurrencyAmount.get();
+    }
+
+    public DoubleProperty secondCurrencyAmountProperty() {
+        return secondCurrencyAmount;
+    }
+
+    public void setSecondCurrencyAmount(double secondCurrencyAmount) {
+        this.secondCurrencyAmount.set(secondCurrencyAmount);
+    }
 
     public int getTransID() {
         return transID.get();
@@ -50,42 +99,6 @@ public class TransactionModel {
         this.type.set(type);
     }
 
-    public String getCrycode() {
-        return crycode.get();
-    }
-
-    public StringProperty crycodeProperty() {
-        return crycode;
-    }
-
-    public void setCrycode(String crycode) {
-        this.crycode.set(crycode);
-    }
-
-    public double getcAmt() {
-        return cAmt.get();
-    }
-
-    public DoubleProperty cAmtProperty() {
-        return cAmt;
-    }
-
-    public void setcAmt(double cAmt) {
-        this.cAmt.set(cAmt);
-    }
-
-    public double getUsAmt() {
-        return usAmt.get();
-    }
-
-    public DoubleProperty usAmtProperty() {
-        return usAmt;
-    }
-
-    public void setUsAmt(double usAmt) {
-        this.usAmt.set(usAmt);
-    }
-
     public Date getDate() {
         return date;
     }
@@ -94,13 +107,15 @@ public class TransactionModel {
         this.date = date;
     }
 
-    public TransactionModel(int tid, int uId, String typ, String cc, Double cryptAmt, Double usdAmt, Date ts){
+    public TransactionModel(int tid, int uId, String typ, String fcc, Double fca, String scc, Double sca, Date ts) {
         this.transID = new SimpleIntegerProperty(tid);
         this.userID = new SimpleIntegerProperty(uId);
         this.type = new SimpleStringProperty(typ);
-        this.crycode = new SimpleStringProperty(cc);
-        this.cAmt = new SimpleDoubleProperty(cryptAmt);
-        this.usAmt = new SimpleDoubleProperty(usdAmt);
+        this.firstCurrencyCode = new SimpleStringProperty(fcc);
+        this.firstCurrencyAmount = new SimpleDoubleProperty(fca);
+        this.secondCurrencyCode = new SimpleStringProperty(scc);
+        this.secondCurrencyAmount = new SimpleDoubleProperty(sca);
+
         this.date = ts;
     }
 

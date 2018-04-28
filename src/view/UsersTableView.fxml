@@ -4,12 +4,13 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane prefHeight="300.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.UserTableViewController">
    <children>
       <Label fx:id="heading" layoutX="229.0" layoutY="14.0" text="Users Table" />
-      <TableView fx:id="table" layoutX="14.0" layoutY="42.0" prefHeight="318.0" prefWidth="466.0">
+      <TableView fx:id="table" layoutX="14.0" layoutY="42.0" prefHeight="318.0" prefWidth="406.0">
         <columns>
           <TableColumn fx:id="userIdCol" prefWidth="75.0" text="UserID" />
           <TableColumn fx:id="usernameCol" prefWidth="75.0" text="Username" />
@@ -18,6 +19,15 @@
         </columns>
       </TableView>
       <Button fx:id="exitBtn" layoutX="534.0" layoutY="10.0" mnemonicParsing="false" onAction="#exit" text="Exit" />
-      <Button fx:id="mainMenuBtn" layoutX="429.0" layoutY="10.0" mnemonicParsing="false" onAction="#menu" text="Main Menu" />
+      <Button fx:id="mainMenuBtn" layoutX="429.0" layoutY="10.0" mnemonicParsing="false" onAction="#menu" text="Menu" />
+      <AnchorPane fx:id="adminAnchorPane" layoutX="426.0" layoutY="59.0" prefHeight="287.0" prefWidth="158.0">
+         <children>
+            <Label layoutX="44.0" layoutY="14.0" text="Remove User" />
+            <TextField fx:id="userIDTextField" layoutX="19.0" layoutY="74.0" prefHeight="26.0" prefWidth="119.0" />
+            <Label layoutX="59.0" layoutY="56.0" text="User ID" />
+            <Button fx:id="rmvUserBtn" layoutX="36.0" layoutY="131.0" mnemonicParsing="false" onAction="#removeUser" text="Remove User" />
+            <Label fx:id="errorLabl" alignment="CENTER" layoutX="7.0" layoutY="185.0" prefHeight="18.0" prefWidth="146.0" textFill="RED" />
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

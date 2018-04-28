@@ -174,17 +174,22 @@ public class ExchangeController{
         System.out.println("Place Order Btn Clicked");
         errorLabl.setText("");
         userIn = Double.parseDouble(inputAmount.getText().replaceAll("[^\\d.]", ""));
-
-        if(toggleBuySell.isSelected()){//Sell
+        //Sell
+        if(toggleBuySell.isSelected()){
+            //Recalculate the total just to make sure the user didnt change anything
             total = (userIn * Double.parseDouble(tradeOptionName.getText().replaceAll("[^\\d.]", "")));
+            //sets the calculated amout label
             calculatedAmountLable.setText(String.valueOf(round(total, 2)));
 
             //if we are trading eth for BTC
             if(exchangingOne.equals("ETH") && exchangeTo.equals("BTC")){
                 System.out.println("Exchanging ETH FOR BTC");
                 System.out.println(total);
+                //if the user input is less than the balance in the bank
                 if(userIn<=Double.parseDouble(currency1AmountLable.getText())){
+                    //subtracts the amount from the users bank balance
                     double balAfter = (Double.parseDouble(currency1AmountLable.getText()) - userIn);
+                    //Adds to the usr's account balance
                     double balanceAfterGetValues = (Double.parseDouble(currency2AmountLable.getText().replaceAll("[^\\d.]", "")) + total);
 
                     //If funds are sufficient set the balances
@@ -193,6 +198,7 @@ public class ExchangeController{
                         System.out.println("ETH Balance Change to" +balAfter);
                         daoWallet.setBtcAmount(round(balanceAfterGetValues, 2));
                         daoWallet.setEthAmount(round(balAfter,2));
+                        daoWallet.logTransaction("Sell ETH for BTC","ETH", round(balanceAfterGetValues, 2), "ETH", round(balAfter,2));
                         updateDataAfterChangingExchanges(menuOption);
                     }
 
@@ -213,6 +219,7 @@ public class ExchangeController{
                         System.out.println("USD Balance Change to" + usdBalanceAfter);
                         daoWallet.setUsdAmount(round(usdBalanceAfter,2));
                         daoWallet.setBtcAmount(round(cryptoBalAfter,2));
+                        daoWallet.logTransaction("Sell BTC for USD","BTC", round(cryptoBalAfter, 2), "USD", round(usdBalanceAfter,2));
                         updateDataAfterChangingExchanges(menuOption);
                     }
                     //If funds are sufficient set the balances
@@ -221,6 +228,7 @@ public class ExchangeController{
                         System.out.println("USD Balance Change to" + usdBalanceAfter);
                         daoWallet.setUsdAmount(round(usdBalanceAfter,2));
                         daoWallet.setEthAmount(round(cryptoBalAfter,2));
+                        daoWallet.logTransaction("Sell ETH for USD","ETH", round(cryptoBalAfter, 2), "USD", round(usdBalanceAfter,2));
                         updateDataAfterChangingExchanges(menuOption);
                     }
                 } else {
@@ -246,6 +254,8 @@ public class ExchangeController{
                         System.out.println("ETH Balance Change to" +ethBalanceAfterGetValues);
                         daoWallet.setEthAmount(round(ethBalanceAfterGetValues, 2));
                         daoWallet.setBtcAmount(round(btcBalAfter,2));
+                        daoWallet.logTransaction("Buy BTC with ETH","BTC", round(btcBalAfter, 2), "ETH",
+                                round(ethBalanceAfterGetValues,2));
                         updateDataAfterChangingExchanges(menuOption);
                     }
 
@@ -266,6 +276,8 @@ public class ExchangeController{
                         System.out.println("USD Balance Change to" +usdBalanceAfterGetValues);
                         daoWallet.setBtcAmount(round(cryptoBalAfter,2));
                         daoWallet.setUsdAmount(round(usdBalanceAfterGetValues,2));
+                        daoWallet.logTransaction("Buy BTC with USD","USD", round(usdBalanceAfterGetValues, 2),
+                                "BTC", round(cryptoBalAfter,2));
                         updateDataAfterChangingExchanges(menuOption);
                     }
                     if (exchangeTo.equals("USD") && exchangingOne.equals("ETH")) {
@@ -273,6 +285,8 @@ public class ExchangeController{
                         System.out.println("USD Balance Change to" +usdBalanceAfterGetValues);
                         daoWallet.setEthAmount(round(cryptoBalAfter,2));
                         daoWallet.setUsdAmount(round(usdBalanceAfterGetValues,2));
+                        daoWallet.logTransaction("Buy ETH with USD","USD", round(usdBalanceAfterGetValues, 2),
+                                "ETH", round(cryptoBalAfter,2));
                         updateDataAfterChangingExchanges(menuOption);
                     }
                 } else {

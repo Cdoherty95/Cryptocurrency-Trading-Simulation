@@ -49,7 +49,10 @@ public class TransactionTableController {
     private TableColumn<TransactionModel, Double> caAmount;
 
     @FXML
-    private TableColumn<TransactionModel, Double> usdAmtCol;
+    private TableColumn<TransactionModel, String> sccColumn;
+
+    @FXML
+    private TableColumn<TransactionModel, Double> scaColumn;
 
     @FXML
     private TableColumn<TransactionModel, Date> date;
@@ -63,6 +66,8 @@ public class TransactionTableController {
     private ObservableList<TransactionModel> tHistList = FXCollections.observableArrayList();
 
     //public String allOrOne = null;
+
+    DaoWallet daoWallet = new DaoWallet();
 
     @FXML
     void exit(ActionEvent event) {
@@ -87,16 +92,16 @@ public class TransactionTableController {
         assert typeCol != null : "fx:id=\"typeCol\" was not injected: check your FXML file 'TransactionHist.fxml'.";
         assert ccodeCol != null : "fx:id=\"ccodeCol\" was not injected: check your FXML file 'TransactionHist.fxml'.";
         assert caAmount != null : "fx:id=\"caAmount\" was not injected: check your FXML file 'TransactionHist.fxml'.";
-        assert usdAmtCol != null : "fx:id=\"usdAmtCol\" was not injected: check your FXML file 'TransactionHist.fxml'.";
         assert exitBtn != null : "fx:id=\"exitBtn\" was not injected: check your FXML file 'TransactionHist.fxml'.";
         assert mainMenuBtn != null : "fx:id=\"mainMenuBtn\" was not injected: check your FXML file 'TransactionHist.fxml'.";
 
         transIDCol.setCellValueFactory(new PropertyValueFactory<>("transID"));
         userIDCol.setCellValueFactory(new PropertyValueFactory<>("userID"));
         typeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
-        ccodeCol.setCellValueFactory(new PropertyValueFactory<>("crycode"));
-        caAmount.setCellValueFactory(new PropertyValueFactory<>("cAmt"));
-        usdAmtCol.setCellValueFactory(new PropertyValueFactory<>("usAmt"));
+        ccodeCol.setCellValueFactory(new PropertyValueFactory<>("firstCurrencyCode"));
+        caAmount.setCellValueFactory(new PropertyValueFactory<>("firstCurrencyAmount"));
+        sccColumn.setCellValueFactory(new PropertyValueFactory<>("secondCurrencyCode"));
+        scaColumn.setCellValueFactory(new PropertyValueFactory<>("secondCurrencyAmount"));
         date.setCellValueFactory(new PropertyValueFactory<>("date"));
 
         //Fills the table with information in the Observ list
@@ -121,30 +126,30 @@ public class TransactionTableController {
     }
 
     public void setDataAU() throws SQLException {
-        DaoWallet daoWallet = new DaoWallet();
         ResultSet rs = daoWallet.getTransactionHistoryActiveUser();
         while (rs.next()) {
             //get Unix timestamp * 1000 to get it to current date and cast it to date object
             Date timestamp = new Date((rs.getLong("DateAdded")*1000));
             tHistList.add(new TransactionModel(
                     rs.getInt("ID"), rs.getInt("UserID"),
-                    rs.getString("Type"), rs.getString("CryptoCode"),
-                    rs.getDouble("CryptoAmt"), rs.getDouble("USDAmt"),
+                    rs.getString("Type"), rs.getString("FirstCurrencyCode"),
+                    rs.getDouble("FirstCurrencyAmount"), rs.getString("SecondCurrencyCode"),
+                    rs.getDouble("SecondCurrencyAmount"),
                     timestamp));
         }
         rs.close();
     }
 
     public void setDataAll() throws SQLException {
-        DaoWallet daoWallet = new DaoWallet();
         ResultSet rs = daoWallet.getTransactionHistoryAll();
         while (rs.next()) {
             //get Unix timestamp * 1000 to get it to current date and cast it to date object
             Date timestamp = new Date((rs.getLong("DateAdded")*1000));
             tHistList.add(new TransactionModel(
                     rs.getInt("ID"), rs.getInt("UserID"),
-                    rs.getString("Type"), rs.getString("CryptoCode"),
-                    rs.getDouble("CryptoAmt"), rs.getDouble("USDAmt"),
+                    rs.getString("Type"), rs.getString("FirstCurrencyCode"),
+                    rs.getDouble("FirstCurrencyAmount"), rs.getString("SecondCurrencyCode"),
+                    rs.getDouble("SecondCurrencyAmount"),
                     timestamp));
         }
         rs.close();
