@@ -62,4 +62,34 @@ public class DaoUpdateCurrencyHist {
         return results;
 
     }
+    public ResultSet get1BtcHist() throws SQLException {
+
+        //Creates a connection to the database
+        statement = connection.connect().createStatement();
+
+        //sql to select from database
+        sql = "SELECT * FROM BTCHistory ORDER BY TimeStamp DESC LIMIT 1";
+
+        ResultSet results = statement.executeQuery(sql);
+
+        //results.close();
+
+        return results;
+
+    }
+    public ResultSet get1EthHist() throws SQLException {
+
+        //Creates a connection to the database
+        statement = connection.connect().createStatement();
+
+        //sql to select from database
+        sql = "SELECT * FROM ETHHistory ORDER BY TimeStamp DESC LIMIT 1";
+
+        ResultSet results = statement.executeQuery(sql);
+
+        //results.close();
+
+        return results;
+
+    }
 }

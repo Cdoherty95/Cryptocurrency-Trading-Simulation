@@ -354,7 +354,7 @@ public class ExchangeController{
     public void setTradeOptionName(String crypto, String trade) throws SQLException {
 
         ResultSet resultSet;
-        resultSet = daoCurrencyHist.getEthHist();
+        resultSet = daoCurrencyHist.get1EthHist();
 
         while (resultSet.next()) {
             //gets the USD amount for 1 ETH
@@ -364,7 +364,7 @@ public class ExchangeController{
         }
         resultSet.close();
 
-        resultSet = daoCurrencyHist.getBtcHist();
+        resultSet = daoCurrencyHist.get1BtcHist();
 
         while (resultSet.next()) {
             //gets the USD amount for 1BTC

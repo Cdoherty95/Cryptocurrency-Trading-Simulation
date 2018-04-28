@@ -37,11 +37,12 @@ public class Main extends Application {
 	public static void main(String[] args) throws SQLException {
 		//this makes all the Active Users Inactive
 		dao.makeAllInactive();
-		//UpdateCurrencyPrices updCur = new UpdateCurrencyPrices();
-		//updCur.start();
+		UpdateCurrencyPrices updCur = new UpdateCurrencyPrices();
+		updCur.start();
 		launch(args);
 		//this makes all the Active Users Inactive
 		dao.makeAllInactive();
+		updCur.stop();
 
 	}
 }
