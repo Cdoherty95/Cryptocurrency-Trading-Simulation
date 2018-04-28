@@ -24,16 +24,18 @@ public class AdminMenuController implements MenuOperations {
     @FXML
     private Button viewTransactionHistory;
 
-    @FXML
-    private Button viewWallets;
+    //@FXML
+    //private Button viewWallets;
 
-    @FXML
-    private Button viewExchangeHistory;
+    //@FXML
+    //private Button viewExchangeHistory;
 
     @FXML
     private Label welcomeLabel;
-    @FXML
-    private Button logoutBtn;
+
+    //@FXML
+    //private Button logoutBtn;
+
     @FXML
     private Button exitBtn;
 
@@ -42,8 +44,8 @@ public class AdminMenuController implements MenuOperations {
         assert border != null : "fx:id=\"border\" was not injected: check your FXML file 'AdminMain.fxml'.";
         assert viewUsers != null : "fx:id=\"viewUsers\" was not injected: check your FXML file 'AdminMain.fxml'.";
         assert viewTransactionHistory != null : "fx:id=\"viewTransactionHistory\" was not injected: check your FXML file 'AdminMain.fxml'.";
-        assert viewWallets != null : "fx:id=\"viewWallets\" was not injected: check your FXML file 'AdminMain.fxml'.";
-        assert viewExchangeHistory != null : "fx:id=\"viewExchangeHistory\" was not injected: check your FXML file 'AdminMain.fxml'.";
+        //assert viewWallets != null : "fx:id=\"viewWallets\" was not injected: check your FXML file 'AdminMain.fxml'.";
+        //assert viewExchangeHistory != null : "fx:id=\"viewExchangeHistory\" was not injected: check your FXML file 'AdminMain.fxml'.";
         assert welcomeLabel != null : "fx:id=\"welcomeLabel\" was not injected: check your FXML file 'AdminMain.fxml'.";
         welcomeLabel.setText("Welcome Chris");
     }
@@ -58,7 +60,7 @@ public class AdminMenuController implements MenuOperations {
         exit(event);
         Stage primaryStage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/TransactionHist.fxml"));
-        Parent root = (Parent) loader.load();
+        Parent root = loader.load();
         TransactionTableController controller = loader.getController();
         controller.whichDataToSet("admin");
         Scene scene = new Scene(root);
@@ -74,14 +76,7 @@ public class AdminMenuController implements MenuOperations {
         exit(event);
         //ViewUsers vu = new ViewUsers();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/UsersTableView.fxml"));
-        Parent root = (Parent) loader.load();
-
-        /*get the controllers functions to add data
-        UserTableViewController controller = loader.getController();
-        controller.setMainApp();
-        */
-
-        //set up the new stage+scene
+        Parent root = loader.load();
         Scene newScene = new Scene(root);
         newScene.getStylesheets().add(getClass().getResource("/view/app.css").toExternalForm());
         Stage newStage = new Stage();
@@ -100,19 +95,13 @@ public class AdminMenuController implements MenuOperations {
         exit(event);
         Stage primaryStage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Login.fxml"));
-        Parent root = (Parent) loader.load();
+        Parent root = loader.load();
         Scene scene = new Scene(root);
         scene.getStylesheets().add(getClass().getResource("/view/app.css").toExternalForm());
         primaryStage.setScene(scene);
         primaryStage.setTitle("Cryptocurrency Trader");
 
         primaryStage.show();
-    }
-
-
-
-    public void setWelcomeName(){
-        welcomeLabel.setText("Welcome Chris");
     }
 
     @FXML
