@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.SQLException;
 
-public class AdminMenu {
+public class AdminMenuController implements MenuOperations {
 
     @FXML
     private VBox border;
@@ -49,12 +49,12 @@ public class AdminMenu {
     }
 
     //default constructor needed
-    public AdminMenu(){
+    public AdminMenuController(){
 
     }
 
     @FXML
-    void viewTransactionHistory(ActionEvent event) throws IOException, SQLException {
+    public void viewTransactionHistory(ActionEvent event) throws IOException, SQLException {
         Stage primaryStage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/TransactionHist.fxml"));
         Parent root = (Parent) loader.load();
@@ -69,7 +69,7 @@ public class AdminMenu {
     }
 
     @FXML
-    void viewUsers(ActionEvent event) throws IOException {
+    public void viewUsers(ActionEvent event) throws IOException {
         exit(event);
         //ViewUsers vu = new ViewUsers();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/UsersTableView.fxml"));
@@ -89,18 +89,13 @@ public class AdminMenu {
     }
 
     @FXML
-    void viewWallets(ActionEvent event) {
-
-    }
-
-    @FXML
     void backToUserMenu(ActionEvent event) throws IOException, SQLException {
         exit(event);
         new WhichUserMainMenu("user");
     }
 
     @FXML
-    void logout(ActionEvent event) throws IOException {
+    public void logout(ActionEvent event) throws IOException {
         exit(event);
         Stage primaryStage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Login.fxml"));
@@ -120,10 +115,11 @@ public class AdminMenu {
     }
 
     @FXML
-    void exit(ActionEvent event){
+    public void exit(ActionEvent event){
         // get a handle to the stage
         Stage stage = (Stage) exitBtn.getScene().getWindow();
         // do what you have to do
         stage.close();
     }
+
 }

@@ -149,7 +149,7 @@ public class UserMenuController {
     }
 
     @FXML
-    void viewTransactionHistory(ActionEvent event) throws IOException, SQLException {
+    public void viewTransactionHistory(ActionEvent event) throws IOException, SQLException {
         exit(event);
         Stage primaryStage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/TransactionHist.fxml"));
@@ -165,7 +165,7 @@ public class UserMenuController {
     }
 
     @FXML
-    void logout(ActionEvent event) throws IOException {
+    public void logout(ActionEvent event) throws IOException {
         exit(event);
         Stage primaryStage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Login.fxml"));
@@ -180,7 +180,7 @@ public class UserMenuController {
     }
 
     @FXML
-    void exit(ActionEvent event) {
+    public void exit(ActionEvent event) {
         // get a handle to the stage
         Stage stage = (Stage) exitBtn.getScene().getWindow();
         // do what you have to do

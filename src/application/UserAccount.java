@@ -1,6 +1,6 @@
 package application;
 
-public class TraderAccount extends LoginController implements TraderOperations {
+public class UserAccount extends LoginController implements UserOperations {
 	
 	public int userID;
 	public String firstName;

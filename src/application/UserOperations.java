@@ -1,6 +1,8 @@
 package application;
 
-public interface TraderOperations {
+import model.DaoUsers;
+
+public interface UserOperations {
 	public void viewTransactionHistory();
 	public void viewCurrencyHistory();
 	public void buy();
@@ -9,6 +11,6 @@ public interface TraderOperations {
 	public void withdraw();
 	public void addBankAccount();
 	public void alterPaymentDetails();
-	public void updateAccountInformation();	
-	
+	public void updateAccountInformation();
+	DaoUsers daoUsers = new DaoUsers();
 }
