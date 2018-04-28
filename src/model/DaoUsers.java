@@ -249,6 +249,16 @@ public class DaoUsers {
 		return results;
 	}
 
+	public void updateUserInfo(int uID, String fnam, String lname, String em, String payName, int acc, int route) throws SQLException {
+				//Creates a connection to the database
+		statement = connection.connect().createStatement();
+		//sql to set active to 0
+		sql = "UPDATE UserAccountDetails SET FirstName='"+fnam+"', LastName='"+lname+"', PaymentName='"+payName+"', Account='"+acc+"', Routing='"+route+"' WHERE UserID="+uID+"";
+		System.out.println(sql);
+		statement.execute(sql);
+		statement.close();
+	}
+
 	/*
 	public static void main(String[] args) throws SQLException {
 		DaoUsers dao = new DaoUsers();

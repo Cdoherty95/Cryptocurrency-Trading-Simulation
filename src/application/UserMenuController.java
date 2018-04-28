@@ -174,8 +174,17 @@ public class UserMenuController {
     }
 
     @FXML
-    void updInfoBtn(ActionEvent event) {
+    void updInfoBtn(ActionEvent event) throws IOException {
+        exit(event);
+        Stage primaryStage = new Stage();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/UpdateUserInfo.fxml"));
+        Parent root = (Parent) loader.load();
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(getClass().getResource("/view/app.css").toExternalForm());
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("Cryptocurrency Trader");
 
+        primaryStage.show();
     }
 
     @FXML
