@@ -10,24 +10,26 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ExchangeController">
+<AnchorPane prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ExchangeController">
    <children>
       <ChoiceBox fx:id="chiceDropDown" layoutX="14.0" layoutY="14.0" onMouseClicked="#changeTrade" prefWidth="150.0" />
-      <AnchorPane layoutX="206.0" layoutY="181.0" prefHeight="203.0" prefWidth="352.0">
+      <AnchorPane layoutX="206.0" layoutY="181.0" prefHeight="249.0" prefWidth="352.0">
          <children>
             <ToggleButton fx:id="toggleBuySell" layoutX="70.0" layoutY="14.0" mnemonicParsing="false" onAction="#changeBuySell" prefHeight="32.0" prefWidth="210.0" stylesheets="@app.css" text="Buy">
                <font>
                   <Font size="14.0" />
                </font></ToggleButton>
-            <TextField fx:id="inputAmount" layoutX="65.0" layoutY="68.0" prefHeight="40.0" prefWidth="222.0">
+            <TextField fx:id="inputAmount" layoutX="113.0" layoutY="68.0" prefHeight="40.0" prefWidth="222.0">
                <opaqueInsets>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </opaqueInsets>
             </TextField>
-            <Label fx:id="inputAmountCurrencyLable" layoutX="225.0" layoutY="79.0" text="Label" />
-            <Button fx:id="placOrderBtn" layoutX="125.0" layoutY="160.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="99.0" text="Place Order" />
+            <Label fx:id="inputAmountCurrencyLable" layoutX="290.0" layoutY="79.0" text="Label" />
+            <Button fx:id="placOrderBtn" layoutX="125.0" layoutY="160.0" mnemonicParsing="false" onAction="#placeOrder" prefHeight="32.0" prefWidth="99.0" text="Place Order" />
             <Label fx:id="totalCurrencyLable" layoutX="69.0" layoutY="120.0" prefHeight="40.0" prefWidth="113.0" text="Total(xxx)=" />
-            <Label fx:id="calculatedAmountLable" layoutX="193.0" layoutY="120.0" prefHeight="40.0" prefWidth="113.0" text="amount(xxx)" />
+            <Label fx:id="calculatedAmountLable" layoutX="155.0" layoutY="120.0" prefHeight="40.0" prefWidth="113.0" text="amount(xxx)" />
+            <Label fx:id="errorLabl" alignment="CENTER" layoutX="45.0" layoutY="88.0" text="Amount" />
+            <Label fx:id="errorLabl" alignment="CENTER" layoutX="31.0" layoutY="205.0" prefHeight="32.0" prefWidth="298.0" textFill="RED" />
          </children>
       </AnchorPane>
       <SplitPane dividerPositions="0.49433573635427397" layoutX="195.0" layoutY="97.0" prefHeight="67.0" prefWidth="390.0">
