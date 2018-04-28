@@ -114,4 +114,30 @@ public class DaoWallet {
         rs.close();
         return wallet;
     }
+
+    public Double[] getCurrentTradePrices() throws SQLException {
+        Double[] wallet = new Double[4];
+        statement = connection.connect().createStatement();
+        sql = "Select USDAmt, BTCAmt, ETHAmt FROM Wallet WHERE UserID='"+activeUserID+"'";
+
+        ResultSet rs = statement.executeQuery(sql);
+        while(rs.next()){
+            wallet[0]=rs.getDouble("USDAmt");
+            wallet[1]=rs.getDouble("BTCAmt");
+        }
+        rs.close();
+
+        statement = connection.connect().createStatement();
+        sql = "Select USDAmt, BTCAmt, ETHAmt FROM Wallet WHERE UserID='"+activeUserID+"'";
+
+        ResultSet rs1 = statement.executeQuery(sql);
+        while(rs1.next()){
+            wallet[2]=rs.getDouble("USDAmt");
+            wallet[3]=rs.getDouble("ETHAmt");
+        }
+        rs1.close();
+
+        return wallet;
+
+    }
 }

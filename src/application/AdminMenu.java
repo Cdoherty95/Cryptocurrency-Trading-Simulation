@@ -11,6 +11,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class AdminMenu {
 
@@ -36,6 +37,8 @@ public class AdminMenu {
     @FXML
     private Button exitBtn;
 
+
+
     @FXML
     void initialize() {
         assert border != null : "fx:id=\"border\" was not injected: check your FXML file 'AdminMain.fxml'.";
@@ -48,8 +51,18 @@ public class AdminMenu {
     }
 
     @FXML
-    void viewTransactionHistory(ActionEvent event) {
+    void viewTransactionHistory(ActionEvent event) throws IOException, SQLException {
+        Stage primaryStage = new Stage();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/TransactionHist.fxml"));
+        Parent root = (Parent) loader.load();
+        TransactionTableController controller = loader.getController();
+        controller.whichDataToSet("admin");
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(getClass().getResource("/view/app.css").toExternalForm());
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("Cryptocurrency Trader");
 
+        primaryStage.show();
     }
 
     @FXML

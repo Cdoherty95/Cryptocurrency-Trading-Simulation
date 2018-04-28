@@ -8,15 +8,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import model.DaoUpdateCurrencyHist;
 import model.DaoUsers;
 import model.DaoWallet;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
@@ -32,16 +32,16 @@ public class ExchangeController {
     private ChoiceBox<String> chiceDropDown;
 
     @FXML
-    private Label usdLable;
+    private Label currency1Lable;
 
     @FXML
-    private Label usdAmountLable;
+    private Label currency1AmountLable;
 
     @FXML
-    private AnchorPane cryptoNameLable;
+    private Label currency2Lable;
 
     @FXML
-    private Label CryptoBalLable;
+    private Label currency2AmountLable;
 
     @FXML
     private ToggleButton toggleBuySell;
@@ -70,35 +70,47 @@ public class ExchangeController {
     @FXML
     private Button exitBtn;
 
-    String[] ActiveUserID;
 
+    String[] ActiveUserID;
     DaoWallet daoWallet = new DaoWallet();
     DaoUsers daoUsers = new DaoUsers();
-    int i=0;
+    DaoUpdateCurrencyHist daoCurrencyHist = new DaoUpdateCurrencyHist();
+    int i = 0;
+    double usdBTCHist = 0, btcHist = 0, usdETHHist = 0, ethHist = 0, total = 0;
+    String exchangingOne = null, exchangeTo = null;
+    Double[] wallet;
+
 
     ChangeListener<Number> changeListener = new ChangeListener<Number>() {
 
         @Override
         public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-            if(i==0){
-                updateDataAfterChangingExchanges(newValue);
+            if (i == 0) {
+                try {
+                    updateDataAfterChangingExchanges(newValue);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
                 i++;
             }
         }
     };
-    public ExchangeController() throws SQLException {
 
+
+    public ExchangeController() throws SQLException {
         ActiveUserID = daoUsers.activeUserInfo();
+        wallet = daoWallet.getWalletAmounts();
+
     }
 
 
     @FXML
-    void initialize() {
+    void initialize() throws SQLException {
         assert chiceDropDown != null : "fx:id=\"chiceDropDown\" was not injected: check your FXML file 'Exchange.fxml'.";
-        assert usdLable != null : "fx:id=\"usdLable\" was not injected: check your FXML file 'Exchange.fxml'.";
-        assert usdAmountLable != null : "fx:id=\"usdAmountLable\" was not injected: check your FXML file 'Exchange.fxml'.";
-        assert cryptoNameLable != null : "fx:id=\"cryptoNameLable\" was not injected: check your FXML file 'Exchange.fxml'.";
-        assert CryptoBalLable != null : "fx:id=\"CryptoBalLable\" was not injected: check your FXML file 'Exchange.fxml'.";
+        assert currency1Lable != null : "fx:id=\"currency1Lable\" was not injected: check your FXML file 'Exchange.fxml'.";
+        assert currency1AmountLable != null : "fx:id=\"currency1AmountLable\" was not injected: check your FXML file 'Exchange.fxml'.";
+        assert currency2Lable != null : "fx:id=\"currency2Lable\" was not injected: check your FXML file 'Exchange.fxml'.";
+        assert currency2AmountLable != null : "fx:id=\"currency2AmountLable\" was not injected: check your FXML file 'Exchange.fxml'.";
         assert toggleBuySell != null : "fx:id=\"toggleBuySell\" was not injected: check your FXML file 'Exchange.fxml'.";
         assert inputAmount != null : "fx:id=\"inputAmount\" was not injected: check your FXML file 'Exchange.fxml'.";
         assert inputAmountCurrencyLable != null : "fx:id=\"inputAmountCurrencyLable\" was not injected: check your FXML file 'Exchange.fxml'.";
@@ -108,44 +120,230 @@ public class ExchangeController {
         assert oneCryptoName != null : "fx:id=\"oneCryptoName\" was not injected: check your FXML file 'Exchange.fxml'.";
         assert tradeOptionName != null : "fx:id=\"tradeOptionName\" was not injected: check your FXML file 'Exchange.fxml'.";
         defaultStart();
+        inputAmount.textProperty().addListener((observable, oldValue, userInput) -> {
+            System.out.println("textfield changed from " + oldValue + " to " + userInput);
+            if (toggleBuySell.isSelected()) {//Sell Mode
+                //if Stmts for Cases
+                if (exchangingOne.equals("BTC") && exchangeTo.equals("USD")) {
+
+                    total = (wallet[1] - Double.parseDouble(userInput));
+
+                    //Change the total Value
+                    calculatedAmountLable.setText("$" + String.valueOf(total));
+                }
+                if (exchangingOne.equals("ETH") && exchangeTo.equals("USD")) {
+
+                }
+                if (exchangingOne.equals("BTC") && exchangeTo.equals("ETH")) {
+
+                }
+                if (exchangingOne.equals("ETH") && exchangeTo.equals("BTC")) {
+
+                }
+            } else {//Buy Mode
+                //If statements for cases
+                if (exchangingOne.equals("BTC") && exchangeTo.equals("USD")) {
+                    total = (Double.parseDouble(userInput));
+                    calculatedAmountLable.setText(String.valueOf(total));
+                }
+                if (exchangingOne.equals("ETH") && exchangeTo.equals("USD")) {
+
+                }
+                if (exchangingOne.equals("BTC") && exchangeTo.equals("ETH")) {
+
+                }
+                if (exchangingOne.equals("ETH") && exchangeTo.equals("BTC")) {
+
+                }
+                calculatedAmountLable.setText(String.valueOf(total));
+            }
+        });
+
+
     }
 
-    public void defaultStart() {
+    @FXML
+    void changeBuySell(ActionEvent event) {
+        toggleBuySell.setOnAction(e -> {
+            toggleBuySell.getStyleClass().removeAll("red-button", "blue-button");
+            if (toggleBuySell.isSelected()) {
+                toggleBuySell.getStyleClass().add("red-button");
+                toggleBuySell.setText("Sell");
+                System.out.println("toggle Selected Sell");
+            } else {
+                toggleBuySell.getStyleClass().add("blue-button");
+                toggleBuySell.setText("Buy");
+                System.out.println("toggle Selected buy");
+            }
+            setAmountLables();
+        });
+    }
+
+    public void defaultStart() throws SQLException {
         chiceDropDown.getItems().addAll("BTC/USD", "BTC/ETH", "ETH/USD", "ETH/BTC");
         chiceDropDown.getSelectionModel().selectFirst();
+        //sets the toggle Button background color to blue
+        toggleBuySell.getStyleClass().add("blue-button");
+        updateDataAfterChangingExchanges(0);
     }
 
-    public void setUSDBalance(String crypto) throws SQLException {
-        Double[] wallet = daoWallet.getWalletAmounts();
-        usdAmountLable.setText(String.valueOf(wallet[0]));
-        if (crypto.equals("btc")) {
-            CryptoBalLable.setText(String.valueOf(wallet[1]));
+    public void setCurrency1LableandAmount(String currency) throws SQLException {
+        currency1AmountLable.setText(String.valueOf(wallet[0]));
+    }
+
+    public void setAmountLables() {
+        if (toggleBuySell.isSelected()) { // SELLL
+            //Change the label in the textField
+            inputAmountCurrencyLable.setText(exchangingOne);
+            //Change Total Lable
+            totalCurrencyLable.setText("Total(" + exchangeTo + ") = ");
+        } else {//BUY
+            //Change the label in the textField
+            inputAmountCurrencyLable.setText(exchangeTo);
+            //Change Total Lable
+            totalCurrencyLable.setText("Total(" + exchangingOne + ") = ");
         }
-        if (crypto.equals("eth")) {
-            CryptoBalLable.setText(String.valueOf(wallet[2]));
+    }
+
+    public void setBalancesBoxes(String currency1, String currency2) throws SQLException {
+        if (currency1.equals("BTC")) {
+            currency1Lable.setText("BTC");
+            currency1AmountLable.setText(String.valueOf(wallet[1]));
+        }
+        if (currency1.equals("ETH")) {
+            currency1Lable.setText("ETH");
+            currency1AmountLable.setText(String.valueOf(wallet[2]));
+
+        }
+        if (currency2.equals("BTC")) {
+            currency2Lable.setText("BTC");
+            currency2AmountLable.setText(String.valueOf(wallet[1]));
+        }
+        if (currency2.equals("ETH")) {
+            currency2Lable.setText("ETH");
+            currency2AmountLable.setText(String.valueOf(wallet[2]));
+
+        }
+        if (currency2.equals("USD")) {
+            currency2Lable.setText("USD");
+            currency2AmountLable.setText(String.valueOf(wallet[0]));
+        }
+    }
+
+    public void setExchangeRates(String oneCrypto, String twoValue) throws SQLException {
+        setOneCryptoName(oneCrypto);
+        setTradeOptionName(oneCrypto, twoValue);
+    }
+
+    public void setOneCryptoName(String name) {
+        if (name.equals("BTC")) {
+            oneCryptoName.setText("1 BTC");
+        }
+        if (name.equals("ETH")) {
+            oneCryptoName.setText("1 ETH");
+        }
+    }
+
+    public void setTradeOptionName(String crypto, String trade) throws SQLException {
+
+        ResultSet resultSet;
+        resultSet = daoCurrencyHist.getEthHist();
+
+        while (resultSet.next()) {
+            //gets the USD amount for 1 ETH
+            usdETHHist = resultSet.getDouble("USDAmt");
+            //gets the BTC amount for 1 eth
+            btcHist = resultSet.getDouble("CryptoAmt");
+        }
+        resultSet.close();
+
+        resultSet = daoCurrencyHist.getBtcHist();
+
+        while (resultSet.next()) {
+            //gets the USD amount for 1BTC
+            usdBTCHist = resultSet.getDouble("USDAmt");
+            //gets the ETH amount for 1BTC
+            ethHist = resultSet.getDouble("CryptoAmt");
+        }
+        resultSet.close();
+
+        if (trade.equals("USD") && crypto.equals("BTC")) {
+            tradeOptionName.setText(String.valueOf(usdBTCHist) + " USD");
+            if (trade.equals("BTC")) {
+                tradeOptionName.setText(String.valueOf(btcHist) + " BTC");
+            }
+            if (trade.equals("ETH")) {
+                tradeOptionName.setText(String.valueOf(ethHist) + " ETH");
+            }
+        }
+        if (trade.equals("USD") && crypto.equals("ETH")) {
+            tradeOptionName.setText(String.valueOf(usdETHHist) + " USD");
+            if (trade.equals("BTC")) {
+                tradeOptionName.setText(String.valueOf(btcHist) + " BTC");
+            }
+            if (trade.equals("ETH")) {
+                tradeOptionName.setText(String.valueOf(ethHist) + " ETH");
+            }
+        }
+        if (!trade.equals("USD")) {
+            if (trade.equals("BTC")) {
+                tradeOptionName.setText(String.valueOf(btcHist) + " BTC");
+            }
+            if (trade.equals("ETH")) {
+                tradeOptionName.setText(String.valueOf(ethHist) + " ETH");
+            }
         }
 
     }
 
-    public void updateDataAfterChangingExchanges(Number choice){
-        System.out.println(choice);
+    /*
+     *Calls all the necessary functions to set the correct values based
+     * on users choice from Choice Box
+     */
+
+    public void updateDataAfterChangingExchanges(Number ch) throws SQLException {
+
+        System.out.println(ch);
+        /*
+        WORKING HERE
+        BTC/USD = 0
+        BTC/ETH = 1
+        ETH/USD=2
+        ETH/BTC=3
+         */
+
+        int choice = Integer.parseInt(String.valueOf(ch));
+        if (choice == 0) {
+            exchangingOne = "BTC";
+            exchangeTo = "USD";
+        }
+        if (choice == 1) {
+            exchangingOne = "BTC";
+            exchangeTo = "ETH";
+        }
+        if (choice == 2) {
+            exchangingOne = "ETH";
+            exchangeTo = "USD";
+        }
+        if (choice == 3) {
+            exchangingOne = "ETH";
+            exchangeTo = "BTC";
+        }
+        setAmountLables();
+        setBalancesBoxes(exchangingOne, exchangeTo);
+        setExchangeRates(exchangingOne, exchangeTo);
+
+        System.out.println(choice + " choice value");
     }
 
     @FXML
     void changeTrade(MouseEvent event) {
-        usdAmountLable.setText("mouseEvent");
+        // currency1AmountLable.setText("mouseEvent");
         chiceDropDown.getSelectionModel()
                 .selectedIndexProperty()
                 .addListener(changeListener);
-        i=0;
+        i = 0;
     }
-
-    @FXML
-    void onContexMenuRequested(ContextMenuEvent event) {
-        System.out.println("context Menu Requested");
-
-    }
-
 
     @FXML
     public void exit(ActionEvent event) {

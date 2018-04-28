@@ -135,11 +135,13 @@ public class UserMenuController {
     }
 
     @FXML
-    void viewTransactionHistory(ActionEvent event) throws IOException {
+    void viewTransactionHistory(ActionEvent event) throws IOException, SQLException {
         exit(event);
         Stage primaryStage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/TransactionHist.fxml"));
         Parent root = (Parent) loader.load();
+        TransactionTableController controller = loader.getController();
+        controller.whichDataToSet("user");
         Scene scene = new Scene(root);
         scene.getStylesheets().add(getClass().getResource("/view/app.css").toExternalForm());
         primaryStage.setScene(scene);
@@ -182,8 +184,17 @@ public class UserMenuController {
     }
 
     @FXML
-    void goToAdminMenu(ActionEvent event){
+    void goToAdminMenu(ActionEvent event) throws IOException {
+        exit(event);
+        Stage primaryStage = new Stage();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/AdminMain.fxml"));
+        Parent root = (Parent) loader.load();
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(getClass().getResource("/view/app.css").toExternalForm());
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("Cryptocurrency Trader");
 
+        primaryStage.show();
     }
 
     public void disableAdminBtn(boolean y) throws SQLException {

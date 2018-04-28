@@ -1,1 +1,15 @@
-/* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+.red-button {
+    -fx-background-color: red;
+}
+
+.blue-button {
+    -fx-background-color: blue;
+}
+.white-button {
+    -fx-background-color: white;
+}
+/*
+.toggle-button:selected {
+    -fx-background-color: red;
+}
+*/

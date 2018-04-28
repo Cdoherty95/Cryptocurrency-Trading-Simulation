@@ -62,6 +62,8 @@ public class TransactionTableController {
 
     private ObservableList<TransactionModel> tHistList = FXCollections.observableArrayList();
 
+    //public String allOrOne = null;
+
     @FXML
     void exit(ActionEvent event) {
         // get a handle to the stage
@@ -102,12 +104,14 @@ public class TransactionTableController {
     }
 
     public TransactionTableController() throws SQLException {
-        DaoUsers daoUsers = new DaoUsers();
-        String[] allOrOne = daoUsers.activeUserInfo();
-        if(allOrOne[2].equals("user")) {
+
+    }
+
+    public void whichDataToSet(String allOrOne) throws SQLException {
+        if(allOrOne.equals("user")) {
             setDataAU();
         }
-        if(allOrOne[2].equals("admin")){
+        if(allOrOne.equals("admin")){
             setDataAll();
         }
     }

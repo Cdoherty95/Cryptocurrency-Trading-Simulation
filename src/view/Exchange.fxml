@@ -8,11 +8,46 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ExchangeController">
    <children>
-      <ChoiceBox fx:id="chiceDropDown" layoutX="14.0" layoutY="14.0" onContextMenuRequested="#onContexMenuRequested" onMouseClicked="#changeTrade" prefWidth="150.0" />
-      <SplitPane dividerPositions="0.5" layoutX="14.0" layoutY="64.0" orientation="VERTICAL" prefHeight="298.0" prefWidth="160.0">
+      <ChoiceBox fx:id="chiceDropDown" layoutX="14.0" layoutY="14.0" onMouseClicked="#changeTrade" prefWidth="150.0" />
+      <AnchorPane layoutX="206.0" layoutY="181.0" prefHeight="203.0" prefWidth="352.0">
+         <children>
+            <ToggleButton fx:id="toggleBuySell" layoutX="70.0" layoutY="14.0" mnemonicParsing="false" onAction="#changeBuySell" prefHeight="32.0" prefWidth="210.0" stylesheets="@app.css" text="Buy">
+               <font>
+                  <Font size="14.0" />
+               </font></ToggleButton>
+            <TextField fx:id="inputAmount" layoutX="65.0" layoutY="68.0" prefHeight="40.0" prefWidth="222.0">
+               <opaqueInsets>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </opaqueInsets>
+            </TextField>
+            <Label fx:id="inputAmountCurrencyLable" layoutX="225.0" layoutY="79.0" text="Label" />
+            <Button fx:id="placOrderBtn" layoutX="125.0" layoutY="160.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="99.0" text="Place Order" />
+            <Label fx:id="totalCurrencyLable" layoutX="69.0" layoutY="120.0" prefHeight="40.0" prefWidth="113.0" text="Total(xxx)=" />
+            <Label fx:id="calculatedAmountLable" layoutX="193.0" layoutY="120.0" prefHeight="40.0" prefWidth="113.0" text="amount(xxx)" />
+         </children>
+      </AnchorPane>
+      <SplitPane dividerPositions="0.49433573635427397" layoutX="195.0" layoutY="97.0" prefHeight="67.0" prefWidth="390.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <Label fx:id="oneCryptoName" alignment="CENTER" prefHeight="65.6" prefWidth="188.0" text="1 Crypto Name" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="66.0" prefWidth="123.0">
+               <children>
+                  <Label fx:id="tradeOptionName" alignment="CENTER" layoutY="23.0" prefHeight="65.6" prefWidth="192.8" text="Trade Opetion name/value" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+      <Button fx:id="exitBtn" layoutX="531.0" layoutY="16.0" mnemonicParsing="false" onAction="#exit" text="Exit" />
+      <Button fx:id="logOut" layoutX="448.0" layoutY="16.0" mnemonicParsing="false" onAction="#logout" text="Log Out" />
+      <Button fx:id="mainMenu" layoutX="349.0" layoutY="16.0" mnemonicParsing="false" onAction="#mainMenu" text="Main Menu" />
+      <SplitPane dividerPositions="0.5" layoutX="9.0" layoutY="87.0" orientation="VERTICAL" prefHeight="298.0" prefWidth="160.0">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="129.0" prefWidth="158.0">
                <children>
@@ -20,12 +55,12 @@
                     <items>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                            <children>
-                              <Label fx:id="usdLable" layoutX="65.0" layoutY="24.0" text="USD" />
+                              <Label fx:id="currency1Lable" alignment="CENTER" layoutX="65.0" layoutY="24.0" prefHeight="67.2" prefWidth="156.8" text="Currency1Name" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                            </children>
                         </AnchorPane>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                            <children>
-                              <Label fx:id="usdAmountLable" layoutX="40.0" layoutY="24.0" text="USD Amount" />
+                              <Label fx:id="currency1AmountLable" alignment="CENTER" layoutX="40.0" layoutY="24.0" prefHeight="67.2" prefWidth="156.8" text="Currency1Amount" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                            </children>
                         </AnchorPane>
                     </items>
@@ -36,14 +71,14 @@
                <children>
                   <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="144.0" prefWidth="158.4">
                      <items>
-                        <AnchorPane fx:id="cryptoNameLable" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                            <children>
-                              <Label layoutX="39.0" layoutY="24.0" text="Crypto Name" />
+                              <Label fx:id="currency2Lable" alignment="CENTER" layoutX="39.0" layoutY="24.0" prefHeight="67.2" prefWidth="156.8" text="Currency2Name" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                            </children>
                         </AnchorPane>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                            <children>
-                              <Label fx:id="CryptoBalLable" layoutX="47.0" layoutY="24.0" text="Crypto Bal" />
+                              <Label fx:id="currency2AmountLable" alignment="CENTER" layoutX="47.0" layoutY="24.0" prefHeight="67.2" prefWidth="156.8" text="Currency2Amount" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                            </children>
                         </AnchorPane>
                      </items>
@@ -52,36 +87,7 @@
             </AnchorPane>
         </items>
       </SplitPane>
-      <AnchorPane layoutX="205.0" layoutY="135.0" prefHeight="239.0" prefWidth="352.0">
-         <children>
-            <ToggleButton fx:id="toggleBuySell" layoutX="70.0" layoutY="14.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="210.0" text="ToggleButton" />
-            <TextField fx:id="inputAmount" layoutX="65.0" layoutY="68.0" prefHeight="40.0" prefWidth="222.0">
-               <opaqueInsets>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </opaqueInsets>
-            </TextField>
-            <Label fx:id="inputAmountCurrencyLable" layoutX="225.0" layoutY="79.0" text="Label" />
-            <Button fx:id="placOrderBtn" layoutX="125.0" layoutY="171.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="99.0" text="Place Order" />
-            <Label fx:id="totalCurrencyLable" layoutX="69.0" layoutY="120.0" prefHeight="40.0" prefWidth="113.0" text="Total(xxx)=" />
-            <Label fx:id="calculatedAmountLable" layoutX="193.0" layoutY="120.0" prefHeight="40.0" prefWidth="113.0" text="amount(xxx)" />
-         </children>
-      </AnchorPane>
-      <SplitPane dividerPositions="0.49433573635427397" layoutX="195.0" layoutY="57.0" prefHeight="67.0" prefWidth="390.0">
-        <items>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
-               <children>
-                  <Label fx:id="oneCryptoName" layoutX="27.0" layoutY="23.0" text="1 Crypto Name" />
-               </children>
-            </AnchorPane>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="66.0" prefWidth="123.0">
-               <children>
-                  <Label fx:id="tradeOptionName" layoutY="23.0" text="Trade Opetion name/value" />
-               </children>
-            </AnchorPane>
-        </items>
-      </SplitPane>
-      <Button fx:id="exitBtn" layoutX="531.0" layoutY="16.0" mnemonicParsing="false" onAction="#exit" text="Exit" />
-      <Button fx:id="logOut" layoutX="448.0" layoutY="16.0" mnemonicParsing="false" onAction="#logout" text="Log Out" />
-      <Button fx:id="mainMenu" layoutX="349.0" layoutY="16.0" mnemonicParsing="false" onAction="#mainMenu" text="Main Menu" />
+      <Label layoutX="53.0" layoutY="57.0" prefHeight="18.0" prefWidth="62.0" text="Balances" />
+      <Label layoutX="346.0" layoutY="66.0" text="Exchange Rate" />
    </children>
 </AnchorPane>

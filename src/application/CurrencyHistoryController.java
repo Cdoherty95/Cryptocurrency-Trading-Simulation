@@ -65,6 +65,8 @@ public class CurrencyHistoryController {
 
     private ObservableList<EthHistory> ethHist = FXCollections.observableArrayList();
 
+    DaoUpdateCurrencyHist dao = new DaoUpdateCurrencyHist();
+
 	@FXML
 	void exit(ActionEvent event) {
         // get a handle to the stage
@@ -108,7 +110,6 @@ public class CurrencyHistoryController {
     }
 
     public void setBtcData() throws SQLException {
-        DaoUpdateCurrencyHist dao = new DaoUpdateCurrencyHist();
         ResultSet rs = dao.getBtcHist();
         // loop through the result set
         while (rs.next()) {
@@ -123,7 +124,6 @@ public class CurrencyHistoryController {
     }
 
     public void setEthData() throws SQLException {
-        DaoUpdateCurrencyHist dao = new DaoUpdateCurrencyHist();
         ResultSet rs = dao.getEthHist();
         // loop through the result set
         while (rs.next()) {
