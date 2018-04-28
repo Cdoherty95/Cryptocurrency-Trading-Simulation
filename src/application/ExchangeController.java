@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import model.DaoUpdateCurrencyHist;
 import model.DaoUsers;
 import model.DaoWallet;
+import org.json.JSONException;
 
 import java.io.IOException;
 import java.net.URL;
@@ -22,7 +23,7 @@ import java.util.ResourceBundle;
 
 import static org.codehaus.groovy.runtime.DefaultGroovyMethods.round;
 
-public class ExchangeController {
+public class ExchangeController{
 
     @FXML
     private ResourceBundle resources;
@@ -75,6 +76,7 @@ public class ExchangeController {
     @FXML
     private Button exitBtn;
 
+    private Thread t;
 
     String[] ActiveUserID;
     DaoWallet daoWallet = new DaoWallet();
@@ -84,6 +86,7 @@ public class ExchangeController {
     double usdBTCHist = 0, btcHist = 0, usdETHHist = 0, ethHist = 0, total = 0, balanceAfter = 0, userIn =0;
     String exchangingOne = null, exchangeTo = null;
     Double[] wallet;
+    Number menuOption;
 
 
     ChangeListener<Number> changeListener = new ChangeListener<Number>() {
@@ -92,7 +95,8 @@ public class ExchangeController {
         public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
             if (i == 0) {
                 try {
-                    updateDataAfterChangingExchanges(newValue);
+                    menuOption = newValue;
+                    updateDataAfterChangingExchanges(menuOption);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -105,9 +109,11 @@ public class ExchangeController {
     public ExchangeController() throws SQLException {
         ActiveUserID = daoUsers.activeUserInfo();
         wallet = daoWallet.getWalletAmounts();
-
     }
 
+    private void updateWallet() throws SQLException {
+        wallet = daoWallet.getWalletAmounts();
+    }
 
     @FXML
     void initialize() throws SQLException {
@@ -164,70 +170,114 @@ public class ExchangeController {
     }
 
     @FXML
-    void placeOrder(ActionEvent event) {
+    void placeOrder(ActionEvent event) throws SQLException {
+        System.out.println("Place Order Btn Clicked");
         errorLabl.setText("");
         userIn = Double.parseDouble(inputAmount.getText().replaceAll("[^\\d.]", ""));
-        if(toggleBuySell.isSelected()){//Sell
-            if(userIn<=Double.parseDouble(currency1AmountLable.getText())){
-                double balAfter = (Double.parseDouble(currency1AmountLable.getText())-userIn);
-                //balance of crypto after trading
-                balanceAfter = (Double.parseDouble(currency2AmountLable.getText().replaceAll("[^\\d.]", ""))+total);
-                System.out.println(exchangeTo+"Balance after trade" + balanceAfter);
-                System.out.println(exchangingOne + "Balance Change to" +balAfter);
 
-                //If funds are sufficient set the balances
-                if(exchangeTo.equals("BTC") && exchangingOne.equals("USD")){
-                    System.out.println("BTC Balance after trade" + balanceAfter);
-                    System.out.println("USD Balance Change to" +balAfter);
+        if(toggleBuySell.isSelected()){//Sell
+            total = (userIn * Double.parseDouble(tradeOptionName.getText().replaceAll("[^\\d.]", "")));
+            calculatedAmountLable.setText(String.valueOf(round(total, 2)));
+
+            //if we are trading eth for BTC
+            if(exchangingOne.equals("ETH") && exchangeTo.equals("BTC")){
+                System.out.println("Exchanging ETH FOR BTC");
+                System.out.println(total);
+                if(userIn<=Double.parseDouble(currency1AmountLable.getText())){
+                    double balAfter = (Double.parseDouble(currency1AmountLable.getText()) - userIn);
+                    double balanceAfterGetValues = (Double.parseDouble(currency2AmountLable.getText().replaceAll("[^\\d.]", "")) + total);
+
+                    //If funds are sufficient set the balances
+                    if(exchangeTo.equals("BTC") && exchangingOne.equals("ETH")){
+                        System.out.println("BTC Balance after trade" + balanceAfterGetValues);
+                        System.out.println("ETH Balance Change to" +balAfter);
+                        daoWallet.setBtcAmount(round(balanceAfterGetValues, 2));
+                        daoWallet.setEthAmount(round(balAfter,2));
+                        updateDataAfterChangingExchanges(menuOption);
+                    }
+
+                }else {
+                    errorLabl.setText("Cannot trade more than you have");
                 }
-                //If funds are sufficient set the balances
-                if(exchangeTo.equals("BTC") && exchangingOne.equals("ETH")){
-                    System.out.println("BTC Balance after trade" + balanceAfter);
-                    System.out.println("ETH Balance Change to" +balAfter);
+            }
+            //We are trading ETH OR BTC for USD
+            else {
+                if (userIn <= Double.parseDouble(currency1AmountLable.getText())) {
+                    double cryptoBalAfter = (Double.parseDouble(currency1AmountLable.getText()) - userIn);
+                    //balance of crypto after trading
+                    double usdBalanceAfter = (Double.parseDouble(currency2AmountLable.getText().replaceAll("[^\\d.]", "")) + total);
+
+                    //If funds are sufficient set the balances
+                    if (exchangeTo.equals("USD") && exchangingOne.equals("BTC")) {
+                        System.out.println("BTC Balance after trade" + cryptoBalAfter);
+                        System.out.println("USD Balance Change to" + usdBalanceAfter);
+                        daoWallet.setUsdAmount(round(usdBalanceAfter,2));
+                        daoWallet.setBtcAmount(round(cryptoBalAfter,2));
+                        updateDataAfterChangingExchanges(menuOption);
+                    }
+                    //If funds are sufficient set the balances
+                    if (exchangeTo.equals("USD") && exchangingOne.equals("ETH")) {
+                        System.out.println("ETH Balance after trade" + cryptoBalAfter);
+                        System.out.println("USD Balance Change to" + usdBalanceAfter);
+                        daoWallet.setUsdAmount(round(usdBalanceAfter,2));
+                        daoWallet.setEthAmount(round(cryptoBalAfter,2));
+                        updateDataAfterChangingExchanges(menuOption);
+                    }
+                } else {
+                    errorLabl.setText("Cannot trade more than you have");
                 }
-                if(exchangeTo.equals("ETH") && exchangingOne.equals("USD")){
-                    System.out.println("ETH Balance after trade" + balanceAfter);
-                    System.out.println("USD Balance Change to" + balAfter);
-                }
-                //If funds are sufficient set the balances
-                if(exchangeTo.equals("ETH") && exchangingOne.equals("BTC")){
-                    System.out.println("ETH Balance after trade" + balanceAfter);
-                    System.out.println("BTC Balance Change to" +balAfter);
-                }
-            }else {
-                errorLabl.setText("Cannot trade more than you have");
             }
 
         }else {//Buy
-            //if user input is less than or equal to current balance of currency
-            if(userIn<=Double.parseDouble(currency2AmountLable.getText())){
-                double balAfter = (Double.parseDouble(currency2AmountLable.getText())-userIn);
-                balanceAfter = (Double.parseDouble(currency1AmountLable.getText().replaceAll("[^\\d.]", ""))+total);
-                System.out.println(exchangingOne+"Balance after trade" + balanceAfter);
-                System.out.println( exchangeTo+ "Balance Change to" +balAfter);
+            total = (userIn / Double.parseDouble(tradeOptionName.getText().replaceAll("[^\\d.]", "")));
+            calculatedAmountLable.setText(String.valueOf(round(total, 2)));
 
-                //If funds are sufficient set the balances
-                if(exchangeTo.equals("BTC") && exchangingOne.equals("USD")){
-                    System.out.println("BTC Balance after trade" + balanceAfter);
-                    System.out.println("USD Balance Change to" +balAfter);
-                }
-                //If funds are sufficient set the balances
-                if(exchangeTo.equals("BTC") && exchangingOne.equals("ETH")){
-                    System.out.println("BTC Balance after trade" + balanceAfter);
-                    System.out.println("ETH Balance Change to" +balAfter);
-                }
-                if(exchangeTo.equals("ETH") && exchangingOne.equals("USD")){
-                    System.out.println("ETH Balance after trade" + balanceAfter);
-                    System.out.println("USD Balance Change to" + balAfter);
-                }
-                //If funds are sufficient set the balances
-                if(exchangeTo.equals("ETH") && exchangingOne.equals("BTC")){
-                    System.out.println("ETH Balance after trade" + balanceAfter);
-                    System.out.println("BTC Balance Change to" +balAfter);
-                }
+            //if we are trading eth for BTC
+            if(exchangingOne.equals("ETH") && exchangeTo.equals("BTC")){
+                System.out.println("Exchanging ETH FOR BTC");
+                System.out.println(total);
+                if(userIn<=Double.parseDouble(currency2AmountLable.getText())){
+                    double btcBalAfter = (Double.parseDouble(currency2AmountLable.getText())-userIn);
+                    double ethBalanceAfterGetValues = (Double.parseDouble(currency2AmountLable.getText().replaceAll("[^\\d.]", ""))+total);
 
-            }else {
-                errorLabl.setText("Cannot trade more than you have");
+                    //If funds are sufficient set the balances
+                    if(exchangeTo.equals("BTC") && exchangingOne.equals("ETH")){
+                        System.out.println("BTC Balance after trade" + btcBalAfter);
+                        System.out.println("ETH Balance Change to" +ethBalanceAfterGetValues);
+                        daoWallet.setEthAmount(round(ethBalanceAfterGetValues, 2));
+                        daoWallet.setBtcAmount(round(btcBalAfter,2));
+                        updateDataAfterChangingExchanges(menuOption);
+                    }
+
+                }else {
+                    errorLabl.setText("Cannot trade more than you have");
+                }
+            }
+            //If we are exchanging BTC OR ETH FOR USD
+            else {
+                System.out.println("we are exchanging BTC OR ETH FOR USD");
+                if (userIn<= Double.parseDouble(currency2AmountLable.getText())) {
+                    double cryptoBalAfter = (Double.parseDouble(currency1AmountLable.getText()) + total);
+                    double usdBalanceAfterGetValues = (Double.parseDouble(currency2AmountLable.getText().replaceAll("[^\\d.]", "")) - userIn);
+
+                    //If funds are sufficient set the balances
+                    if (exchangeTo.equals("USD") && exchangingOne.equals("BTC")) {
+                        System.out.println("BTC Balance after trade" + cryptoBalAfter);
+                        System.out.println("USD Balance Change to" +usdBalanceAfterGetValues);
+                        daoWallet.setBtcAmount(round(cryptoBalAfter,2));
+                        daoWallet.setUsdAmount(round(usdBalanceAfterGetValues,2));
+                        updateDataAfterChangingExchanges(menuOption);
+                    }
+                    if (exchangeTo.equals("USD") && exchangingOne.equals("ETH")) {
+                        System.out.println("ETH Balance after trade" + cryptoBalAfter);
+                        System.out.println("USD Balance Change to" +usdBalanceAfterGetValues);
+                        daoWallet.setEthAmount(round(cryptoBalAfter,2));
+                        daoWallet.setUsdAmount(round(usdBalanceAfterGetValues,2));
+                        updateDataAfterChangingExchanges(menuOption);
+                    }
+                } else {
+                    errorLabl.setText("Cannot trade more than you have");
+                }
             }
 
         }
@@ -235,11 +285,13 @@ public class ExchangeController {
     }
 
     public void defaultStart() throws SQLException {
-        chiceDropDown.getItems().addAll("BTC/USD", "BTC/ETH", "ETH/USD", "ETH/BTC");
+
+        chiceDropDown.getItems().addAll("BTC/USD", "ETH/USD", "ETH/BTC");
         chiceDropDown.getSelectionModel().selectFirst();
         //sets the toggle Button background color to blue
         toggleBuySell.getStyleClass().add("blue-button");
-        updateDataAfterChangingExchanges(0);
+        menuOption = 0;
+        updateDataAfterChangingExchanges(menuOption);
     }
 
     public void setCurrency1LableandAmount(String currency) throws SQLException {
@@ -362,34 +414,70 @@ public class ExchangeController {
         /*
         WORKING HERE
         BTC/USD = 0
-        BTC/ETH = 1
-        ETH/USD=2
-        ETH/BTC=3
+        NO LONGER BTC/ETH = 1
+        ETH/USD=1
+        ETH/BTC=2
          */
-
+        updateWallet();
         int choice = Integer.parseInt(String.valueOf(ch));
         if (choice == 0) {
             exchangingOne = "BTC";
             exchangeTo = "USD";
-        }
+        }/*
         if (choice == 1) {
             exchangingOne = "BTC";
             exchangeTo = "ETH";
-        }
-        if (choice == 2) {
+        }*/
+        if (choice == 1) {
             exchangingOne = "ETH";
             exchangeTo = "USD";
         }
-        if (choice == 3) {
+        if (choice == 2) {
             exchangingOne = "ETH";
             exchangeTo = "BTC";
         }
+        //start();
         setAmountLables();
         setBalancesBoxes(exchangingOne, exchangeTo);
         setExchangeRates(exchangingOne, exchangeTo);
 
         System.out.println(choice + " choice value");
     }
+
+    /*
+    @Override
+    public void run(){
+        boolean run = true;
+        try{
+            System.out.println("Update Values Tread Started");
+            while (run){
+                setUpdateTradOptionInRealTime();
+                Thread.sleep(5000);
+            }
+        }catch (SQLException | InterruptedException e) {
+            //e.printStackTrace();
+            run = false;
+        }
+    }
+
+    public void start(){
+        System.out.println("Starting thread");
+        if(t==null){
+            t = new Thread(this);
+            t.start();
+            System.out.println("Out of start Method");
+        }
+    }
+    public void stop(){
+        t.interrupt();
+        System.out.println("Thread is stopped");
+    }
+
+
+    public void setUpdateTradOptionInRealTime() throws SQLException {
+
+        setTradeOptionName(exchangingOne, exchangeTo);
+    }*/
 
     @FXML
     void changeTrade(MouseEvent event) {
@@ -405,11 +493,13 @@ public class ExchangeController {
         // get a handle to the stage
         Stage stage = (Stage) exitBtn.getScene().getWindow();
         // do what you have to do
+        //stop();
         stage.close();
     }
 
     @FXML
     void logout(ActionEvent event) throws IOException {
+        //stop();
         exit(event);
         Stage primaryStage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Login.fxml"));
@@ -424,6 +514,7 @@ public class ExchangeController {
 
     @FXML
     void mainMenu(ActionEvent event) throws IOException, SQLException {
+        //stop();
         exit(event);
         new WhichUserMainMenu("user");
     }
