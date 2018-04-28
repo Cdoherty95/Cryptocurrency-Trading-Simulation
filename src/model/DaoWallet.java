@@ -16,10 +16,15 @@ public class DaoWallet {
     DaoUsers daoUsers = new DaoUsers();
     int activeUserID;
 
-    public DaoWallet() throws SQLException {
-        connection = new DBConnect();
-        activeUserID = Integer.parseInt(daoUsers.activeUserInfo()[0]);
+    {
+        try {
+            activeUserID = Integer.parseInt(daoUsers.activeUserInfo()[0]);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
+
+    public DaoWallet(){connection = new DBConnect();}
 
 
     public void logTransaction(String type, String fcc, Double fca, String scc, Double sca) throws SQLException {

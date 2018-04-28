@@ -1,6 +1,8 @@
 package application;
 
-public class UserAccount extends LoginController implements UserOperations {
+public class UserAccount {
+	/*extends
+} LoginController implements UserOperations {
 	
 	public int userID;
 	public String firstName;
@@ -70,5 +72,5 @@ public class UserAccount extends LoginController implements UserOperations {
 	public void updateAccountInformation() {
 		// TODO Auto-generated method stub
 		
-	}
+	}*/
 }

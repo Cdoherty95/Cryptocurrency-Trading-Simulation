@@ -16,7 +16,7 @@ import javafx.stage.Stage;
 import model.DaoUsers;
 import model.DaoWallet;
 
-public class UserMenuController {
+public class UserMenuController implements DAOInterface {
 
     @FXML
     private ResourceBundle resources;
@@ -76,8 +76,8 @@ public class UserMenuController {
     private Button adminMenuBtn;
 
     //Database access objects
-    DaoUsers daoUsers = new DaoUsers();
-    DaoWallet daoWallet = new DaoWallet();
+    //DaoUsers daoUsers = new DaoUsers();
+
 
     //default constructor
     public UserMenuController() throws SQLException {
