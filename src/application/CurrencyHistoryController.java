@@ -20,7 +20,7 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.ResourceBundle;
 
-public class CurrencyHistoryController {
+public class CurrencyHistoryController implements DAOInterface{
 
 	@FXML
 	private ResourceBundle resources;
@@ -65,7 +65,7 @@ public class CurrencyHistoryController {
 
     private ObservableList<EthHistory> ethHist = FXCollections.observableArrayList();
 
-    DaoUpdateCurrencyHist dao = new DaoUpdateCurrencyHist();
+    //DaoUpdateCurrencyHist dao = new DaoUpdateCurrencyHist();
 
 	@FXML
 	void exit(ActionEvent event) {
@@ -110,7 +110,7 @@ public class CurrencyHistoryController {
     }
 
     public void setBtcData() throws SQLException {
-        ResultSet rs = dao.getBtcHist();
+        ResultSet rs = daoUpdateCurrencyHist.getBtcHist();
         // loop through the result set
         while (rs.next()) {
             Long DateTimeStamp = rs.getLong("TimeStamp");
@@ -124,7 +124,7 @@ public class CurrencyHistoryController {
     }
 
     public void setEthData() throws SQLException {
-        ResultSet rs = dao.getEthHist();
+        ResultSet rs = daoUpdateCurrencyHist.getEthHist();
         // loop through the result set
         while (rs.next()) {
             Long DateTimeStamp = rs.getLong("TimeStamp");

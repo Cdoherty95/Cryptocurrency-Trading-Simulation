@@ -16,7 +16,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class UpdateUserInfoController {
+public class UpdateUserInfoController implements DAOInterface {
 
     @FXML
     private ResourceBundle resources;
@@ -60,7 +60,6 @@ public class UpdateUserInfoController {
     @FXML
     private Label errorLbl;
 
-    DaoUsers dao = new DaoUsers();
     String[] userInfo;
 
 
@@ -83,7 +82,7 @@ public class UpdateUserInfoController {
     @FXML
     void update(ActionEvent event) throws SQLException, IOException {
         if(checkBankInfo()) {//ints are ints
-            dao.updateUserInfo(Integer.parseInt(userInfo[0]), fNameIn.getText(), lNameIn.getText(), emIn.getText(), payNameIn.getText(), Integer.parseInt(accountIn.getText()),
+            daoUsers.updateUserInfo(Integer.parseInt(userInfo[0]), fNameIn.getText(), lNameIn.getText(), emIn.getText(), payNameIn.getText(), Integer.parseInt(accountIn.getText()),
                     Integer.parseInt(routingIn.getText()));
             exit(event);
             new WhichUserMainMenu("user");
@@ -115,7 +114,7 @@ public class UpdateUserInfoController {
         assert accountIn != null : "fx:id=\"accountIn\" was not injected: check your FXML file 'Register.fxml'.";
         assert routingIn != null : "fx:id=\"routingIn\" was not injected: check your FXML file 'Register.fxml'.";
         assert registerBtn != null : "fx:id=\"registerBtn\" was not injected: check your FXML file 'Register.fxml'.";
-        userInfo = dao.activeUserInfo();
+        userInfo = daoUsers.activeUserInfo();
         setUserInfo();
     }
 

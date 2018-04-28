@@ -20,7 +20,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 
-public class UserTableViewController {
+public class UserTableViewController implements DAOInterface {
 
 
     //FXML Definitions
@@ -57,7 +57,7 @@ public class UserTableViewController {
     @FXML
     private Label errorLabl;
 
-    DaoUsers daoUsers = new DaoUsers();
+    //DaoUsers daoUsers = new DaoUsers();
     //0= unset, 1=Cancel, 2=continue
     static int DoubleCheck=0;
 

@@ -12,7 +12,6 @@
          <children>
             <Button fx:id="viewUsers" mnemonicParsing="false" onAction="#viewUsers" text="View All Users" />
             <Button fx:id="viewTransactionHistory" mnemonicParsing="false" onAction="#viewTransactionHistory" text="View All Transactions" />
-            <Button fx:id="viewWallets" mnemonicParsing="false" onAction="#viewWallets" text="View All User Wallets" />
             <Button fx:id="userMenu" mnemonicParsing="false" onAction="#backToUserMenu" text="Back To User Menu" />
          </children>
       </VBox>

@@ -19,7 +19,7 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.ResourceBundle;
 
-public class TransactionTableController {
+public class TransactionTableController implements DAOInterface {
 
     @FXML
     private ResourceBundle resources;
@@ -65,9 +65,10 @@ public class TransactionTableController {
 
     private ObservableList<TransactionModel> tHistList = FXCollections.observableArrayList();
 
+    String userOrAdmin = null;
     //public String allOrOne = null;
 
-    DaoWallet daoWallet = new DaoWallet();
+    //DaoWallet daoWallet = new DaoWallet();
 
     @FXML
     void exit(ActionEvent event) {
@@ -80,7 +81,11 @@ public class TransactionTableController {
     @FXML
     void menu(ActionEvent event) throws IOException, SQLException {
         exit(event);
-        new WhichUserMainMenu("user");
+        if (userOrAdmin.equals("admin")){
+            new WhichUserMainMenu("admin");
+        }else{
+            new WhichUserMainMenu("user");
+        }
     }
 
     @FXML
@@ -114,9 +119,11 @@ public class TransactionTableController {
 
     public void whichDataToSet(String allOrOne) throws SQLException {
         if(allOrOne.equals("user")) {
+            userOrAdmin = "user";
             setDataAU();
         }
         if(allOrOne.equals("admin")){
+            userOrAdmin = "admin";
             setDataAll();
         }
     }

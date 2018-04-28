@@ -19,7 +19,7 @@ import javafx.scene.input.InputMethodEvent;
 import javafx.stage.Stage;
 import model.DaoUsers;
 
-public class RegisterController {
+public class RegisterController implements DAOInterface {
 
     @FXML
     private ResourceBundle resources;
@@ -63,8 +63,6 @@ public class RegisterController {
     @FXML
     private Button cancelBtn;
 
-    DaoUsers dao = new DaoUsers();
-
     public boolean checkBankInfo(){
         try{
             Integer.parseInt(accountIn.getText());
@@ -81,7 +79,7 @@ public class RegisterController {
     }
 
     public boolean seeIfUsernameExists(String userName) throws SQLException, InterruptedException {
-        if(dao.getUserID(userName)==0){
+        if(daoUsers.getUserID(userName)==0){
             return true; //Username Doesnt Exist
         }
         return false;
@@ -96,15 +94,15 @@ public class RegisterController {
            if(checkBankInfo()){//ints are ints
                if (seeIfUsernameExists(usernameIn.getText())) { //see if username exists
                    if (regAsAdmin.isSelected()) { //Check if admin is selected
-                       dao.createUser(usernameIn.getText(), pass1In.getText(), "admin");
-                       int uid = dao.getUserID(usernameIn.getText());
-                       dao.registerUser(uid,fNameIn.getText(),lNameIn.getText(),payNameIn.getText(),Integer.parseInt(accountIn.getText()),
+                       daoUsers.createUser(usernameIn.getText(), pass1In.getText(), "admin");
+                       int uid = daoUsers.getUserID(usernameIn.getText());
+                       daoUsers.registerUser(uid,fNameIn.getText(),lNameIn.getText(),payNameIn.getText(),Integer.parseInt(accountIn.getText()),
                                Integer.parseInt(routingIn.getText()), emIn.getText());
                        cancel(event);
                    }else{//user is regular user
-                       dao.createUser(usernameIn.getText(), pass1In.getText(), "user");
-                       int uid = dao.getUserID(usernameIn.getText());
-                       dao.registerUser(uid,fNameIn.getText(),lNameIn.getText(),payNameIn.getText(),Integer.parseInt(accountIn.getText()),
+                       daoUsers.createUser(usernameIn.getText(), pass1In.getText(), "user");
+                       int uid = daoUsers.getUserID(usernameIn.getText());
+                       daoUsers.registerUser(uid,fNameIn.getText(),lNameIn.getText(),payNameIn.getText(),Integer.parseInt(accountIn.getText()),
                                Integer.parseInt(routingIn.getText()), emIn.getText());
                        cancel(event);
                    }

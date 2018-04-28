@@ -6,18 +6,16 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.DaoUsers;
+import model.DaoWallet;
 
 import java.sql.SQLException;
 
-public class Main extends Application {
-
-	static DaoUsers dao = new DaoUsers();
+public class Main extends Application implements DAOInterface {
 
 	@Override
 	public void start(Stage primaryStage) throws SQLException {
-		DaoUsers dao = new DaoUsers();
 		//this makes all the Active Users Inactive
-		dao.makeAllInactive();
+		daoUsers.makeAllInactive();
 		try {
 			Parent root = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
 			//Parent root = FXMLLoader.load(getClass().getResource("/view/AdminMain.fxml"));
@@ -36,12 +34,12 @@ public class Main extends Application {
 
 	public static void main(String[] args) throws SQLException {
 		//this makes all the Active Users Inactive
-		dao.makeAllInactive();
+		daoUsers.makeAllInactive();
 		UpdateCurrencyPrices updCur = new UpdateCurrencyPrices();
 		updCur.start();
 		launch(args);
 		//this makes all the Active Users Inactive
-		dao.makeAllInactive();
+		daoUsers.makeAllInactive();
 		updCur.stop();
 
 	}

@@ -1,8 +1,9 @@
 package application;
 
 
-import model.DaoUpdateCurrencyHist;
-import org.json.*;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -10,7 +11,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.sql.SQLException;
 
-public class UpdateCurrencyPrices implements Runnable {
+public class UpdateCurrencyPrices implements Runnable, DAOInterface {
     private Thread t;
 
     //Default constructor
@@ -74,8 +75,8 @@ public class UpdateCurrencyPrices implements Runnable {
         //JSONObject myResponse = jsonObject.getJSONObject("MyResponse");
         System.out.println("Eth: "+jsonObject.getString("ETH"));
         System.out.println("USD: "+jsonObject.getString("USD"));
-        DaoUpdateCurrencyHist daoupd = new DaoUpdateCurrencyHist();
-        daoupd.updateCurrency("BTC", Double.valueOf(jsonObject.getString("ETH")), Double.parseDouble(jsonObject.getString("USD")));
+        //DaoUpdateCurrencyHist daoupd = new DaoUpdateCurrencyHist();
+        daoUpdateCurrencyHist.updateCurrency("BTC", Double.valueOf(jsonObject.getString("ETH")), Double.parseDouble(jsonObject.getString("USD")));
         con.disconnect();
     }
 
@@ -106,8 +107,8 @@ public class UpdateCurrencyPrices implements Runnable {
         //JSONObject myResponse = jsonObject.getJSONObject("MyResponse");
         System.out.println("BTC: "+jsonObject.getString("BTC"));
         System.out.println("USD: "+jsonObject.getString("USD"));
-        DaoUpdateCurrencyHist daoupd = new DaoUpdateCurrencyHist();
-        daoupd.updateCurrency("ETH", Double.valueOf(jsonObject.getString("BTC")), Double.parseDouble(jsonObject.getString("USD")));
+        //DaoUpdateCurrencyHist daoupd = new DaoUpdateCurrencyHist();
+        daoUpdateCurrencyHist.updateCurrency("ETH", Double.valueOf(jsonObject.getString("BTC")), Double.parseDouble(jsonObject.getString("USD")));
         con.disconnect();
     }
 

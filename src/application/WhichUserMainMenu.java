@@ -11,8 +11,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 
-public class WhichUserMainMenu {
-    DaoUsers dao = new DaoUsers();
+public class WhichUserMainMenu implements DAOInterface {
+
 
     public WhichUserMainMenu(String uOa) throws IOException, SQLException {
         figureOutActiveUser(uOa);
@@ -38,7 +38,7 @@ public class WhichUserMainMenu {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/UserMain.fxml"));
             Parent root = (Parent) loader.load();
 
-            String[] userRole = dao.activeUserInfo();
+            String[] userRole = daoUsers.activeUserInfo();
             if(userRole[2].equals("admin")){
                 UserMenuController controller = loader.getController();
                 controller.disableAdminBtn(true);

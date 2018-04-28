@@ -14,7 +14,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class DepositController {
+public class DepositController implements DAOInterface {
 
     @FXML
     private ResourceBundle resources;
@@ -48,7 +48,6 @@ public class DepositController {
 
         if (!amountTxtfield.getText().isEmpty()) {
             if(checkInput()){
-                DaoWallet daoWallet = new DaoWallet();
                 Double[] walletAmts = daoWallet.getWalletAmounts();
                 Double total = (walletAmts[0] + Double.parseDouble(amountTxtfield.getText()));
                 daoWallet.setUsdAmount(total);
@@ -93,8 +92,7 @@ public class DepositController {
     }
 
     public void setUserInfo() throws SQLException {
-        DaoUsers dao = new DaoUsers();
-        String[] userInfo = dao.activeUserInfo();
+        String[] userInfo = daoUsers.activeUserInfo();
 
         payMethLabel.setText(userInfo[6]);
         accountNumberLabel.setText(userInfo[7]);

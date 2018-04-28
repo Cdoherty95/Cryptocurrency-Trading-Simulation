@@ -14,20 +14,13 @@ public class DaoWallet {
     String sql = null;
    // ResultSet rs = null;
     DaoUsers daoUsers = new DaoUsers();
-    int activeUserID;
 
-    {
-        try {
-            activeUserID = Integer.parseInt(daoUsers.activeUserInfo()[0]);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
     public DaoWallet(){connection = new DBConnect();}
 
 
     public void logTransaction(String type, String fcc, Double fca, String scc, Double sca) throws SQLException {
+        int activeUserID = Integer.parseInt(daoUsers.activeUserInfo()[0]);
         //sql prepared stmt
         sql = "INSERT INTO TransactionHistory (UserID, Type, FirstCurrencyCode, FirstCurrencyAmount, SecondCurrencyCode, SecondCurrencyAmount, DateAdded) VALUES (?,?,?,?,?,?,?)";
         //getting timestamp to be stored
@@ -51,7 +44,7 @@ public class DaoWallet {
     }
 
     public ResultSet getTransactionHistoryActiveUser() throws SQLException {
-
+        int activeUserID = Integer.parseInt(daoUsers.activeUserInfo()[0]);
         //Creates a connection to the database
         statement = connection.connect().createStatement();
 
@@ -82,6 +75,7 @@ public class DaoWallet {
     }
 
     public void setUsdAmount(Double usdAmount) throws SQLException {
+        int activeUserID = Integer.parseInt(daoUsers.activeUserInfo()[0]);
 
         statement = connection.connect().createStatement();
         sql = "UPDATE Wallet SET USDAmt="+usdAmount+" WHERE UserID='"+activeUserID+"'";
@@ -90,7 +84,7 @@ public class DaoWallet {
     }
     
     public void setBtcAmount(Double btcAmount) throws SQLException {
-
+        int activeUserID = Integer.parseInt(daoUsers.activeUserInfo()[0]);
         statement = connection.connect().createStatement();
         sql = "UPDATE Wallet SET BTCAmt="+btcAmount+" WHERE UserID='"+activeUserID+"'";
         statement.execute(sql);
@@ -99,6 +93,7 @@ public class DaoWallet {
     }
     
     public void setEthAmount(Double ethAmount) throws SQLException {
+        int activeUserID = Integer.parseInt(daoUsers.activeUserInfo()[0]);
         statement = connection.connect().createStatement();
         sql = "UPDATE Wallet SET ETHAmt="+ethAmount+" WHERE UserID='"+activeUserID+"'";
         statement.execute(sql);
@@ -106,6 +101,7 @@ public class DaoWallet {
     }
     
     public Double[] getWalletAmounts() throws SQLException {
+        int activeUserID = Integer.parseInt(daoUsers.activeUserInfo()[0]);
         Double[] wallet = new Double[3];
         
         statement = connection.connect().createStatement();
@@ -122,6 +118,7 @@ public class DaoWallet {
     }
 
     public Double[] getCurrentTradePrices() throws SQLException {
+        int activeUserID = Integer.parseInt(daoUsers.activeUserInfo()[0]);
         Double[] wallet = new Double[4];
         statement = connection.connect().createStatement();
         sql = "Select USDAmt, BTCAmt, ETHAmt FROM Wallet WHERE UserID='"+activeUserID+"'";

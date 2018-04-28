@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 import model.DaoUsers;
 import model.DaoWallet;
 
-public class WithdrawController {
+public class WithdrawController implements DAOInterface {
 
     @FXML
     private ResourceBundle resources;
@@ -67,7 +67,6 @@ public class WithdrawController {
         if (!amountTxtfield.getText().isEmpty()) {
             if(checkInput()){
                 System.out.println("Input is valid");
-                DaoWallet daoWallet = new DaoWallet();
                 Double[] walletAmts = daoWallet.getWalletAmounts();
                 Double total = (walletAmts[0] - Double.parseDouble(amountTxtfield.getText()));
                 System.out.println("Total after withdraw would be " + total);
@@ -108,8 +107,8 @@ public class WithdrawController {
     }
 
     public void setUserInfo() throws SQLException {
-        DaoUsers dao = new DaoUsers();
-        String[] userInfo = dao.activeUserInfo();
+
+        String[] userInfo = daoUsers.activeUserInfo();
 
         payMethLabel.setText(userInfo[6]);
         accountNumberLabel.setText(userInfo[7]);
@@ -117,8 +116,7 @@ public class WithdrawController {
     }
 
     public void setWalletInfo() throws SQLException {
-        DaoWallet dao = new DaoWallet();
-        Double[] wallet = dao.getWalletAmounts();
+        Double[] wallet = daoWallet.getWalletAmounts();
         currentBalLabel.setText(String.valueOf(wallet[0]));
     }
 

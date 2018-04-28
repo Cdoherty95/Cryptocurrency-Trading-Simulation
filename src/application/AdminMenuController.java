@@ -55,6 +55,7 @@ public class AdminMenuController implements MenuOperations {
 
     @FXML
     public void viewTransactionHistory(ActionEvent event) throws IOException, SQLException {
+        exit(event);
         Stage primaryStage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/TransactionHist.fxml"));
         Parent root = (Parent) loader.load();

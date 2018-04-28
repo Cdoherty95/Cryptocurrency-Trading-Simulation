@@ -15,7 +15,7 @@ import model.DaoUsers;
 import java.io.IOException;
 import java.sql.SQLException;
 
-public class LoginController {
+public class LoginController implements DAOInterface{
 
 
     @FXML
@@ -44,11 +44,11 @@ public class LoginController {
     public void loginbtnClicked(ActionEvent event) throws SQLException, IOException, InterruptedException {
 
         if (!Username.getText().isEmpty() && !Password.getText().isEmpty()) {
-            DaoUsers dao = new DaoUsers();
+
             //this makes all the Active Users Inactive
-            dao.makeAllInactive();
+            daoUsers.makeAllInactive();
             //this checks for the passwords matching
-            if (dao.loginPasswordMatching(Username.getText(), Password.getText())) {
+            if (daoUsers.loginPasswordMatching(Username.getText(), Password.getText())) {
                 exit(event);
 
                 new WhichUserMainMenu("user");

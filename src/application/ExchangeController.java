@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
 
 import static org.codehaus.groovy.runtime.DefaultGroovyMethods.round;
 
-public class ExchangeController{
+public class ExchangeController implements DAOInterface{
 
     @FXML
     private ResourceBundle resources;
@@ -79,9 +79,9 @@ public class ExchangeController{
     private Thread t;
 
     String[] ActiveUserID;
-    DaoWallet daoWallet = new DaoWallet();
-    DaoUsers daoUsers = new DaoUsers();
-    DaoUpdateCurrencyHist daoCurrencyHist = new DaoUpdateCurrencyHist();
+    //DaoWallet daoWallet = new DaoWallet();
+    //DaoUsers daoUsers = new DaoUsers();
+    //DaoUpdateCurrencyHist daoCurrencyHist = new DaoUpdateCurrencyHist();
     int i = 0;
     double usdBTCHist = 0, btcHist = 0, usdETHHist = 0, ethHist = 0, total = 0, balanceAfter = 0, userIn =0;
     String exchangingOne = null, exchangeTo = null;
@@ -368,7 +368,7 @@ public class ExchangeController{
     public void setTradeOptionName(String crypto, String trade) throws SQLException {
 
         ResultSet resultSet;
-        resultSet = daoCurrencyHist.get1EthHist();
+        resultSet = daoUpdateCurrencyHist.get1EthHist();
 
         while (resultSet.next()) {
             //gets the USD amount for 1 ETH
@@ -378,7 +378,7 @@ public class ExchangeController{
         }
         resultSet.close();
 
-        resultSet = daoCurrencyHist.get1BtcHist();
+        resultSet = daoUpdateCurrencyHist.get1BtcHist();
 
         while (resultSet.next()) {
             //gets the USD amount for 1BTC
