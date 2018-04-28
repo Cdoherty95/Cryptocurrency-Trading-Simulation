@@ -31,7 +31,7 @@
                </VBox.margin>
             </PasswordField>
             <Label prefHeight="18.0" prefWidth="91.0" text="Verify Password" />
-            <PasswordField fx:id="pass2In" disable="true" onInputMethodTextChanged="#verifyPasswordMatches" promptText="Verify Password">
+            <PasswordField fx:id="pass2In" disable="true" promptText="Verify Password">
                <VBox.margin>
                   <Insets bottom="6.0" />
                </VBox.margin>
@@ -78,5 +78,6 @@
          </font>
       </Button>
       <Button fx:id="cancelBtn" layoutX="535.0" layoutY="5.0" mnemonicParsing="false" onAction="#cancel" text="Cancel" />
+      <Label fx:id="errorLbl" layoutX="336.0" layoutY="214.0" prefHeight="18.0" prefWidth="202.0" textFill="RED" />
    </children>
 </AnchorPane>

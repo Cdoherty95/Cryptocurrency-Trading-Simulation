@@ -6,10 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleButton;
+import javafx.scene.control.*;
 import javafx.scene.input.InputMethodEvent;
 import javafx.stage.Stage;
 import model.DaoUsers;
@@ -58,10 +55,10 @@ public class UpdateUserInfoController {
     private Button registerBtn;
 
     @FXML
-    private ToggleButton regAsAdmin;
+    private Button cancelBtn;
 
     @FXML
-    private Button cancelBtn;
+    private Label errorLbl;
 
     DaoUsers dao = new DaoUsers();
     String[] userInfo;
@@ -72,87 +69,31 @@ public class UpdateUserInfoController {
         try{
             Integer.parseInt(accountIn.getText());
         }catch (NumberFormatException e){
-            System.out.println("acc is not int");
+            errorLbl.setText("Account Number Must Be An Integer");
             return false;
         }try {
             Integer.parseInt(routingIn.getText());
         }catch (NumberFormatException e) {
-            System.out.println("routing is not int");
+            errorLbl.setText("Routing Number Must Be An Integer");
             return false;
         }
         return true;
     }
 
-    public boolean seeIfUsernameExists(String userName) throws SQLException, InterruptedException {
-        if(dao.getUserID(userName)==0){
-            return true; //Username Doesnt Exist
-        }
-        return false;
-    }
-
-    @FXML
-    void Register(ActionEvent event) throws SQLException, InterruptedException, IOException {
-
-
-        //check to make sure user entered the same password
-        if(pass1In.getText().equals(pass2In.getText())){
-           if(checkBankInfo()){//ints are ints
-               if (seeIfUsernameExists(usernameIn.getText())) { //see if username exists
-                   if (regAsAdmin.isSelected()) { //Check if admin is selected
-                       dao.createUser(usernameIn.getText(), pass1In.getText(), "admin");
-                       int uid = dao.getUserID(usernameIn.getText());
-                       dao.registerUser(uid,fNameIn.getText(),lNameIn.getText(),payNameIn.getText(),Integer.parseInt(accountIn.getText()),
-                               Integer.parseInt(routingIn.getText()), emIn.getText());
-                       cancel(event);
-                   }else{//user is regular user
-                       dao.createUser(usernameIn.getText(), pass1In.getText(), "user");
-                       int uid = dao.getUserID(usernameIn.getText());
-                       dao.registerUser(uid,fNameIn.getText(),lNameIn.getText(),payNameIn.getText(),Integer.parseInt(accountIn.getText()),
-                               Integer.parseInt(routingIn.getText()), emIn.getText());
-                       cancel(event);
-                   }
-               }else{
-                   usernameIn.clear();
-                   usernameIn.setPromptText("Username Exists");
-               }
-           }else {//account or routing numbers were incorrect
-               accountIn.clear();
-               routingIn.clear();
-               accountIn.setPromptText("Must be numbers only");
-               routingIn.setPromptText("Must be numbers only");
-           }
-        }else { //passwords didnt match
-            pass1In.clear();
-            pass2In.clear();
-            pass1In.setPromptText("Passwords Did Not Match");
-        }
-    }
-
     @FXML
     void update(ActionEvent event) throws SQLException, IOException {
-        dao.updateUserInfo(Integer.parseInt(userInfo[0]), fNameIn.getText(), lNameIn.getText(), emIn.getText(), payNameIn.getText(), Integer.parseInt(accountIn.getText()),
-                Integer.parseInt(routingIn.getText()));
+        if(checkBankInfo()) {//ints are ints
+            dao.updateUserInfo(Integer.parseInt(userInfo[0]), fNameIn.getText(), lNameIn.getText(), emIn.getText(), payNameIn.getText(), Integer.parseInt(accountIn.getText()),
+                    Integer.parseInt(routingIn.getText()));
+            exit(event);
+            new WhichUserMainMenu("user");
+        }
+    }
+
+    @FXML
+    void cancel(ActionEvent event) throws IOException, SQLException {
         exit(event);
         new WhichUserMainMenu("user");
-
-    }
-
-    @FXML
-    void verifyPasswordMatches(InputMethodEvent event) {
-        System.out.println("entered verify");
-
-    }
-    @FXML
-    void cancel(ActionEvent event) throws IOException {
-        exit(event);
-        Stage primaryStage = new Stage();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Login.fxml"));
-        Parent root = (Parent) loader.load();
-        Scene scene = new Scene(root);
-        scene.getStylesheets().add(getClass().getResource("/view/app.css").toExternalForm());
-        primaryStage.setScene(scene);
-        primaryStage.setTitle("Cryptocurrency Trader");
-        primaryStage.show();
     }
 
     public void exit(ActionEvent event){
@@ -174,7 +115,6 @@ public class UpdateUserInfoController {
         assert accountIn != null : "fx:id=\"accountIn\" was not injected: check your FXML file 'Register.fxml'.";
         assert routingIn != null : "fx:id=\"routingIn\" was not injected: check your FXML file 'Register.fxml'.";
         assert registerBtn != null : "fx:id=\"registerBtn\" was not injected: check your FXML file 'Register.fxml'.";
-        assert regAsAdmin != null : "fx:id=\"regAsAdmin\" was not injected: check your FXML file 'Register.fxml'.";
         userInfo = dao.activeUserInfo();
         setUserInfo();
     }

@@ -75,6 +75,20 @@ public class UserMenuController {
     @FXML
     private Button adminMenuBtn;
 
+    //Database access objects
+    DaoUsers daoUsers = new DaoUsers();
+    DaoWallet daoWallet = new DaoWallet();
+
+    //default constructor
+    public UserMenuController() throws SQLException {
+    }
+
+    @FXML
+    void initialize() throws SQLException {
+        setUserInfo();
+        setWalletInfo();
+    }
+
     @FXML
     void depositeFundsBtn(ActionEvent event) throws IOException {
         exit(event);
@@ -183,13 +197,7 @@ public class UserMenuController {
         scene.getStylesheets().add(getClass().getResource("/view/app.css").toExternalForm());
         primaryStage.setScene(scene);
         primaryStage.setTitle("Cryptocurrency Trader");
-
         primaryStage.show();
-    }
-
-    @FXML
-    void initialize() throws SQLException {
-
     }
 
     @FXML
@@ -215,9 +223,7 @@ public class UserMenuController {
 
 
     public void setUserInfo() throws SQLException {
-        DaoUsers dao = new DaoUsers();
-        String[] userInfo = dao.activeUserInfo();
-
+        String[] userInfo = daoUsers.activeUserInfo();
         welcomeUser.setText("Welcome " + userInfo[4]);
         usrName.setText(userInfo[1]);
         usrLastName.setText(userInfo[5]);
@@ -226,8 +232,7 @@ public class UserMenuController {
     }
 
     public void setWalletInfo() throws SQLException {
-        DaoWallet dao = new DaoWallet();
-        Double[] wallet = dao.getWalletAmounts();
+        Double[] wallet = daoWallet.getWalletAmounts();
         usdAmt.setText(String.valueOf(wallet[0]));
         btcAmt.setText(String.valueOf(wallet[1]));
         ethAmt.setText(String.valueOf(wallet[2]));

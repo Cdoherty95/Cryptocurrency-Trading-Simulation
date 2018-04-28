@@ -250,12 +250,16 @@ public class DaoUsers {
 	}
 
 	public void updateUserInfo(int uID, String fnam, String lname, String em, String payName, int acc, int route) throws SQLException {
-				//Creates a connection to the database
+		//getting timestamp to be stored
+		long currentUnixTime = System.currentTimeMillis() / 1000L;
+		//Creates a connection to the database
 		statement = connection.connect().createStatement();
 		//sql to set active to 0
-		sql = "UPDATE UserAccountDetails SET FirstName='"+fnam+"', LastName='"+lname+"', PaymentName='"+payName+"', Account='"+acc+"', Routing='"+route+"' WHERE UserID="+uID+"";
+		sql = "UPDATE UserAccountDetails SET FirstName='"+fnam+"', LastName='"+lname+"', PaymentName='"+payName+"', Account='"+acc+"', " +
+				"Routing='"+route+"', Email='"+em+"', DateAdded='"+currentUnixTime+"' WHERE UserID="+uID+"";
 		System.out.println(sql);
-		statement.execute(sql);
+		int i = statement.executeUpdate(sql);
+		System.out.println(i);
 		statement.close();
 	}
 
