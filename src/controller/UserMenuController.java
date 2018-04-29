@@ -89,6 +89,7 @@ public class UserMenuController implements DAOInterface {
     void depositeFundsBtn(ActionEvent event) throws IOException {
         exit(event);
         //ViewUsers vu = new ViewUsers();
+        Stage primaryStage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Deposit.fxml"));
         Parent root = loader.load();
 
@@ -97,6 +98,7 @@ public class UserMenuController implements DAOInterface {
         newScene.getStylesheets().add(getClass().getResource("/view/app.css").toExternalForm());
         Stage newStage = new Stage();
         newStage.setScene(newScene);
+        primaryStage.setTitle("Cryptocurrency Trader");
         newStage.show();
     }
 
@@ -104,6 +106,7 @@ public class UserMenuController implements DAOInterface {
     void withdrawFundsBtn(ActionEvent event) throws IOException {
         exit(event);
         //ViewUsers vu = new ViewUsers();
+        Stage primaryStage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Withdraw.fxml"));
         Parent root = loader.load();
 
@@ -112,6 +115,7 @@ public class UserMenuController implements DAOInterface {
         newScene.getStylesheets().add(getClass().getResource("/view/app.css").toExternalForm());
         Stage newStage = new Stage();
         newStage.setScene(newScene);
+        primaryStage.setTitle("Cryptocurrency Trader");
         newStage.show();
     }
 
@@ -133,6 +137,7 @@ public class UserMenuController implements DAOInterface {
     void viewCurrencyHistory(ActionEvent event) throws IOException {
         exit(event);
         //ViewUsers vu = new ViewUsers();
+        Stage primaryStage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/CurrencyHistroy.fxml"));
         Parent root = loader.load();
 
@@ -141,6 +146,7 @@ public class UserMenuController implements DAOInterface {
         newScene.getStylesheets().add(getClass().getResource("/view/app.css").toExternalForm());
         Stage newStage = new Stage();
         newStage.setScene(newScene);
+        primaryStage.setTitle("Cryptocurrency Trader");
         newStage.show();
     }
 

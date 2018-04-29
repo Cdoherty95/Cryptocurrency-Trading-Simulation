@@ -6,23 +6,27 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CurrencyHistoryController">
+<AnchorPane prefHeight="400.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CurrencyHistoryController">
    <children>
-      <Button fx:id="exitBtn" layoutX="550.0" layoutY="14.0" mnemonicParsing="false" onAction="#exit" text="Exit" />
-      <Button fx:id="mainMenuBtn" layoutX="455.0" layoutY="14.0" mnemonicParsing="false" onAction="#mainMenu" text="Main Menu" />
-      <Label layoutX="254.0" layoutY="31.0" text="Currency Histroy " />
-      <Label layoutX="92.0" layoutY="49.0" text="Bitcoin History" />
-      <Label layoutX="409.0" layoutY="49.0" text="Ethereum Histroy" />
-      <SplitPane dividerPositions="0.5" layoutY="67.0" prefHeight="332.0" prefWidth="600.0">
+      <Button fx:id="exitBtn" layoutX="750.0" layoutY="14.0" mnemonicParsing="false" onAction="#exit" text="Exit" />
+      <Button fx:id="mainMenuBtn" layoutX="650.0" layoutY="18.0" mnemonicParsing="false" onAction="#mainMenu" text="Main Menu" />
+      <Label layoutX="308.0" layoutY="13.0" text="Currency Histroy ">
+         <font>
+            <Font size="24.0" />
+         </font></Label>
+      <Label layoutX="168.0" layoutY="49.0" text="Bitcoin History" />
+      <Label layoutX="568.0" layoutY="49.0" text="Ethereum Histroy" />
+      <SplitPane dividerPositions="0.5" layoutY="74.0" prefHeight="326.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="74.0">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
                   <TableView fx:id="btcTableView" prefHeight="330.4" prefWidth="296.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columns>
-                      <TableColumn fx:id="btcTimeCol" prefWidth="120.0" sortType="DESCENDING" text="Date/Time" />
-                      <TableColumn fx:id="btcUsdCol" prefWidth="85.0" text="USD Price" />
-                        <TableColumn fx:id="btcEthCol" prefWidth="85.0" text="ETH Price" />
+                      <TableColumn fx:id="btcTimeCol" prefWidth="179.0" sortType="DESCENDING" text="Date/Time" />
+                      <TableColumn fx:id="btcUsdCol" prefWidth="105.0" text="USD Price" />
+                        <TableColumn fx:id="btcEthCol" prefWidth="105.0" text="ETH Price" />
                     </columns>
                   </TableView>
                </children>
@@ -31,9 +35,9 @@
                <children>
                   <TableView fx:id="ethTableView" prefHeight="330.4" prefWidth="296.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columns>
-                      <TableColumn fx:id="ethTimeCol" prefWidth="120.0" sortType="DESCENDING" text="Date/Time" />
-                      <TableColumn fx:id="ethUsdCol" prefWidth="85.0" text="USD Price" />
-                        <TableColumn fx:id="ethBtcCol" prefWidth="85.0" text="BTC Price" />
+                      <TableColumn fx:id="ethTimeCol" prefWidth="179.0" sortType="DESCENDING" text="Date/Time" />
+                      <TableColumn fx:id="ethUsdCol" prefWidth="105.0" text="USD Price" />
+                        <TableColumn fx:id="ethBtcCol" prefWidth="105.0" text="BTC Price" />
                     </columns>
                   </TableView>
                </children></AnchorPane>

@@ -1,5 +1,6 @@
 package controller;
 
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -10,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import model.DaoUpdateCurrencyHist;
 
 import java.io.IOException;
 import java.sql.ResultSet;
@@ -75,10 +77,12 @@ public class ExchangeController implements DAOInterface {
     private Thread t;
     private int i = 0;
     private double usdBTCHist = 0, btcHist = 0, usdETHHist = 0, ethHist = 0, total = 0, balanceAfter = 0, userIn = 0;
-    private String exchangingOne = null, exchangeTo = null;
+    private String exchangingOne = null, exchangeTo = null, exchangeRate = null;
     private Double[] wallet;
     private Number menuOption;
     private boolean run = true;
+    DaoUpdateCurrencyHist daoUpdateCurrencyHist = new DaoUpdateCurrencyHist();
+
 
 
     private ChangeListener<Number> changeListener = new ChangeListener<>() {
@@ -96,10 +100,6 @@ public class ExchangeController implements DAOInterface {
             }
         }
     };
-
-    private void constUpdate() throws SQLException {
-        setExchangeRates(exchangingOne, exchangeTo);
-    }
 
     public ExchangeController() throws SQLException {
         //ActiveUserID = daoUsers.activeUserInfo();
@@ -144,8 +144,6 @@ public class ExchangeController implements DAOInterface {
                 }
             }
         });
-
-
     }
 
     @FXML
@@ -382,29 +380,37 @@ public class ExchangeController implements DAOInterface {
         resultSet.close();
 
         if (trade.equals("USD") && crypto.equals("BTC")) {
-            tradeOptionName.setText(String.valueOf(usdBTCHist) + " USD");
+            exchangeRate = (String.valueOf(usdBTCHist) + " USD");
+            tradeOptionName.setText(exchangeRate);
             if (trade.equals("BTC")) {
-                tradeOptionName.setText(String.valueOf(btcHist) + " BTC");
+                exchangeRate = (String.valueOf(btcHist) + " BTC");
+                tradeOptionName.setText(exchangeRate);
             }
             if (trade.equals("ETH")) {
-                tradeOptionName.setText(String.valueOf(ethHist) + " ETH");
+                exchangeRate = (String.valueOf(ethHist) + " ETH");
+                tradeOptionName.setText(exchangeRate);
             }
         }
         if (trade.equals("USD") && crypto.equals("ETH")) {
-            tradeOptionName.setText(String.valueOf(usdETHHist) + " USD");
+            exchangeRate = (String.valueOf(usdETHHist) + " USD");
+            tradeOptionName.setText(exchangeRate);
             if (trade.equals("BTC")) {
-                tradeOptionName.setText(String.valueOf(btcHist) + " BTC");
+                exchangeRate = (String.valueOf(btcHist) + " BTC");
+                tradeOptionName.setText(exchangeRate);
             }
             if (trade.equals("ETH")) {
-                tradeOptionName.setText(String.valueOf(ethHist) + " ETH");
+                exchangeRate = (String.valueOf(btcHist) + " ETH");
+                tradeOptionName.setText(exchangeRate);
             }
         }
         if (!trade.equals("USD")) {
             if (trade.equals("BTC")) {
-                tradeOptionName.setText(String.valueOf(btcHist) + " BTC");
+                exchangeRate = (String.valueOf(btcHist) + " BTC");
+                tradeOptionName.setText(exchangeRate);
             }
             if (trade.equals("ETH")) {
-                tradeOptionName.setText(String.valueOf(ethHist) + " ETH");
+                exchangeRate = (String.valueOf(btcHist) + " ETH");
+                tradeOptionName.setText(exchangeRate);
             }
         }
 

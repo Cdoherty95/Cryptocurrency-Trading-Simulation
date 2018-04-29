@@ -18,16 +18,16 @@
           <TableColumn fx:id="transIDCol" prefWidth="116.79998397827148" text="Transaction Id" />
           <TableColumn fx:id="userIDCol" prefWidth="90.39999389648438" text="UserId" />
             <TableColumn fx:id="typeCol" prefWidth="196.8000030517578" text="Type" />
-            <TableColumn fx:id="ccodeCol" prefWidth="140.0" text="First Currency Code" />
-            <TableColumn fx:id="caAmount" prefWidth="140.0" text="First Currency Amount" />
-            <TableColumn fx:id="sccColumn" minWidth="4.800048828125" prefWidth="140.0" text="Second Currency Code" />
-            <TableColumn fx:id="scaColumn" prefWidth="140.0" text="Second Currency Amount" />
+            <TableColumn fx:id="ccodeCol" prefWidth="140.0" style="-fx-background-color: red;" text="First Currency Code" />
+            <TableColumn fx:id="caAmount" prefWidth="140.0" style="-fx-background-color: red;" text="First Currency Amount" />
+            <TableColumn fx:id="sccColumn" minWidth="4.800048828125" prefWidth="140.0" style="-fx-background-color: green;" text="Second Currency Code" />
+            <TableColumn fx:id="scaColumn" prefWidth="140.0" style="-fx-background-color: green;" text="Second Currency Amount" />
             <TableColumn fx:id="date" prefWidth="140.0" text="Date" />
         </columns>
       </TableView>
       <Button fx:id="exitBtn" layoutX="1150.0" layoutY="23.0" mnemonicParsing="false" onAction="#exit" text="Exit" />
       <Button fx:id="mainMenuBtn" layoutX="1055.0" layoutY="23.0" mnemonicParsing="false" onAction="#menu" text="Main Menu" />
-      <Label layoutX="509.0" layoutY="47.0" text="Subtracting" />
-      <Label layoutX="805.0" layoutY="47.0" text="Gaining " />
+      <Label layoutX="509.0" layoutY="47.0" text="Debit" />
+      <Label layoutX="805.0" layoutY="47.0" text="Credit" />
    </children>
 </AnchorPane>

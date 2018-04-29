@@ -10,6 +10,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.BtcHistory;
+import model.DaoUpdateCurrencyHist;
 import model.EthHistory;
 
 import java.io.IOException;
@@ -64,7 +65,7 @@ public class CurrencyHistoryController implements DAOInterface {
 
     private ObservableList<EthHistory> ethHist = FXCollections.observableArrayList();
 
-    //DaoUpdateCurrencyHist dao = new DaoUpdateCurrencyHist();
+    DaoUpdateCurrencyHist daoUpdateCurrencyHist = new DaoUpdateCurrencyHist();
 
     @FXML
     void exit(ActionEvent event) {
@@ -81,7 +82,7 @@ public class CurrencyHistoryController implements DAOInterface {
     }
 
     @FXML
-    void initialize() {
+    void initialize() throws SQLException {
         btcEthCol.setCellValueFactory(new PropertyValueFactory<>("ethPrice"));
         btcTimeCol.setCellValueFactory(new PropertyValueFactory<>("date"));
         btcUsdCol.setCellValueFactory(new PropertyValueFactory<>("usdPrice"));
@@ -97,13 +98,24 @@ public class CurrencyHistoryController implements DAOInterface {
         fillBothTables();
     }
 
-    public CurrencyHistoryController() throws SQLException {
-        setBtcData();
-        setEthData();
+    public CurrencyHistoryController() {
 
     }
 
-    public void fillBothTables() {
+    public void fillBothTables() throws SQLException {
+        btcTableView.getItems().clear();
+        btcTableView.getItems().removeAll();
+        ethTableView.getItems().clear();
+        ethTableView.getItems().removeAll();
+        btcHist.removeAll();
+        btcHist.clear();
+        ethHist.clear();
+        ethHist.removeAll();
+        //personData.clear();
+        //personData.removeAll();
+
+        setBtcData();
+        setEthData();
         btcTableView.setItems(btcHist);
         ethTableView.setItems(ethHist);
     }

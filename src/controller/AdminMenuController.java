@@ -76,13 +76,14 @@ public class AdminMenuController implements MenuOperations {
     @FXML
     public void viewUsers(ActionEvent event) throws IOException {
         exit(event);
-        //ViewUsers vu = new ViewUsers();
+        Stage primaryStage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/UsersTableView.fxml"));
         Parent root = loader.load();
         Scene newScene = new Scene(root);
         newScene.getStylesheets().add(getClass().getResource("/view/app.css").toExternalForm());
         Stage newStage = new Stage();
         newStage.setScene(newScene);
+        primaryStage.setTitle("Cryptocurrency Trader");
         newStage.show();
     }
 

@@ -9,14 +9,15 @@ public class DaoUpdateCurrencyHist {
     DBConnect connection;
     Statement statement;
     String sql;
-    //getting timestamp to be stored
-    long currentUnixTime = System.currentTimeMillis() / 1000L;
 
     public DaoUpdateCurrencyHist() {
         connection = new DBConnect();
     }
 
     public void updateCurrency(String type, Double cryptoAmt, Double usdAmt) throws SQLException {
+
+        //getting timestamp to be stored
+        long currentUnixTime = System.currentTimeMillis() / 1000L;
         //Creates a connection to the database
         statement = connection.connect().createStatement();
 
@@ -50,6 +51,7 @@ public class DaoUpdateCurrencyHist {
     }
 
     public ResultSet getBtcHist() throws SQLException {
+
 
         //Creates a connection to the database
         statement = connection.connect().createStatement();
