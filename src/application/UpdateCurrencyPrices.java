@@ -21,7 +21,7 @@ public class UpdateCurrencyPrices implements Runnable, DAOInterface {
     public void run() {
         boolean run = true;
         try {
-            System.out.println("Currency Tread Started");
+            ////System.out.println("Currency Tread Started");
             while (run){
             getBtc();
             getETH();
@@ -35,17 +35,17 @@ public class UpdateCurrencyPrices implements Runnable, DAOInterface {
     }
 
     public void start(){
-        System.out.println("Starting thread");
+        //////System.out.println("Starting thread");
         if(t==null){
             t = new Thread(this);
             t.start();
-            System.out.println("Out of start Method");
+            //System.out.println("Out of start Method");
         }
     }
 
     public void stop(){
         t.interrupt();
-        System.out.println("Thread is stopped");
+        //System.out.println("Thread is stopped");
     }
 
     public void getBtc() throws IOException, JSONException, SQLException {
@@ -56,7 +56,7 @@ public class UpdateCurrencyPrices implements Runnable, DAOInterface {
         con.setRequestMethod("GET");
         //Do not need response code for now
         //int responseCode = con.getResponseCode();
-        //System.out.println("Resp Code" + responseCode);
+        ////System.out.println("Resp Code" + responseCode);
 
         //Buffer Reader to surround input Stream Reader
         BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
@@ -70,11 +70,11 @@ public class UpdateCurrencyPrices implements Runnable, DAOInterface {
 
         String jsonString = response.toString();
 
-        System.out.println(jsonString);
+        //System.out.println(jsonString);
         JSONObject jsonObject = new JSONObject(jsonString);
         //JSONObject myResponse = jsonObject.getJSONObject("MyResponse");
-        System.out.println("Eth: "+jsonObject.getString("ETH"));
-        System.out.println("USD: "+jsonObject.getString("USD"));
+        //System.out.println("Eth: "+jsonObject.getString("ETH"));
+        //System.out.println("USD: "+jsonObject.getString("USD"));
         //DaoUpdateCurrencyHist daoupd = new DaoUpdateCurrencyHist();
         daoUpdateCurrencyHist.updateCurrency("BTC", Double.valueOf(jsonObject.getString("ETH")), Double.parseDouble(jsonObject.getString("USD")));
         con.disconnect();
@@ -88,7 +88,7 @@ public class UpdateCurrencyPrices implements Runnable, DAOInterface {
         con.setRequestMethod("GET");
         //Do not need response code for now
         //int responseCode = con.getResponseCode();
-        //System.out.println("Resp Code" + responseCode);
+        ////System.out.println("Resp Code" + responseCode);
 
         //Buffer Reader to surround input Stream Reader
         BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
@@ -102,11 +102,11 @@ public class UpdateCurrencyPrices implements Runnable, DAOInterface {
 
         String jsonString = response.toString();
 
-        System.out.println(jsonString);
+        //System.out.println(jsonString);
         JSONObject jsonObject = new JSONObject(jsonString);
         //JSONObject myResponse = jsonObject.getJSONObject("MyResponse");
-        System.out.println("BTC: "+jsonObject.getString("BTC"));
-        System.out.println("USD: "+jsonObject.getString("USD"));
+        //System.out.println("BTC: "+jsonObject.getString("BTC"));
+        //System.out.println("USD: "+jsonObject.getString("USD"));
         //DaoUpdateCurrencyHist daoupd = new DaoUpdateCurrencyHist();
         daoUpdateCurrencyHist.updateCurrency("ETH", Double.valueOf(jsonObject.getString("BTC")), Double.parseDouble(jsonObject.getString("USD")));
         con.disconnect();

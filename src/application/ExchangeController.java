@@ -10,26 +10,22 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import model.DaoUpdateCurrencyHist;
-import model.DaoUsers;
-import model.DaoWallet;
-import org.json.JSONException;
 
 import java.io.IOException;
-import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ResourceBundle;
 
 import static org.codehaus.groovy.runtime.DefaultGroovyMethods.round;
 
 public class ExchangeController implements DAOInterface{
 
+    /*
     @FXML
     private ResourceBundle resources;
 
     @FXML
     private URL location;
+    */
 
     @FXML
     private ChoiceBox<String> chiceDropDown;
@@ -77,19 +73,15 @@ public class ExchangeController implements DAOInterface{
     private Button exitBtn;
 
     private Thread t;
-
-    String[] ActiveUserID;
-    //DaoWallet daoWallet = new DaoWallet();
-    //DaoUsers daoUsers = new DaoUsers();
-    //DaoUpdateCurrencyHist daoCurrencyHist = new DaoUpdateCurrencyHist();
-    int i = 0;
-    double usdBTCHist = 0, btcHist = 0, usdETHHist = 0, ethHist = 0, total = 0, balanceAfter = 0, userIn =0;
-    String exchangingOne = null, exchangeTo = null;
-    Double[] wallet;
-    Number menuOption;
+    private int i = 0;
+    private double usdBTCHist = 0, btcHist = 0, usdETHHist = 0, ethHist = 0, total = 0, balanceAfter = 0, userIn =0;
+    private String exchangingOne = null, exchangeTo = null;
+    private Double[] wallet;
+    private Number menuOption;
+    private boolean run= true;
 
 
-    ChangeListener<Number> changeListener = new ChangeListener<Number>() {
+    private ChangeListener<Number> changeListener = new ChangeListener<>() {
 
         @Override
         public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
@@ -105,10 +97,14 @@ public class ExchangeController implements DAOInterface{
         }
     };
 
+    private void constUpdate() throws SQLException {
+        setExchangeRates(exchangingOne, exchangeTo);
+    }
 
     public ExchangeController() throws SQLException {
-        ActiveUserID = daoUsers.activeUserInfo();
-        wallet = daoWallet.getWalletAmounts();
+        //ActiveUserID = daoUsers.activeUserInfo();
+        //wallet = daoWallet.getWalletAmounts();
+        updateWallet();
     }
 
     private void updateWallet() throws SQLException {
@@ -298,7 +294,7 @@ public class ExchangeController implements DAOInterface{
 
     }
 
-    public void defaultStart() throws SQLException {
+    private void defaultStart() throws SQLException {
 
         chiceDropDown.getItems().addAll("BTC/USD", "ETH/USD", "ETH/BTC");
         chiceDropDown.getSelectionModel().selectFirst();
@@ -308,11 +304,7 @@ public class ExchangeController implements DAOInterface{
         updateDataAfterChangingExchanges(menuOption);
     }
 
-    public void setCurrency1LableandAmount(String currency) throws SQLException {
-        currency1AmountLable.setText(String.valueOf(wallet[0]));
-    }
-
-    public void setAmountLables(){
+    private void setAmountLables(){
         if (toggleBuySell.isSelected()) { // SELLL
             //Change the label in the textField
             inputAmountCurrencyLable.setText(exchangingOne);
@@ -326,7 +318,7 @@ public class ExchangeController implements DAOInterface{
         }
     }
 
-    public void setBalancesBoxes(String currency1, String currency2) throws SQLException {
+    private void setBalancesBoxes(String currency1, String currency2){
         if (currency1.equals("BTC")) {
             currency1Lable.setText("BTC");
             currency1AmountLable.setText(String.valueOf(wallet[1]));
@@ -351,12 +343,12 @@ public class ExchangeController implements DAOInterface{
         }
     }
 
-    public void setExchangeRates(String oneCrypto, String twoValue) throws SQLException {
+    private void setExchangeRates(String oneCrypto, String twoValue) throws SQLException {
         setOneCryptoName(oneCrypto);
         setTradeOptionName(oneCrypto, twoValue);
     }
 
-    public void setOneCryptoName(String name) {
+    private void setOneCryptoName(String name) {
         if (name.equals("BTC")) {
             oneCryptoName.setText("1 BTC");
         }
@@ -365,8 +357,9 @@ public class ExchangeController implements DAOInterface{
         }
     }
 
-    public void setTradeOptionName(String crypto, String trade) throws SQLException {
-
+    private void setTradeOptionName(String crypto, String trade) throws SQLException {
+        System.out.println("Called setTradeOptionName");
+        tradeOptionName.setText("");
         ResultSet resultSet;
         resultSet = daoUpdateCurrencyHist.get1EthHist();
 
@@ -422,7 +415,7 @@ public class ExchangeController implements DAOInterface{
      * on users choice from Choice Box
      */
 
-    public void updateDataAfterChangingExchanges(Number ch) throws SQLException {
+    private void updateDataAfterChangingExchanges(Number ch) throws SQLException {
 
         System.out.println(ch);
         /*
@@ -458,41 +451,6 @@ public class ExchangeController implements DAOInterface{
         System.out.println(choice + " choice value");
     }
 
-    /*
-    @Override
-    public void run(){
-        boolean run = true;
-        try{
-            System.out.println("Update Values Tread Started");
-            while (run){
-                setUpdateTradOptionInRealTime();
-                Thread.sleep(5000);
-            }
-        }catch (SQLException | InterruptedException e) {
-            //e.printStackTrace();
-            run = false;
-        }
-    }
-
-    public void start(){
-        System.out.println("Starting thread");
-        if(t==null){
-            t = new Thread(this);
-            t.start();
-            System.out.println("Out of start Method");
-        }
-    }
-    public void stop(){
-        t.interrupt();
-        System.out.println("Thread is stopped");
-    }
-
-
-    public void setUpdateTradOptionInRealTime() throws SQLException {
-
-        setTradeOptionName(exchangingOne, exchangeTo);
-    }*/
-
     @FXML
     void changeTrade(MouseEvent event) {
         // currency1AmountLable.setText("mouseEvent");
@@ -507,17 +465,15 @@ public class ExchangeController implements DAOInterface{
         // get a handle to the stage
         Stage stage = (Stage) exitBtn.getScene().getWindow();
         // do what you have to do
-        //stop();
         stage.close();
     }
 
     @FXML
     void logout(ActionEvent event) throws IOException {
-        //stop();
         exit(event);
         Stage primaryStage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Login.fxml"));
-        Parent root = (Parent) loader.load();
+        Parent root = loader.load();
         Scene scene = new Scene(root);
         scene.getStylesheets().add(getClass().getResource("/view/app.css").toExternalForm());
         primaryStage.setScene(scene);
@@ -528,7 +484,6 @@ public class ExchangeController implements DAOInterface{
 
     @FXML
     void mainMenu(ActionEvent event) throws IOException, SQLException {
-        //stop();
         exit(event);
         new WhichUserMainMenu("user");
     }
