@@ -27,7 +27,12 @@ public class Main extends Application implements DAOInterface {
         }
     }
 
+    private static void buildDB(){
+        daoDBFunctions.createAllTables();
+    }
+
     public static void main(String[] args) throws SQLException {
+        buildDB();
         //this makes all the Active Users Inactive
         daoUsers.makeAllInactive();
         UpdateCurrencyPrices updCur = new UpdateCurrencyPrices();
