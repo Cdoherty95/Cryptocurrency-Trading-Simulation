@@ -23,9 +23,9 @@ public class DaoUsers {
         //getting timestamp to be stored
         long currentUnixTime = System.currentTimeMillis() / 1000L;
         //generating salt storing in byte array
-        byte[] salt = application.Password.getNextSalt();
+        byte[] salt = controller.Password.getNextSalt();
         //Getting the byte array back after hashing password
-        byte[] pwHash = application.Password.hash(Password.toCharArray(), salt);
+        byte[] pwHash = controller.Password.hash(Password.toCharArray(), salt);
 
 
         //sql prepared stmt
@@ -123,7 +123,7 @@ public class DaoUsers {
 
 
             //getting if the password matches
-            boolean y = application.Password.isExpectedPassword(Password.toCharArray(), saltFromSql, hashPw);
+            boolean y = controller.Password.isExpectedPassword(Password.toCharArray(), saltFromSql, hashPw);
 
             if (y) {
                 System.out.println("Passwords Match");

@@ -1,4 +1,4 @@
-package application;
+package controller;
 
 
 import javafx.collections.FXCollections;
@@ -120,7 +120,7 @@ public class UserTableViewController implements DAOInterface {
         new WhichUserMainMenu("admin");
     }
 
-    // Reference to the main application.
+    // Reference to the main controller.
     //private ViewUsers viewUsers;
 
     /**
@@ -139,7 +139,7 @@ public class UserTableViewController implements DAOInterface {
     }
 
     /**
-     * Is called by the main application to give a reference back to itself.
+     * Is called by the main controller to give a reference back to itself.
      */
     private void setMainApp() {
         //ViewUsers viewUsers

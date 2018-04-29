@@ -1,4 +1,4 @@
-package application;
+package controller;
 
 import model.DaoDBFunctions;
 import model.DaoUpdateCurrencyHist;
