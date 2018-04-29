@@ -67,7 +67,7 @@ public class UseraccountsView {
         this.LastLoggedIn.set(lastLoggedIn);
     }
 
-    public UseraccountsView(Integer uid, String uname, String roll, Date lastin){
+    public UseraccountsView(Integer uid, String uname, String roll, Date lastin) {
         this.UserID = new SimpleIntegerProperty(uid);
         this.Username = new SimpleStringProperty(uname);
         this.Role = new SimpleStringProperty(roll);

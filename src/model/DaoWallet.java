@@ -1,7 +1,5 @@
 package model;
 
-import org.jdesktop.swingx.plaf.PainterUIResource;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,11 +10,13 @@ public class DaoWallet {
     DBConnect connection = null;
     Statement statement = null;
     String sql = null;
-   // ResultSet rs = null;
+    // ResultSet rs = null;
     DaoUsers daoUsers = new DaoUsers();
 
 
-    public DaoWallet(){connection = new DBConnect();}
+    public DaoWallet() {
+        connection = new DBConnect();
+    }
 
 
     public void logTransaction(String type, String fcc, Double fca, String scc, Double sca) throws SQLException {
@@ -50,7 +50,7 @@ public class DaoWallet {
 
         //sql to select from database
         sql = "SELECT ID, UserID, Type, FirstCurrencyCode, FirstCurrencyAmount, SecondCurrencyCode, SecondCurrencyAmount, DateAdded " +
-                "FROM TransactionHistory WHERE UserID='"+activeUserID+"'";
+                "FROM TransactionHistory WHERE UserID='" + activeUserID + "'";
 
         ResultSet results = statement.executeQuery(sql);
 
@@ -78,40 +78,40 @@ public class DaoWallet {
         int activeUserID = Integer.parseInt(daoUsers.activeUserInfo()[0]);
 
         statement = connection.connect().createStatement();
-        sql = "UPDATE Wallet SET USDAmt="+usdAmount+" WHERE UserID='"+activeUserID+"'";
+        sql = "UPDATE Wallet SET USDAmt=" + usdAmount + " WHERE UserID='" + activeUserID + "'";
         statement.execute(sql);
         statement.close();
     }
-    
+
     public void setBtcAmount(Double btcAmount) throws SQLException {
         int activeUserID = Integer.parseInt(daoUsers.activeUserInfo()[0]);
         statement = connection.connect().createStatement();
-        sql = "UPDATE Wallet SET BTCAmt="+btcAmount+" WHERE UserID='"+activeUserID+"'";
+        sql = "UPDATE Wallet SET BTCAmt=" + btcAmount + " WHERE UserID='" + activeUserID + "'";
         statement.execute(sql);
         statement.close();
 
     }
-    
+
     public void setEthAmount(Double ethAmount) throws SQLException {
         int activeUserID = Integer.parseInt(daoUsers.activeUserInfo()[0]);
         statement = connection.connect().createStatement();
-        sql = "UPDATE Wallet SET ETHAmt="+ethAmount+" WHERE UserID='"+activeUserID+"'";
+        sql = "UPDATE Wallet SET ETHAmt=" + ethAmount + " WHERE UserID='" + activeUserID + "'";
         statement.execute(sql);
         statement.close();
     }
-    
+
     public Double[] getWalletAmounts() throws SQLException {
         int activeUserID = Integer.parseInt(daoUsers.activeUserInfo()[0]);
         Double[] wallet = new Double[3];
-        
+
         statement = connection.connect().createStatement();
-        sql = "Select USDAmt, BTCAmt, ETHAmt FROM Wallet WHERE UserID='"+activeUserID+"'";
-        
+        sql = "Select USDAmt, BTCAmt, ETHAmt FROM Wallet WHERE UserID='" + activeUserID + "'";
+
         ResultSet rs = statement.executeQuery(sql);
-        while(rs.next()){
-            wallet[0]=rs.getDouble("USDAmt");
-            wallet[1]=rs.getDouble("BTCAmt");
-            wallet[2]=rs.getDouble("ETHAmt");
+        while (rs.next()) {
+            wallet[0] = rs.getDouble("USDAmt");
+            wallet[1] = rs.getDouble("BTCAmt");
+            wallet[2] = rs.getDouble("ETHAmt");
         }
         rs.close();
         return wallet;
@@ -121,22 +121,22 @@ public class DaoWallet {
         int activeUserID = Integer.parseInt(daoUsers.activeUserInfo()[0]);
         Double[] wallet = new Double[4];
         statement = connection.connect().createStatement();
-        sql = "Select USDAmt, BTCAmt, ETHAmt FROM Wallet WHERE UserID='"+activeUserID+"'";
+        sql = "Select USDAmt, BTCAmt, ETHAmt FROM Wallet WHERE UserID='" + activeUserID + "'";
 
         ResultSet rs = statement.executeQuery(sql);
-        while(rs.next()){
-            wallet[0]=rs.getDouble("USDAmt");
-            wallet[1]=rs.getDouble("BTCAmt");
+        while (rs.next()) {
+            wallet[0] = rs.getDouble("USDAmt");
+            wallet[1] = rs.getDouble("BTCAmt");
         }
         rs.close();
 
         statement = connection.connect().createStatement();
-        sql = "Select USDAmt, BTCAmt, ETHAmt FROM Wallet WHERE UserID='"+activeUserID+"'";
+        sql = "Select USDAmt, BTCAmt, ETHAmt FROM Wallet WHERE UserID='" + activeUserID + "'";
 
         ResultSet rs1 = statement.executeQuery(sql);
-        while(rs1.next()){
-            wallet[2]=rs.getDouble("USDAmt");
-            wallet[3]=rs.getDouble("ETHAmt");
+        while (rs1.next()) {
+            wallet[2] = rs.getDouble("USDAmt");
+            wallet[3] = rs.getDouble("ETHAmt");
         }
         rs1.close();
 

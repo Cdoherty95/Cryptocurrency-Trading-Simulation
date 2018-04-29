@@ -42,7 +42,7 @@ public class EthHistory {
         this.usdPrice.set(usdPrice);
     }
 
-    public EthHistory(Date d, Double btc, Double usd){
+    public EthHistory(Date d, Double btc, Double usd) {
         this.date = d;
         this.btcPrice = new SimpleDoubleProperty(btc);
         this.usdPrice = new SimpleDoubleProperty(usd);

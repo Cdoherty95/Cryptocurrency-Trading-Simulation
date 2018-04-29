@@ -12,19 +12,21 @@ public class DaoUpdateCurrencyHist {
     //getting timestamp to be stored
     long currentUnixTime = System.currentTimeMillis() / 1000L;
 
-    public DaoUpdateCurrencyHist(){connection = new DBConnect();}
+    public DaoUpdateCurrencyHist() {
+        connection = new DBConnect();
+    }
 
     public void updateCurrency(String type, Double cryptoAmt, Double usdAmt) throws SQLException {
         //Creates a connection to the database
         statement = connection.connect().createStatement();
 
-        if(type.equals("BTC")){
+        if (type.equals("BTC")) {
             //sql to select from database
-            sql = "INSERT INTO BTCHistory(TimeStamp,CryptoAmt,USDAmt) VALUES ("+currentUnixTime+","+cryptoAmt+","+usdAmt+");";
+            sql = "INSERT INTO BTCHistory(TimeStamp,CryptoAmt,USDAmt) VALUES (" + currentUnixTime + "," + cryptoAmt + "," + usdAmt + ");";
         }
-        if(type.equals("ETH")){
+        if (type.equals("ETH")) {
             //sql to select from database
-            sql = "INSERT INTO ETHHistory(TimeStamp,CryptoAmt,USDAmt) VALUES ("+currentUnixTime+","+cryptoAmt+","+usdAmt+");";
+            sql = "INSERT INTO ETHHistory(TimeStamp,CryptoAmt,USDAmt) VALUES (" + currentUnixTime + "," + cryptoAmt + "," + usdAmt + ");";
         }
 
         statement.execute(sql);
@@ -62,6 +64,7 @@ public class DaoUpdateCurrencyHist {
         return results;
 
     }
+
     public ResultSet get1BtcHist() throws SQLException {
 
         //Creates a connection to the database
@@ -77,6 +80,7 @@ public class DaoUpdateCurrencyHist {
         return results;
 
     }
+
     public ResultSet get1EthHist() throws SQLException {
 
         //Creates a connection to the database
