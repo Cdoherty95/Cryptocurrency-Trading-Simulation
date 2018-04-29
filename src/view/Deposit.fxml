@@ -5,7 +5,6 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.DepositController">
    <children>
       <Label layoutX="230.0" layoutY="28.0" text="Deposit Funds To Account" />
@@ -21,5 +20,6 @@
       <Label fx:id="accountNumberLabel" layoutX="216.0" layoutY="99.0" prefHeight="18.0" prefWidth="224.0" text="Label" />
       <Label fx:id="routingNumLabel" layoutX="216.0" layoutY="126.0" prefHeight="18.0" prefWidth="224.0" text="Label" />
       <Label layoutX="314.0" layoutY="225.0" text="USD" />
+      <Label fx:id="errorLabel" layoutX="202.0" layoutY="264.0" prefHeight="18.0" prefWidth="214.0" textFill="RED" />
    </children>
 </AnchorPane>

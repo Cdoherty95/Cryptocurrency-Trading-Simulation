@@ -5,10 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleButton;
+import javafx.scene.control.*;
 import javafx.scene.input.InputMethodEvent;
 import javafx.stage.Stage;
 
@@ -59,6 +56,9 @@ public class RegisterController implements DAOInterface {
     private ToggleButton regAsAdmin;
 
     @FXML
+    private Label errorLabel;
+
+    @FXML
     private Button cancelBtn;
 
     private boolean checkBankInfo() {
@@ -104,18 +104,17 @@ public class RegisterController implements DAOInterface {
                     }
                 } else {
                     usernameIn.clear();
-                    usernameIn.setPromptText("Username Exists");
+                    errorLabel.setText("Username Exists");
                 }
             } else {//account or routing numbers were incorrect
                 accountIn.clear();
                 routingIn.clear();
-                accountIn.setPromptText("Must be numbers only");
-                routingIn.setPromptText("Must be numbers only");
+                errorLabel.setText("Bank Information Must be numbers only");
             }
         } else { //passwords didnt match
             pass1In.clear();
             pass2In.clear();
-            pass1In.setPromptText("Passwords Did Not Match");
+            errorLabel.setText("Passwords Did Not Match");
         }
     }
 

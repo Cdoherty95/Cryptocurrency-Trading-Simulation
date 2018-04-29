@@ -80,5 +80,6 @@
       </Button>
       <ToggleButton fx:id="regAsAdmin" layoutX="328.0" layoutY="214.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="218.0" text="Register As Admin" />
       <Button fx:id="cancelBtn" layoutX="535.0" layoutY="5.0" mnemonicParsing="false" onAction="#cancel" text="Cancel" />
+      <Label fx:id="errorLabel" layoutX="329.0" layoutY="359.0" prefHeight="18.0" prefWidth="218.0" textFill="RED" />
    </children>
 </AnchorPane>

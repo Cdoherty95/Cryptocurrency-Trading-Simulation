@@ -40,6 +40,8 @@ public class DepositController implements DAOInterface {
 
     @FXML
     private Label routingNumLabel;
+    @FXML
+    private Label errorLabel;
 
     @FXML
     void deposit(ActionEvent event) throws SQLException, IOException {
@@ -54,11 +56,12 @@ public class DepositController implements DAOInterface {
                 new WhichUserMainMenu("user");
             } else {
                 amountTxtfield.clear();
-                amountTxtfield.setPromptText("Please Input A Number");
+
+                errorLabel.setText("Please Input A Number");
             }
         } else {
             amountTxtfield.clear();
-            amountTxtfield.setPromptText("Please Input A Number");
+            errorLabel.setText("Please Input A Number");
         }
     }
 

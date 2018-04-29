@@ -76,16 +76,16 @@ public class WithdrawController implements DAOInterface {
                     mainMenu(event);
                 } else {
                     amountTxtfield.clear();
-                    amountTxtfield.setPromptText("Balance Cannot Be Negative");
+                    errorLabel.setText("Balance Cannot Be Negative");
                 }
 
             } else {
                 amountTxtfield.clear();
-                amountTxtfield.setPromptText("Please Input A Number");
+                errorLabel.setText("Please Input A Number");
             }
         } else {
             amountTxtfield.clear();
-            amountTxtfield.setPromptText("Please Input A Number");
+            errorLabel.setText("Please Input A Number");
         }
     }
 
