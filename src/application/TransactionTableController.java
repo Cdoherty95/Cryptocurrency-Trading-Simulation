@@ -10,22 +10,22 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import model.*;
+import model.TransactionModel;
 
 import java.io.IOException;
-import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
-import java.util.ResourceBundle;
 
 public class TransactionTableController implements DAOInterface {
 
+    /*
     @FXML
     private ResourceBundle resources;
 
     @FXML
     private URL location;
+    */
 
     @FXML
     private Label heading;
@@ -65,7 +65,7 @@ public class TransactionTableController implements DAOInterface {
 
     private ObservableList<TransactionModel> tHistList = FXCollections.observableArrayList();
 
-    String userOrAdmin = null;
+    private String userOrAdmin = null;
     //public String allOrOne = null;
 
     //DaoWallet daoWallet = new DaoWallet();
@@ -81,9 +81,9 @@ public class TransactionTableController implements DAOInterface {
     @FXML
     void menu(ActionEvent event) throws IOException, SQLException {
         exit(event);
-        if (userOrAdmin.equals("admin")){
+        if (userOrAdmin.equals("admin")) {
             new WhichUserMainMenu("admin");
-        }else{
+        } else {
             new WhichUserMainMenu("user");
         }
     }
@@ -113,30 +113,30 @@ public class TransactionTableController implements DAOInterface {
         fillTable();
     }
 
-    public TransactionTableController() throws SQLException {
+    public TransactionTableController() {
 
     }
 
-    public void whichDataToSet(String allOrOne) throws SQLException {
-        if(allOrOne.equals("user")) {
+    void whichDataToSet(String allOrOne) throws SQLException {
+        if (allOrOne.equals("user")) {
             userOrAdmin = "user";
             setDataAU();
         }
-        if(allOrOne.equals("admin")){
+        if (allOrOne.equals("admin")) {
             userOrAdmin = "admin";
             setDataAll();
         }
     }
 
-    public void fillTable() {
+    private void fillTable() {
         table.setItems(tHistList);
     }
 
-    public void setDataAU() throws SQLException {
+    void setDataAU() throws SQLException {
         ResultSet rs = daoWallet.getTransactionHistoryActiveUser();
         while (rs.next()) {
             //get Unix timestamp * 1000 to get it to current date and cast it to date object
-            Date timestamp = new Date((rs.getLong("DateAdded")*1000));
+            Date timestamp = new Date((rs.getLong("DateAdded") * 1000));
             tHistList.add(new TransactionModel(
                     rs.getInt("ID"), rs.getInt("UserID"),
                     rs.getString("Type"), rs.getString("FirstCurrencyCode"),
@@ -147,11 +147,11 @@ public class TransactionTableController implements DAOInterface {
         rs.close();
     }
 
-    public void setDataAll() throws SQLException {
+    private void setDataAll() throws SQLException {
         ResultSet rs = daoWallet.getTransactionHistoryAll();
         while (rs.next()) {
             //get Unix timestamp * 1000 to get it to current date and cast it to date object
-            Date timestamp = new Date((rs.getLong("DateAdded")*1000));
+            Date timestamp = new Date((rs.getLong("DateAdded") * 1000));
             tHistList.add(new TransactionModel(
                     rs.getInt("ID"), rs.getInt("UserID"),
                     rs.getString("Type"), rs.getString("FirstCurrencyCode"),

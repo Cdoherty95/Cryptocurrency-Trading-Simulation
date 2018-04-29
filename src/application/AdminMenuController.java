@@ -47,11 +47,10 @@ public class AdminMenuController implements MenuOperations {
         //assert viewWallets != null : "fx:id=\"viewWallets\" was not injected: check your FXML file 'AdminMain.fxml'.";
         //assert viewExchangeHistory != null : "fx:id=\"viewExchangeHistory\" was not injected: check your FXML file 'AdminMain.fxml'.";
         assert welcomeLabel != null : "fx:id=\"welcomeLabel\" was not injected: check your FXML file 'AdminMain.fxml'.";
-        welcomeLabel.setText("Welcome Chris");
     }
 
     //default constructor needed
-    public AdminMenuController(){
+    public AdminMenuController() {
 
     }
 
@@ -105,7 +104,7 @@ public class AdminMenuController implements MenuOperations {
     }
 
     @FXML
-    public void exit(ActionEvent event){
+    public void exit(ActionEvent event) {
         // get a handle to the stage
         Stage stage = (Stage) exitBtn.getScene().getWindow();
         // do what you have to do

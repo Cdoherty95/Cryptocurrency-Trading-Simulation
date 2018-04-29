@@ -182,9 +182,8 @@ public class DaoDBFunctions {
 
 	/**
 	 * @param args the command line arguments
-	 * @throws SQLException 
-	 */
-	public static void main(String[] args) throws SQLException {
+     */
+	public static void main(String[] args) {
 		DaoDBFunctions dao = new DaoDBFunctions();
 		//dao.test();
 

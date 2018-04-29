@@ -10,12 +10,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import model.DaoUsers;
 
 import java.io.IOException;
 import java.sql.SQLException;
 
-public class LoginController implements DAOInterface{
+public class LoginController implements DAOInterface {
 
 
     @FXML
@@ -38,7 +37,6 @@ public class LoginController implements DAOInterface{
 
     @FXML
     private Button registerbtn;
-
 
 
     public void loginbtnClicked(ActionEvent event) throws SQLException, IOException, InterruptedException {
@@ -68,7 +66,7 @@ public class LoginController implements DAOInterface{
         exit(event);
         Stage primaryStage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Register.fxml"));
-        Parent root = (Parent) loader.load();
+        Parent root = loader.load();
         Scene scene = new Scene(root);
         scene.getStylesheets().add(getClass().getResource("/view/app.css").toExternalForm());
         primaryStage.setScene(scene);
@@ -76,7 +74,7 @@ public class LoginController implements DAOInterface{
         primaryStage.show();
     }
 
-    public void exit(ActionEvent event){
+    public void exit(ActionEvent event) {
         // get a handle to the stage
         Stage stage = (Stage) exitBTN.getScene().getWindow();
         // do what you have to do

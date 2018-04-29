@@ -1,9 +1,5 @@
 package application;
 
-import java.io.IOException;
-import java.net.URL;
-import java.sql.SQLException;
-import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,11 +9,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuBar;
 import javafx.stage.Stage;
-import model.DaoUsers;
-import model.DaoWallet;
+
+import java.io.IOException;
+import java.net.URL;
+import java.sql.SQLException;
+import java.util.ResourceBundle;
 
 public class UserMenuController implements DAOInterface {
-
+    /*
     @FXML
     private ResourceBundle resources;
 
@@ -26,6 +25,28 @@ public class UserMenuController implements DAOInterface {
 
     @FXML
     private MenuBar topBar;
+
+    @FXML
+    private Button goToExch;
+
+    @FXML
+    private Button CurrencyHistory;
+
+    @FXML
+    private Button viewTransHist;
+
+    @FXML
+    private Button DepositFunds;
+
+    @FXML
+    private Button UpdateUserInfo;
+
+    @FXML
+    private Button logoutBtn;
+
+    @FXML
+    private Label walletHeading;
+    */
 
     @FXML
     private Label welcomeUser;
@@ -43,9 +64,6 @@ public class UserMenuController implements DAOInterface {
     private Label usrpaymnetMethod;
 
     @FXML
-    private Label walletHeading;
-
-    @FXML
     private Label usdAmt;
 
     @FXML
@@ -55,32 +73,13 @@ public class UserMenuController implements DAOInterface {
     private Label ethAmt;
 
     @FXML
-    private Button goToExch;
-
-    @FXML
-    private Button CurrencyHistory;
-
-    @FXML
-    private Button viewTransHist;
-
-    @FXML
-    private Button DepositFunds;
-
-    @FXML
-    private Button UpdateUserInfo;
-    @FXML
-    private Button logoutBtn;
-    @FXML
     private Button exitBtn;
+
     @FXML
     private Button adminMenuBtn;
 
-    //Database access objects
-    //DaoUsers daoUsers = new DaoUsers();
-
-
     //default constructor
-    public UserMenuController() throws SQLException {
+    public UserMenuController() {
     }
 
     @FXML
@@ -94,7 +93,7 @@ public class UserMenuController implements DAOInterface {
         exit(event);
         //ViewUsers vu = new ViewUsers();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Deposit.fxml"));
-        Parent root = (Parent) loader.load();
+        Parent root = loader.load();
 
         //set up the new stage+scene
         Scene newScene = new Scene(root);
@@ -109,7 +108,7 @@ public class UserMenuController implements DAOInterface {
         exit(event);
         //ViewUsers vu = new ViewUsers();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Withdraw.fxml"));
-        Parent root = (Parent) loader.load();
+        Parent root = loader.load();
 
         //set up the new stage+scene
         Scene newScene = new Scene(root);
@@ -124,7 +123,7 @@ public class UserMenuController implements DAOInterface {
         exit(event);
         Stage primaryStage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Exchange.fxml"));
-        Parent root = (Parent) loader.load();
+        Parent root = loader.load();
         Scene scene = new Scene(root);
         scene.getStylesheets().add(getClass().getResource("/view/app.css").toExternalForm());
         primaryStage.setScene(scene);
@@ -138,7 +137,7 @@ public class UserMenuController implements DAOInterface {
         exit(event);
         //ViewUsers vu = new ViewUsers();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/CurrencyHistroy.fxml"));
-        Parent root = (Parent) loader.load();
+        Parent root = loader.load();
 
         //set up the new stage+scene
         Scene newScene = new Scene(root);
@@ -153,7 +152,7 @@ public class UserMenuController implements DAOInterface {
         exit(event);
         Stage primaryStage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/TransactionHist.fxml"));
-        Parent root = (Parent) loader.load();
+        Parent root = loader.load();
         TransactionTableController controller = loader.getController();
         controller.whichDataToSet("user");
         Scene scene = new Scene(root);
@@ -169,7 +168,7 @@ public class UserMenuController implements DAOInterface {
         exit(event);
         Stage primaryStage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Login.fxml"));
-        Parent root = (Parent) loader.load();
+        Parent root = loader.load();
         Scene scene = new Scene(root);
         scene.getStylesheets().add(getClass().getResource("/view/app.css").toExternalForm());
         primaryStage.setScene(scene);
@@ -192,7 +191,7 @@ public class UserMenuController implements DAOInterface {
         exit(event);
         Stage primaryStage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/UpdateUserInfo.fxml"));
-        Parent root = (Parent) loader.load();
+        Parent root = loader.load();
         Scene scene = new Scene(root);
         scene.getStylesheets().add(getClass().getResource("/view/app.css").toExternalForm());
         primaryStage.setScene(scene);
@@ -205,7 +204,7 @@ public class UserMenuController implements DAOInterface {
         exit(event);
         Stage primaryStage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/AdminMain.fxml"));
-        Parent root = (Parent) loader.load();
+        Parent root = loader.load();
         Scene scene = new Scene(root);
         scene.getStylesheets().add(getClass().getResource("/view/app.css").toExternalForm());
         primaryStage.setScene(scene);
@@ -214,7 +213,7 @@ public class UserMenuController implements DAOInterface {
         primaryStage.show();
     }
 
-    public void disableAdminBtn(boolean y) throws SQLException {
+    void disableAdminBtn(boolean y) throws SQLException {
         //adminMenuBtn.managedProperty().bind(adminMenuBtn.visibleProperty());
         adminMenuBtn.setVisible(y);
         setUserInfo();
@@ -222,7 +221,7 @@ public class UserMenuController implements DAOInterface {
     }
 
 
-    public void setUserInfo() throws SQLException {
+    private void setUserInfo() throws SQLException {
         String[] userInfo = daoUsers.activeUserInfo();
         welcomeUser.setText("Welcome " + userInfo[4]);
         usrName.setText(userInfo[1]);
@@ -231,7 +230,7 @@ public class UserMenuController implements DAOInterface {
         usrpaymnetMethod.setText(userInfo[6]);
     }
 
-    public void setWalletInfo() throws SQLException {
+    private void setWalletInfo() throws SQLException {
         Double[] wallet = daoWallet.getWalletAmounts();
         usdAmt.setText(String.valueOf(wallet[0]));
         btcAmt.setText(String.valueOf(wallet[1]));

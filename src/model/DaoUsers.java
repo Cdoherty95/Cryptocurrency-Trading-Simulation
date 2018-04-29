@@ -48,7 +48,7 @@ public class DaoUsers {
 		connection.connect().close(); //close db connection
 
 	}
-	public int getUserID(String uname) throws SQLException, InterruptedException {
+	public int getUserID(String uname) throws SQLException {
 
 		int userID=0;
 		statement = connection.connect().createStatement();

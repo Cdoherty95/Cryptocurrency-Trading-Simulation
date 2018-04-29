@@ -6,8 +6,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import model.DaoUsers;
-import model.DaoWallet;
 
 import java.io.IOException;
 import java.net.URL;
@@ -47,14 +45,14 @@ public class DepositController implements DAOInterface {
     void deposit(ActionEvent event) throws SQLException, IOException {
 
         if (!amountTxtfield.getText().isEmpty()) {
-            if(checkInput()){
+            if (checkInput()) {
                 Double[] walletAmts = daoWallet.getWalletAmounts();
                 Double total = (walletAmts[0] + Double.parseDouble(amountTxtfield.getText()));
                 daoWallet.setUsdAmount(total);
-                daoWallet.logTransaction("Deposit", null, 0.0,"USD", Double.parseDouble(amountTxtfield.getText()));
+                daoWallet.logTransaction("Deposit", null, 0.0, "USD", Double.parseDouble(amountTxtfield.getText()));
                 exit(event);
                 new WhichUserMainMenu("user");
-            }else {
+            } else {
                 amountTxtfield.clear();
                 amountTxtfield.setPromptText("Please Input A Number");
             }
@@ -99,7 +97,7 @@ public class DepositController implements DAOInterface {
         routingNumLabel.setText(userInfo[8]);
     }
 
-    public boolean checkInput(){
+    public boolean checkInput() {
         try {
             Double.parseDouble(amountTxtfield.getText());
         } catch (NumberFormatException e) {

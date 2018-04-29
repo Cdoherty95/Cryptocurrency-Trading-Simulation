@@ -1,17 +1,16 @@
 package application;
 
-import java.io.IOException;
-import java.net.URL;
-import java.sql.SQLException;
-import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import model.DaoUsers;
-import model.DaoWallet;
+
+import java.io.IOException;
+import java.net.URL;
+import java.sql.SQLException;
+import java.util.ResourceBundle;
 
 public class WithdrawController implements DAOInterface {
 
@@ -65,22 +64,22 @@ public class WithdrawController implements DAOInterface {
     @FXML
     void withdraw(ActionEvent event) throws SQLException, IOException {
         if (!amountTxtfield.getText().isEmpty()) {
-            if(checkInput()){
+            if (checkInput()) {
                 System.out.println("Input is valid");
                 Double[] walletAmts = daoWallet.getWalletAmounts();
                 Double total = (walletAmts[0] - Double.parseDouble(amountTxtfield.getText()));
                 System.out.println("Total after withdraw would be " + total);
-                if(total>0){
+                if (total > 0) {
                     daoWallet.setUsdAmount(total);
                     System.out.println("Set USD to amount minus the withdraw");
-                    daoWallet.logTransaction("Withdraw","USD", Double.parseDouble(amountTxtfield.getText()), null, 0.0);
+                    daoWallet.logTransaction("Withdraw", "USD", Double.parseDouble(amountTxtfield.getText()), null, 0.0);
                     mainMenu(event);
-                }else {
+                } else {
                     amountTxtfield.clear();
                     amountTxtfield.setPromptText("Balance Cannot Be Negative");
                 }
 
-            }else {
+            } else {
                 amountTxtfield.clear();
                 amountTxtfield.setPromptText("Please Input A Number");
             }
@@ -106,7 +105,7 @@ public class WithdrawController implements DAOInterface {
         setWalletInfo();
     }
 
-    public void setUserInfo() throws SQLException {
+    private void setUserInfo() throws SQLException {
 
         String[] userInfo = daoUsers.activeUserInfo();
 
@@ -115,12 +114,12 @@ public class WithdrawController implements DAOInterface {
         routingNumLabel.setText(userInfo[8]);
     }
 
-    public void setWalletInfo() throws SQLException {
+    private void setWalletInfo() throws SQLException {
         Double[] wallet = daoWallet.getWalletAmounts();
         currentBalLabel.setText(String.valueOf(wallet[0]));
     }
 
-    public boolean checkInput(){
+    private boolean checkInput() {
         try {
             Double.parseDouble(amountTxtfield.getText());
         } catch (NumberFormatException e) {

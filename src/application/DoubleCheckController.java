@@ -15,7 +15,7 @@ public class DoubleCheckController {
 
     @FXML
     void CancelAction(ActionEvent event) {
-        UserTableViewController.DoubleCheck =1;
+        UserTableViewController.DoubleCheck = 1;
         Stage stage = (Stage) cancelBtn.getScene().getWindow();
         // do what you have to do
         stage.close();
@@ -23,7 +23,7 @@ public class DoubleCheckController {
 
     @FXML
     void ContinueAction(ActionEvent event) {
-        UserTableViewController.DoubleCheck=2;
+        UserTableViewController.DoubleCheck = 2;
         Stage stage = (Stage) cancelBtn.getScene().getWindow();
         // do what you have to do
         stage.close();

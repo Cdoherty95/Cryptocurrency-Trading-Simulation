@@ -15,17 +15,18 @@ public class UpdateCurrencyPrices implements Runnable, DAOInterface {
     private Thread t;
 
     //Default constructor
-    public UpdateCurrencyPrices(){}
+    public UpdateCurrencyPrices() {
+    }
 
     @Override
     public void run() {
         boolean run = true;
         try {
             ////System.out.println("Currency Tread Started");
-            while (run){
-            getBtc();
-            getETH();
-            Thread.sleep(5000);
+            while (run) {
+                getBtc();
+                getETH();
+                Thread.sleep(5000);
             }
         } catch (IOException | JSONException | SQLException | InterruptedException e) {
             //e.printStackTrace();
@@ -34,21 +35,21 @@ public class UpdateCurrencyPrices implements Runnable, DAOInterface {
 
     }
 
-    public void start(){
+    void start() {
         //////System.out.println("Starting thread");
-        if(t==null){
+        if (t == null) {
             t = new Thread(this);
             t.start();
             //System.out.println("Out of start Method");
         }
     }
 
-    public void stop(){
+    void stop() {
         t.interrupt();
         //System.out.println("Thread is stopped");
     }
 
-    public void getBtc() throws IOException, JSONException, SQLException {
+    private void getBtc() throws IOException, JSONException, SQLException {
         //url to get USD and Eth for 1BTC
         String url = "https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=USD,ETH";
         URL obj = new URL(url);
@@ -80,7 +81,7 @@ public class UpdateCurrencyPrices implements Runnable, DAOInterface {
         con.disconnect();
     }
 
-    public void getETH() throws IOException, JSONException, SQLException {
+    private void getETH() throws IOException, JSONException, SQLException {
         //url to get USD and Eth for 1BTC
         String url = "https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD,BTC";
         URL obj = new URL(url);
@@ -111,14 +112,4 @@ public class UpdateCurrencyPrices implements Runnable, DAOInterface {
         daoUpdateCurrencyHist.updateCurrency("ETH", Double.valueOf(jsonObject.getString("BTC")), Double.parseDouble(jsonObject.getString("USD")));
         con.disconnect();
     }
-
-
-    /*
-    public static void main(String[] args) throws IOException, JSONException, SQLException {
-        UpdateCurrencyPrices ucp = new UpdateCurrencyPrices();
-        ucp.getBtc();
-        ucp.getETH();
-    }
-
-*/
 }

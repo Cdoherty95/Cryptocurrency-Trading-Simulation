@@ -18,11 +18,13 @@ import java.util.ResourceBundle;
 
 public class UpdateUserInfoController implements DAOInterface {
 
+    /*
     @FXML
     private ResourceBundle resources;
 
     @FXML
     private URL location;
+    */
 
     @FXML
     private TextField usernameIn;
@@ -60,11 +62,9 @@ public class UpdateUserInfoController implements DAOInterface {
     @FXML
     private Label errorLbl;
 
-    String[] userInfo;
+    private String[] userInfo;
 
-
-
-    public boolean checkBankInfo(){
+    private boolean checkBankInfo(){
         try{
             Integer.parseInt(accountIn.getText());
         }catch (NumberFormatException e){
@@ -118,7 +118,7 @@ public class UpdateUserInfoController implements DAOInterface {
         setUserInfo();
     }
 
-    public void setUserInfo() throws SQLException {
+    private void setUserInfo() {
 
         usernameIn.setText(userInfo[1]);
         fNameIn.setText(userInfo[4]);

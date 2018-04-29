@@ -1,11 +1,9 @@
 package application;
 
-import javafx.beans.property.StringProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import model.DaoUsers;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -18,13 +16,13 @@ public class WhichUserMainMenu implements DAOInterface {
         figureOutActiveUser(uOa);
     }
 
-    public void figureOutActiveUser(String uOa) throws IOException, SQLException {
+    private void figureOutActiveUser(String uOa) throws IOException, SQLException {
         if (uOa.equals("admin")) {
             System.out.println("User is an admin");
             //exit(event);
             Stage primaryStage = new Stage();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/AdminMain.fxml"));
-            Parent root = (Parent) loader.load();
+            Parent root = loader.load();
             //Parent root = FXMLLoader.load(getClass().getResource("/view/UsersTableView.fxml"));
             Scene scene = new Scene(root);
             scene.getStylesheets().add(getClass().getResource("/view/app.css").toExternalForm());
@@ -36,13 +34,13 @@ public class WhichUserMainMenu implements DAOInterface {
             //exit(event);
             Stage primaryStage = new Stage();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/UserMain.fxml"));
-            Parent root = (Parent) loader.load();
+            Parent root = loader.load();
 
             String[] userRole = daoUsers.activeUserInfo();
-            if(userRole[2].equals("admin")){
+            if (userRole[2].equals("admin")) {
                 UserMenuController controller = loader.getController();
                 controller.disableAdminBtn(true);
-            }else{
+            } else {
                 UserMenuController controller = loader.getController();
                 controller.disableAdminBtn(false);
             }
