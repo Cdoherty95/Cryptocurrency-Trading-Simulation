@@ -13,7 +13,7 @@
 <AnchorPane prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ExchangeController">
    <children>
       <ChoiceBox fx:id="chiceDropDown" layoutX="14.0" layoutY="14.0" onMouseClicked="#changeTrade" prefWidth="150.0" />
-      <AnchorPane layoutX="206.0" layoutY="181.0" prefHeight="249.0" prefWidth="352.0">
+      <AnchorPane layoutX="206.0" layoutY="181.0" prefHeight="250.0" prefWidth="390.0">
          <children>
             <ToggleButton fx:id="toggleBuySell" layoutX="70.0" layoutY="14.0" mnemonicParsing="false" onAction="#changeBuySell" prefHeight="32.0" prefWidth="210.0" stylesheets="@app.css" text="Buy">
                <font>
@@ -27,9 +27,10 @@
             <Label fx:id="inputAmountCurrencyLable" layoutX="290.0" layoutY="79.0" text="Label" />
             <Button fx:id="placOrderBtn" layoutX="125.0" layoutY="160.0" mnemonicParsing="false" onAction="#placeOrder" prefHeight="32.0" prefWidth="99.0" text="Place Order" />
             <Label fx:id="totalCurrencyLable" layoutX="69.0" layoutY="120.0" prefHeight="40.0" prefWidth="113.0" />
-            <Label fx:id="calculatedAmountLable" layoutX="196.0" layoutY="120.0" prefHeight="40.0" prefWidth="113.0" />
+            <Label fx:id="calculatedAmountLable" layoutX="196.0" layoutY="120.0" prefHeight="40.0" prefWidth="99.0" />
             <Label fx:id="errorLabl" alignment="CENTER" layoutX="45.0" layoutY="88.0" text="Amount" />
             <Label fx:id="errorLabl" alignment="CENTER" layoutX="31.0" layoutY="205.0" prefHeight="32.0" prefWidth="298.0" textFill="RED" />
+            <Button fx:id="viewTotalBtn" layoutX="296.0" layoutY="123.0" mnemonicParsing="false" onAction="#refreshTotal" text="ViewTotal" />
          </children>
       </AnchorPane>
       <SplitPane dividerPositions="0.49433573635427397" layoutX="195.0" layoutY="97.0" prefHeight="67.0" prefWidth="390.0">

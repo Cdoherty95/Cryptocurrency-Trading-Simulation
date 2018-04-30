@@ -84,7 +84,6 @@ public class ExchangeController implements DAOInterface {
     DaoUpdateCurrencyHist daoUpdateCurrencyHist = new DaoUpdateCurrencyHist();
 
 
-
     private ChangeListener<Number> changeListener = new ChangeListener<>() {
 
         @Override
@@ -127,23 +126,53 @@ public class ExchangeController implements DAOInterface {
         assert oneCryptoName != null : "fx:id=\"oneCryptoName\" was not injected: check your FXML file 'Exchange.fxml'.";
         assert tradeOptionName != null : "fx:id=\"tradeOptionName\" was not injected: check your FXML file 'Exchange.fxml'.";
         defaultStart();
-        inputAmount.textProperty().addListener((observable, oldValue, userInput) -> {
-            System.out.println("textfield changed from " + oldValue + " to " + userInput);
-            if (!userInput.isEmpty()) {
-                userIn = Double.parseDouble(userInput.replaceAll("[^\\d.]", ""));
-                if (toggleBuySell.isSelected()) {//Sell Mode
-                    //need to see what null user input is
-                    //if Stmts for Cases
-                    total = (userIn * Double.parseDouble(tradeOptionName.getText().replaceAll("[^\\d.]", "")));
-                    calculatedAmountLable.setText(String.valueOf(round(total, 2)));
+       /**
+        * This listener brakes when running program from jar file.
+        * Replaced with a refresh button to show total
+        * updateTotal();
+        */
 
-                } else {//Buy Mode
-                    total = (userIn / Double.parseDouble(tradeOptionName.getText().replaceAll("[^\\d.]", "")));
-                    calculatedAmountLable.setText(String.valueOf(round(total, 2)));
+    }
 
-                }
+    @FXML
+    void refreshTotal(ActionEvent event) {
+
+        if (!inputAmount.getText().isEmpty()) {
+            userIn = Double.parseDouble(inputAmount.getText().replaceAll("[^\\d.]", ""));
+            if (toggleBuySell.isSelected()) {//Sell Mode
+                //need to see what null user input is
+                //if Stmts for Cases
+                total = (userIn * Double.parseDouble(tradeOptionName.getText().replaceAll("[^\\d.]", "")));
+                calculatedAmountLable.setText(String.valueOf(round(total, 2)));
+
+            } else {//Buy Mode
+                total = (userIn / Double.parseDouble(tradeOptionName.getText().replaceAll("[^\\d.]", "")));
+                calculatedAmountLable.setText(String.valueOf(round(total, 2)));
+
             }
-        });
+        }
+    }
+
+    void updateTotal() {
+        Platform.runLater(() ->
+                inputAmount.textProperty().addListener((observable, oldValue, userInput) -> {
+                    System.out.println("textfield changed from " + oldValue + " to " + userInput);
+                    if (!userInput.isEmpty()) {
+                        userIn = Double.parseDouble(userInput.replaceAll("[^\\d.]", ""));
+                        if (toggleBuySell.isSelected()) {//Sell Mode
+                            //need to see what null user input is
+                            //if Stmts for Cases
+                            total = (userIn * Double.parseDouble(tradeOptionName.getText().replaceAll("[^\\d.]", "")));
+                            calculatedAmountLable.setText(String.valueOf(round(total, 2)));
+
+                        } else {//Buy Mode
+                            total = (userIn / Double.parseDouble(tradeOptionName.getText().replaceAll("[^\\d.]", "")));
+                            calculatedAmountLable.setText(String.valueOf(round(total, 2)));
+
+                        }
+                    }
+                }));
+
     }
 
     @FXML
